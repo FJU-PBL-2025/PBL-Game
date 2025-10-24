@@ -1,5 +1,10 @@
-# Entry
+# PBL-Game
+
+## Entry
+
 `main.py`
 
-# Run with `uv`
+## Run with `uv`
+
+`uv sync`
 `uv run python main.py`
