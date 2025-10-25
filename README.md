@@ -6,5 +6,5 @@
 
 ## Run with `uv`
 
-`uv sync`
+`uv sync`  
 `uv run python main.py`

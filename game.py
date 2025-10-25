@@ -14,29 +14,23 @@ class Game():
     self.running = True
     self.playing = True
     
-    self.GAME_W = 480
-    self.GAME_H = 270
-    self.SCREEN_WIDTH = 960
-    self.SCREEN_HEIGHT = 540
+    self.GAME_W = 1920
+    self.GAME_H = 1080
+    self.SCREEN_WIDTH = 1920
+    self.SCREEN_HEIGHT = 1080
     
     self.game_canvas = pygame.Surface(
       (self.GAME_W, self.GAME_H)
     )
     self.screen = pygame.display.set_mode(
-      (self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
+      (self.SCREEN_WIDTH, self.SCREEN_HEIGHT),
+      pygame.SCALED | pygame.RESIZABLE
     )
     
-    self.actions = {
-      "escape": False,
-      "left": False,
-      "right": False,
-      "up": False,
-      "down": False,
-      "return": False
-    }
+    self.actions = {}
     
-    self.dt = 0
-    self.prev_time = 0
+    self.delta_time = 0.0
+    self.prev_time = 0.0
     self.state_stack = []
     
     self.load_assets()
@@ -44,7 +38,7 @@ class Game():
 
   def game_loop(self):
     while self.playing:
-      self.get_dt()
+      self.get_delta_time()
       self.get_events()
       self.update()
       self.render()
@@ -56,37 +50,13 @@ class Game():
         self.running = False
 
       if event.type == pygame.KEYDOWN:
-        match event.key:
-          case pygame.K_ESCAPE:
-            self.actions["escape"] = True
-          case pygame.K_a:
-            self.actions["left"] = True
-          case pygame.K_d:
-            self.actions["right"] = True
-          case pygame.K_w:
-            self.actions["up"] = True
-          case pygame.K_s:
-            self.actions["down"] = True
-          case pygame.K_RETURN:
-            self.actions["return"] = True  
+        self.actions[event.key] = True
 
       if event.type == pygame.KEYUP:
-        match event.key:
-          case pygame.K_ESCAPE:
-            self.actions["escape"] = True
-          case pygame.K_a:
-            self.actions["left"] = False
-          case pygame.K_d:
-            self.actions["right"] = False
-          case pygame.K_w:
-            self.actions["up"] = False
-          case pygame.K_s:
-            self.actions["down"] = False
-          case pygame.K_RETURN:
-            self.actions["return"] = False  
+        self.actions[event.key] = False
 
   def update(self):
-    self.state_stack[-1].update(self.dt, self.actions)
+    self.state_stack[-1].update(self.delta_time, self.actions)
 
   def render(self):
     self.state_stack[-1].render(self.game_canvas)
@@ -103,9 +73,9 @@ class Game():
     )
     pygame.display.flip()
 
-  def get_dt(self):
+  def get_delta_time(self):
     now = time.time()
-    self.dt = now - self.prev_time
+    self.delta_time = now - self.prev_time
     self.prev_time = now
 
   def draw_text(self, surface, text, color, x, y):

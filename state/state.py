@@ -1,12 +1,15 @@
+import pygame
+
+
 class State():
   def __init__(self, game):
     self.game = game
     self.prev_state = None
 
-  def update(self, delta_time, actions):
+  def update(self, delta_time: float, actions: dict):
     pass
 
-  def render(self, surface):
+  def render(self, surface: pygame.Surface):
     pass
 
   def enter_state(self):
