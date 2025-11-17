@@ -7,10 +7,9 @@ class FirstLevelState():
     self.game = game
     self.map_renderer = TiledMapRenderer(map_name)
 
-    # 將玩家位置設定到第一關的出生點
-    # 假設出生點在 (100, 100)
-    self.game.player.x = 100
-    self.game.player.y = 100
+    # 將玩家位置設定在畫面中央
+    self.game.player.x = self.game.GAME_W / 2
+    self.game.player.y = self.game.GAME_H / 2
     self.game.player.rect.center = (self.game.player.x, self.game.player.y)
 
   def update(self, delta_time, actions):
