@@ -35,6 +35,13 @@ class Game():
     self.delta_time = 0.0
     self.prev_time = 0.0
     self.state_stack = []
+
+    self.settings = {
+        'language': 'English',
+        'volume': 50,
+        'x_sensitivity': 1.0,
+        'y_sensitivity': 1.0,
+    }
     
     self.player = Player()
     
@@ -83,10 +90,15 @@ class Game():
     self.delta_time = now - self.prev_time
     self.prev_time = now
 
-  def draw_text(self, surface, text, color, x, y):
+  def draw_text(self, surface, text, color, x, y, align="center"):
     text_surface = self.font.render(text, True, color)
     text_rect = text_surface.get_rect()
-    text_rect.center = (x, y)
+    if align == "center":
+        text_rect.center = (x, y)
+    elif align == "left":
+        text_rect.midleft = (x, y)
+    elif align == "right":
+        text_rect.midright = (x, y)
     surface.blit(text_surface, text_rect)
 
   def load_assets(self):

@@ -26,16 +26,10 @@ class TitleScreenState(State):
           self.game.running = False
     
     if actions.get(pygame.K_w) or actions.get(pygame.K_UP):
-      if self.index == 0:
-        self.index = len(self.OPTIONS) - 1
-      else:
-        self.index -= 1
+      self.index = (self.index - 1) % len(self.OPTIONS)
     
     if actions.get(pygame.K_s) or actions.get(pygame.K_DOWN):
-      if self.index == len(self.OPTIONS) - 1:
-        self.index = 0
-      else:
-        self.index += 1
+      self.index = (self.index + 1) % len(self.OPTIONS)
 
     self.game.reset_keys()
 
