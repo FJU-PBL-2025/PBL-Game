@@ -24,7 +24,8 @@ class Player(pygame.sprite.Sprite):
     delta_time: float,
     actions: dict,
     tiles: pygame.sprite.Group,
-    metadata: dict
+    metadata: dict,
+    game = None
   ):
     dx = 0
     dy = 0
@@ -38,6 +39,24 @@ class Player(pygame.sprite.Sprite):
     if actions.get(pygame.K_s) or actions.get(pygame.K_DOWN):
       dy += self.speed * delta_time
     
+    # 檢查是否與傳送門 (exit) 碰撞
+    if game and "exit" in metadata:
+      hit_tiles = pygame.sprite.spritecollide(self, tiles, False)
+      for tile in hit_tiles:
+        for exit_info in metadata["exit"]:
+          # 檢查碰撞到的圖塊座標是否與 exit 中定義的座標相符
+          if tile.x == exit_info["x"] and tile.y == exit_info["y"]:
+            # 取得目標地圖名稱和玩家在新地圖的出生位置
+            target_map = exit_info["to"]
+            # 檢查出口是否定義了出生點，若無則傳入 None
+            # 這允許我們切換到沒有玩家位置的場景 (例如關卡標題畫面)
+            if "start_pos" in exit_info:
+              player_start_pos = (exit_info["start_pos"]["x"], exit_info["start_pos"]["y"])
+            else:
+              player_start_pos = None
+            game.change_map(target_map, player_start_pos) 
+            return # 觸發傳送後，結束當前移動處理
+
     if dx != 0:
       old_x = self.x
       self.x += dx

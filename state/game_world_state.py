@@ -12,7 +12,14 @@ class GameWorldState(State):
 
   def update(self, delta_time: float, actions: dict):
     self.game.player.update(delta_time, actions)
-    self.game.player.handle_movement(delta_time, actions, self.map.tiles, self.map.metadata)
+    # 傳入 self.game 以便 player 可以觸發傳送
+    self.game.player.handle_movement(
+      delta_time,
+      actions,
+      self.map.tiles,
+      self.map.metadata,
+      self.game
+    )
     
     if actions.get(pygame.K_ESCAPE):
       self.exit_state()
