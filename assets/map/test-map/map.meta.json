@@ -1,4 +1,7 @@
 {
+  "collision_gid": [
+    3
+  ],
   "exit": [
     {
       "x": 31,

@@ -1,18 +1,25 @@
 import pygame
 import pytmx
+import json
 
 
 class TiledMapRenderer():
-  def __init__(self, filename):
+  def __init__(self, map_name):
     self.tiles = pygame.sprite.Group()
+    self.map = None
+    self.metadata = None
     
-    self.change_map(filename)
+    self.change_map(map_name)
 
-  def change_map(self, filename):
-    self.map = pytmx.load_pygame(filename)
+  def change_map(self, map_name):
+    self.map = pytmx.load_pygame(f"./assets/map/{map_name}/map.tmx")
+    with open(f"./assets/map/{map_name}/map.meta.json", "r") as f:
+      self.metadata = json.load(f)
+    
     self.tiles.empty()
+    
     for layer in self.map.visible_layers:
-      for x, y, gid, in layer:
+      for x, y, gid in layer:
         tile = Tile(
           self.map.get_tile_image_by_gid(gid),
           gid,
@@ -20,6 +27,7 @@ class TiledMapRenderer():
           self.map.tilewidth,
           self.map.tileheight
         )
+        
         self.tiles.add(tile)
 
   def render(self, surface: pygame.Surface):

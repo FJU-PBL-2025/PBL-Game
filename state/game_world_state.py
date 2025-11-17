@@ -8,18 +8,11 @@ class GameWorldState(State):
   def __init__(self, game):
     State.__init__(self, game)
     
-    self.map_renderer = TiledMapRenderer(
-      "./assets/map/test-map/test-map.tmx"
-    )
+    self.map = TiledMapRenderer("test-map")
 
   def update(self, delta_time: float, actions: dict):
     self.game.player.update(delta_time, actions)
-    
-    hit_tiles = pygame.sprite.spritecollide(
-      self.game.player,
-      self.map_renderer.tiles,
-      False
-    )
+    self.game.player.handle_movement(delta_time, actions, self.map.tiles, self.map.metadata)
     
     if actions.get(pygame.K_ESCAPE):
       self.exit_state()
@@ -27,5 +20,5 @@ class GameWorldState(State):
 
   def render(self, surface: pygame.Surface):
     surface.fill((255, 255, 255))
-    self.map_renderer.render(surface)
+    self.map.render(surface)
     self.game.player.render(surface)
