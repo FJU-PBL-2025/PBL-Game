@@ -5,12 +5,17 @@ class Player(pygame.sprite.Sprite):
     pygame.sprite.Sprite.__init__(self)
     
     self.speed = 200
-    self.run_speed = 350
     
     self.x = 0
     self.y = 0
     
-    self.image = pygame.image.load("./assets/knight.png")
+    # 載入原始圖片
+    original_image = pygame.image.load("./assets/knight.png")
+    # 設定放大倍率
+    scale_factor = 1.5
+    original_size = original_image.get_size()
+    new_size = (int(original_size[0] * scale_factor), int(original_size[1] * scale_factor))
+    self.image = pygame.transform.scale(original_image, new_size)
     
     self.rect = self.image.get_rect()
   
@@ -31,18 +36,14 @@ class Player(pygame.sprite.Sprite):
     dx = 0
     dy = 0
     
-    current_speed = self.speed
-    if actions.get(pygame.K_LSHIFT):
-      current_speed = self.run_speed
-    
     if actions.get(pygame.K_a) or actions.get(pygame.K_LEFT):
-      dx -= current_speed * delta_time
+      dx -= self.speed * delta_time
     if actions.get(pygame.K_d) or actions.get(pygame.K_RIGHT):
-      dx += current_speed * delta_time
+      dx += self.speed * delta_time
     if actions.get(pygame.K_w) or actions.get(pygame.K_UP):
-      dy -= current_speed * delta_time
+      dy -= self.speed * delta_time
     if actions.get(pygame.K_s) or actions.get(pygame.K_DOWN):
-      dy += current_speed * delta_time
+      dy += self.speed * delta_time
     
     # 檢查是否與傳送門 (exit) 碰撞
     if game and "exit" in metadata:
