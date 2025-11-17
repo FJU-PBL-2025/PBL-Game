@@ -5,6 +5,8 @@ class Player(pygame.sprite.Sprite):
     pygame.sprite.Sprite.__init__(self)
     
     self.speed = 200
+    self.running_speed = 300
+    self.running = False
     
     self.x = 0
     self.y = 0
@@ -36,14 +38,17 @@ class Player(pygame.sprite.Sprite):
     dx = 0
     dy = 0
     
+    # 根據是否按下 Shift 鍵來決定速度
+    current_speed = self.running_speed if actions.get(pygame.K_LSHIFT) or actions.get(pygame.K_RSHIFT) else self.speed
+    
     if actions.get(pygame.K_a) or actions.get(pygame.K_LEFT):
-      dx -= self.speed * delta_time
+      dx -= current_speed * delta_time
     if actions.get(pygame.K_d) or actions.get(pygame.K_RIGHT):
-      dx += self.speed * delta_time
+      dx += current_speed * delta_time
     if actions.get(pygame.K_w) or actions.get(pygame.K_UP):
-      dy -= self.speed * delta_time
+      dy -= current_speed * delta_time
     if actions.get(pygame.K_s) or actions.get(pygame.K_DOWN):
-      dy += self.speed * delta_time
+      dy += current_speed * delta_time
     
     # 檢查是否與傳送門 (exit) 碰撞
     if game and "exit" in metadata:
