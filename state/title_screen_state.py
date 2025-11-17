@@ -1,6 +1,7 @@
 import pygame
 
 from state.game_world_state import GameWorldState
+from state.character_selection_state import CharacterSelectionState
 from state.settings_state import SettingsState
 from state.state import State
 
@@ -16,7 +17,7 @@ class TitleScreenState(State):
     if actions.get(pygame.K_RETURN):
       match self.index:
         case 0:
-          new_state = GameWorldState(self.game)
+          new_state = CharacterSelectionState(self.game)
           new_state.enter_state()
         case 1:
           new_state = SettingsState(self.game)

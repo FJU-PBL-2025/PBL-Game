@@ -11,21 +11,30 @@ class Player(pygame.sprite.Sprite):
     self.x = 0
     self.y = 0
     
-    # 載入原始圖片
-    original_image = pygame.image.load("./assets/knight.png")
-    # 設定放大倍率
-    scale_factor = 1.5
-    original_size = original_image.get_size()
-    new_size = (int(original_size[0] * scale_factor), int(original_size[1] * scale_factor))
-    self.image = pygame.transform.scale(original_image, new_size)
-    
-    self.rect = self.image.get_rect()
+    # 預設載入騎士角色
+    self.set_character("knight")
   
   def render(self, surface):
     surface.blit(
       self.image,
       self.rect
     )
+
+  def set_character(self, character_name: str):
+    """根據角色名稱載入對應的圖片並更新 rect"""
+    try:
+      image_path = f"./assets/{character_name}.png"
+      original_image = pygame.image.load(image_path)
+    except FileNotFoundError:
+      print(f"錯誤：找不到角色圖片檔案 {image_path}。將使用預設圖片。")
+      original_image = pygame.Surface((32, 48)) # 建立一個粉紅色方塊作為預設
+      original_image.fill((255, 0, 255))
+
+    scale_factor = 1.5
+    original_size = original_image.get_size()
+    new_size = (int(original_size[0] * scale_factor), int(original_size[1] * scale_factor))
+    self.image = pygame.transform.scale(original_image, new_size)
+    self.rect = self.image.get_rect()
   
   def handle_movement(
     self,
