@@ -21,4 +21,3 @@ class SettingsState(State):
       self.game.GAME_W / 2,
       self.game.GAME_H / 4
     )
-
