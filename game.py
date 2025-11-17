@@ -1,6 +1,7 @@
 import time
 import pygame
 
+from player import Player
 from state.title_screen_state import TitleScreenState
 
 
@@ -14,10 +15,10 @@ class Game():
     self.running = True
     self.playing = True
     
-    self.GAME_W = 1920
-    self.GAME_H = 1080
-    self.SCREEN_WIDTH = 1920
-    self.SCREEN_HEIGHT = 1080
+    self.GAME_W = 1280
+    self.GAME_H = 720
+    self.SCREEN_WIDTH = 1280
+    self.SCREEN_HEIGHT = 720
     
     self.game_canvas = pygame.Surface(
       (self.GAME_W, self.GAME_H)
@@ -32,6 +33,8 @@ class Game():
     self.delta_time = 0.0
     self.prev_time = 0.0
     self.state_stack = []
+    
+    self.player = Player()
     
     self.load_assets()
     self.load_states()
