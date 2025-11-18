@@ -1,0 +1,17 @@
+{
+  "collision_gid": [
+    3
+  ],
+  "exit": [
+    {
+      "x": 31,
+      "y": 8,
+      "to": "test-map-right"
+    },
+    {
+      "x": 30,
+      "y": 8,
+      "to": "first_stage_screen"
+    }
+  ]
+}
