@@ -73,6 +73,12 @@ class Game():
   def render(self):
     self.state_stack[-1].render(self.game_canvas)
 
+    # 在右上角繪製設定快捷鍵提示
+    self.draw_text(
+      self.game_canvas, "設定 (ESC)", (255, 255, 255), 
+      self.GAME_W - 20, 20, align="right"
+    )
+
     self.screen.blit(
       pygame.transform.scale(
         self.game_canvas,
@@ -136,11 +142,6 @@ class Game():
     # 如果 player_pos 是 None，表示這是一個非地圖場景，不需要移動玩家
     if player_pos:
       self.player.x, self.player.y = player_pos
-      # 關鍵修正：同時更新 player 的 rect 位置，確保與邏輯座標同步
       self.player.rect.center = self.player.x, self.player.y
-
-    # 每次切換地圖時，重置玩家的生成旗標
-    self.player.just_spawned = True
-    self.player.was_in_portal = False
 
     self.enter_state(self.level_states[map_name])
