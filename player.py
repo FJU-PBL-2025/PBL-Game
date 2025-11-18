@@ -35,7 +35,7 @@ class Player(pygame.sprite.Sprite):
         if character_name == "knight":
             scale_factor = 1.5
         elif character_name == "magician":
-            scale_factor = 0.25  # 調整為更小的值，讓 Magician 變得更小，如果仍太大，可再調小如 0.1
+            scale_factor = 0.1  # 調整為更小的值，讓 Magician 變得更小，如果仍太大，可再調小如 0.05
         else:
             scale_factor = 1.0
 
@@ -76,7 +76,7 @@ class Player(pygame.sprite.Sprite):
             hit_tiles = pygame.sprite.spritecollide(self, tiles, False)
             blocked_tiles = [t for t in hit_tiles if t.gid in metadata["collision_gid"]]
             if blocked_tiles:
-                print("X collision detected with blocked tiles")  # Debug: 檢查是否碰撞
+                print("X collision detected with blocked tiles at positions:", [(t.rect.x, t.rect.y) for t in blocked_tiles])  # 更詳細 debug: 打印阻擋 tile 的位置
                 self.x = old_x
                 self.rect.centerx = self.x
 
@@ -88,7 +88,7 @@ class Player(pygame.sprite.Sprite):
             hit_tiles = pygame.sprite.spritecollide(self, tiles, False)
             blocked_tiles = [t for t in hit_tiles if t.gid in metadata["collision_gid"]]
             if blocked_tiles:
-                print("Y collision detected with blocked tiles")  # Debug: 檢查是否碰撞
+                print("Y collision detected with blocked tiles at positions:", [(t.rect.x, t.rect.y) for t in blocked_tiles])  # 更詳細 debug: 打印阻擋 tile 的位置
                 self.y = old_y
                 self.rect.centery = self.y
 

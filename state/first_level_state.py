@@ -7,8 +7,8 @@ class FirstLevelState():
     self.game = game
     self.map_renderer = TiledMapRenderer(map_name)
 
-    # 將玩家位置設定在畫面中央
-    self.game.player.x = self.game.GAME_W / 2
+    # 將玩家位置設定在左側開放區域（假設地圖左側無阻擋，調整以避免起始碰撞）
+    self.game.player.x = 100  # 從中央改為左側，測試是否解決碰撞問題
     self.game.player.y = self.game.GAME_H / 2
     self.game.player.rect.center = (self.game.player.x, self.game.player.y)
 
