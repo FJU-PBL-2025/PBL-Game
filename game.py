@@ -136,6 +136,11 @@ class Game():
     # 如果 player_pos 是 None，表示這是一個非地圖場景，不需要移動玩家
     if player_pos:
       self.player.x, self.player.y = player_pos
+      # 關鍵修正：同時更新 player 的 rect 位置，確保與邏輯座標同步
       self.player.rect.center = self.player.x, self.player.y
+
+    # 每次切換地圖時，重置玩家的生成旗標
+    self.player.just_spawned = True
+    self.player.was_in_portal = False
 
     self.enter_state(self.level_states[map_name])
