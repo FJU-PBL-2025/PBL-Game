@@ -12,17 +12,18 @@ class TiledMapRenderer():
     self.change_map(map_name)
 
   def change_map(self, map_name: str):
+    self.tiles.empty()
+    
     self.map = pytmx.load_pygame(f"./assets/map/{map_name}/map.tmx")
+    
     with open(f"./assets/map/{map_name}/map.meta.json", "r") as f:
       self.metadata = json.load(f)
-    
-    self.tiles.empty()
     
     for layer in self.map.visible_layers:
       for x, y, gid in layer:
         tile = Tile(
           self.map.get_tile_image_by_gid(gid),
-          gid,
+          self.map.tiledgidmap[gid],
           x, y,
           self.map.tilewidth,
           self.map.tileheight
