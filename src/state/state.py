@@ -1,12 +1,17 @@
+from typing import TYPE_CHECKING
+
 import pygame
+
+if TYPE_CHECKING:
+  from src.game import Game
 
 
 class State():
-  def __init__(self, game):
-    self.game = game
-    self.prev_state = None
+  def __init__(self, game: "Game"):
+    self.game: "Game" = game
+    self.prev_state: State | None = None
 
-  def update(self, delta_time: float, actions: dict):
+  def update(self, delta_time: float):
     pass
 
   def render(self, surface: pygame.Surface):

@@ -4,14 +4,14 @@ import json
 
 
 class TiledMapRenderer():
-  def __init__(self, map_name):
-    self.tiles = pygame.sprite.Group()
-    self.map = None
-    self.metadata = None
+  def __init__(self, map_name: str):
+    self.tiles: pygame.sprite.Group[Tile] = pygame.sprite.Group()
+    self.map: pytmx.TiledMap | None = None
+    self.metadata: dict | None = None
     
     self.change_map(map_name)
 
-  def change_map(self, map_name):
+  def change_map(self, map_name: str):
     self.map = pytmx.load_pygame(f"./assets/map/{map_name}/map.tmx")
     with open(f"./assets/map/{map_name}/map.meta.json", "r") as f:
       self.metadata = json.load(f)
@@ -36,15 +36,23 @@ class TiledMapRenderer():
     )
 
 class Tile(pygame.sprite.Sprite):
-  def __init__(self, image, gid, x, y, width, height):
+  def __init__(
+    self,
+    image: pygame.Surface,
+    gid: int,
+    x: int,
+    y: int,
+    width: int,
+    height: int
+  ):
     pygame.sprite.Sprite.__init__(self)
     
-    self.x = x
-    self.y = y
-    self.gid = gid
+    self.x: int = x
+    self.y: int = y
+    self.gid: int = gid
     
-    self.image = image
-    self.rect = pygame.Rect()
+    self.image: pygame.Surface = image
+    self.rect: pygame.Rect = pygame.Rect()
     self.rect.centerx = x * width
     self.rect.centery = y * height
     self.rect.width = width

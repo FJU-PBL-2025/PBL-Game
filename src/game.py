@@ -1,8 +1,10 @@
 import time
 import pygame
 
-from player import Player
-from state.title_screen_state import TitleScreenState
+from src.input_manager import InputManager
+from src.player import Player
+from src.state.state import State
+from src.state.title_screen_state import TitleScreenState
 
 
 class Game():
@@ -10,31 +12,30 @@ class Game():
     pygame.init()
     pygame.display.set_caption("PBL Game")
     
-    self.clock = pygame.time.Clock()
+    self.clock: pygame.time.Clock = pygame.time.Clock()
     
-    self.running = True
-    self.playing = True
+    self.running: bool = True
+    self.playing: bool = True
     
-    self.GAME_W = 1280
-    self.GAME_H = 720
-    self.SCREEN_WIDTH = 1280
-    self.SCREEN_HEIGHT = 720
+    self.GAME_W: int = 1280
+    self.GAME_H: int = 720
+    self.SCREEN_WIDTH: int = 1280
+    self.SCREEN_HEIGHT: int = 720
     
-    self.game_canvas = pygame.Surface(
+    self.game_canvas: pygame.Surface = pygame.Surface(
       (self.GAME_W, self.GAME_H)
     )
-    self.screen = pygame.display.set_mode(
+    self.screen: pygame.Surface = pygame.display.set_mode(
       (self.SCREEN_WIDTH, self.SCREEN_HEIGHT),
       pygame.SCALED | pygame.RESIZABLE
     )
     
-    self.actions = {}
+    self.delta_time: float = 0.0
+    self.prev_time: float = 0.0
+    self.state_stack: list[State] = []
     
-    self.delta_time = 0.0
-    self.prev_time = 0.0
-    self.state_stack = []
-    
-    self.player = Player()
+    self.player: Player = Player()
+    self.input_manager: InputManager = InputManager()
     
     self.load_assets()
     self.load_states()
@@ -42,9 +43,11 @@ class Game():
   def game_loop(self):
     while self.playing:
       self.get_delta_time()
+      self.input_manager.capture()
       self.get_events()
       self.update()
       self.render()
+      self.input_manager.tick(self.delta_time)
 
   def get_events(self):
     for event in pygame.event.get():
@@ -52,14 +55,8 @@ class Game():
         self.playing = False
         self.running = False
 
-      if event.type == pygame.KEYDOWN:
-        self.actions[event.key] = True
-
-      if event.type == pygame.KEYUP:
-        self.actions[event.key] = False
-
   def update(self):
-    self.state_stack[-1].update(self.delta_time, self.actions)
+    self.state_stack[-1].update(self.delta_time)
 
   def render(self):
     self.state_stack[-1].render(self.game_canvas)
@@ -81,10 +78,16 @@ class Game():
     self.delta_time = now - self.prev_time
     self.prev_time = now
 
-  def draw_text(self, surface, text, color, x, y):
+  def draw_text(
+    self,
+    surface: pygame.Surface,
+    text: str | bytes | None,
+    color: pygame.typing.ColorLike,
+    center: tuple
+  ):
     text_surface = self.font.render(text, True, color)
     text_rect = text_surface.get_rect()
-    text_rect.center = (x, y)
+    text_rect.center = center
     surface.blit(text_surface, text_rect)
 
   def load_assets(self):
@@ -93,7 +96,3 @@ class Game():
   def load_states(self):
     self.title_screen = TitleScreenState(self)
     self.state_stack.append(self.title_screen)
-
-  def reset_keys(self):
-    for action in self.actions:
-      self.actions[action] = False

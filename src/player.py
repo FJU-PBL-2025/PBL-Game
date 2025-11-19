@@ -1,19 +1,23 @@
 import pygame
 
+from src.input_manager import InputManager
+from src.tile_render import Tile
+
+
 class Player(pygame.sprite.Sprite):
   def __init__(self):
     pygame.sprite.Sprite.__init__(self)
     
-    self.speed = 200
+    self.speed: int = 200
     
-    self.x = 0
-    self.y = 0
+    self.x: int = 0
+    self.y: int = 0
     
-    self.image = pygame.image.load("./assets/knight.png")
+    self.image: pygame.Surface = pygame.image.load("./assets/knight.png")
     
-    self.rect = self.image.get_rect()
+    self.rect: pygame.Rect = self.image.get_rect()
   
-  def render(self, surface):
+  def render(self, surface: pygame.Surface):
     surface.blit(
       self.image,
       self.rect
@@ -22,21 +26,23 @@ class Player(pygame.sprite.Sprite):
   def handle_movement(
     self,
     delta_time: float,
-    actions: dict,
-    tiles: pygame.sprite.Group,
+    input_manager: InputManager,
+    tiles: pygame.sprite.Group[Tile],
     metadata: dict
-  ):
+  ) -> list[Tile]:
     dx = 0
     dy = 0
     
-    if actions.get(pygame.K_a) or actions.get(pygame.K_LEFT):
+    if input_manager.is_key_down(pygame.K_a) or input_manager.is_key_down(pygame.K_LEFT):
       dx -= self.speed * delta_time
-    if actions.get(pygame.K_d) or actions.get(pygame.K_RIGHT):
+    if input_manager.is_key_down(pygame.K_d) or input_manager.is_key_down(pygame.K_RIGHT):
       dx += self.speed * delta_time
-    if actions.get(pygame.K_w) or actions.get(pygame.K_UP):
+    if input_manager.is_key_down(pygame.K_w) or input_manager.is_key_down(pygame.K_UP):
       dy -= self.speed * delta_time
-    if actions.get(pygame.K_s) or actions.get(pygame.K_DOWN):
+    if input_manager.is_key_down(pygame.K_s) or input_manager.is_key_down(pygame.K_DOWN):
       dy += self.speed * delta_time
+    
+    hit_tiles_set = set()
     
     if dx != 0:
       old_x = self.x
@@ -44,6 +50,7 @@ class Player(pygame.sprite.Sprite):
       self.rect.centerx = self.x
       
       hit_tiles = pygame.sprite.spritecollide(self, tiles, False)
+      hit_tiles_set.update(hit_tiles)
       blocked_tiles = [t for t in hit_tiles if t.gid in metadata["collision_gid"]]
       
       if len(blocked_tiles) > 0:
@@ -56,6 +63,7 @@ class Player(pygame.sprite.Sprite):
       self.rect.centery = self.y
       
       hit_tiles = pygame.sprite.spritecollide(self, tiles, False)
+      hit_tiles_set.update(hit_tiles)
       blocked_tiles = [t for t in hit_tiles if t.gid in metadata["collision_gid"]]
       
       if len(blocked_tiles) > 0:
@@ -63,6 +71,11 @@ class Player(pygame.sprite.Sprite):
         self.rect.centery = self.y
     
     self.rect.center = (self.x, self.y)
+    
+    if dx == 0 and dy == 0:
+      hit_tiles_set.update(pygame.sprite.spritecollide(self, tiles, False))
+    
+    return list(hit_tiles_set)
 
-  def update(self, delta_time: float, actions: dict):
+  def update(self, delta_time: float):
     pass
