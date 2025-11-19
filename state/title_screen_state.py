@@ -1,7 +1,6 @@
 import pygame
 
 from state.game_world_state import GameWorldState
-from state.character_selection_state import CharacterSelectionState
 from state.settings_state import SettingsState
 from state.state import State
 
@@ -17,7 +16,7 @@ class TitleScreenState(State):
     if actions.get(pygame.K_RETURN):
       match self.index:
         case 0:
-          new_state = CharacterSelectionState(self.game)
+          new_state = GameWorldState(self.game)
           new_state.enter_state()
         case 1:
           new_state = SettingsState(self.game)
@@ -27,10 +26,16 @@ class TitleScreenState(State):
           self.game.running = False
     
     if actions.get(pygame.K_w) or actions.get(pygame.K_UP):
-      self.index = (self.index - 1) % len(self.OPTIONS)
+      if self.index == 0:
+        self.index = len(self.OPTIONS) - 1
+      else:
+        self.index -= 1
     
     if actions.get(pygame.K_s) or actions.get(pygame.K_DOWN):
-      self.index = (self.index + 1) % len(self.OPTIONS)
+      if self.index == len(self.OPTIONS) - 1:
+        self.index = 0
+      else:
+        self.index += 1
 
     self.game.reset_keys()
 
