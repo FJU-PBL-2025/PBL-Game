@@ -7,9 +7,12 @@ class InputManager():
   
   def capture(self):
     for event in pygame.event.get():
-      if event.type in [pygame.KEYDOWN, pygame.KEYUP] and self.actions.get(event.key) is None:
+      if event.type != pygame.KEYDOWN and event.type != pygame.KEYUP:
+        return
+      
+      if self.actions.get(event.key) is None:
         self.actions[event.key] = KeyState()
-        
+      
       if event.type == pygame.KEYDOWN:
         self.actions[event.key].pressed = True
 
@@ -26,16 +29,22 @@ class InputManager():
     for k in self.actions.keys():
       self.actions[k].clear()
   
+  def check_key_capured(func):
+    def wrapper(*args):
+      if args[0].actions.get(args[1]) is None:
+        args[0].actions[args[1]] = KeyState()
+      return func(*args)
+    return wrapper
+  
+  @check_key_capured
   def is_key_down(self, key: int):
     if self.actions.get(key) is None:
       self.actions[key] = KeyState()
     
     return self.actions[key].pressed
   
+  @check_key_capured
   def is_key_down_once(self, key: int):
-    if self.actions.get(key) is None:
-      self.actions[key] = KeyState()
-      
     if not self.actions[key].pressed:
       return False
     
@@ -44,10 +53,8 @@ class InputManager():
     
     return True
   
+  @check_key_capured
   def is_key_down_delayed(self, key: int, delay: float):
-    if self.actions.get(key) is None:
-      self.actions[key] = KeyState()
-      
     if not self.actions[key].pressed:
       return False
 
@@ -63,8 +70,8 @@ class KeyState():
     self.pressed: bool = False
     self.last_triggered: float = 0.0
     self.total_time: float = 0.0
-    
+
   def clear(self):
-      self.pressed = False
-      self.total_time = 0.0
-      self.last_triggered = 0.0
+    self.pressed = False
+    self.total_time = 0.0
+    self.last_triggered = 0.0
