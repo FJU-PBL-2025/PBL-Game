@@ -4,10 +4,10 @@
   ],
   "exit": [
     {
-      "source_x": 31,
+      "source_x": 0,
       "source_y": 8,
-      "dist": "test-map-right",
-      "dist_x": 0,
+      "dist": "test-map",
+      "dist_x": 31,
       "dist_y": 8
     }
   ]
