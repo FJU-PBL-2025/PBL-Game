@@ -43,14 +43,17 @@ class Game():
   def game_loop(self):
     while self.playing:
       self.get_delta_time()
-      self.input_manager.capture()
-      self.get_events()
+      # 只在主迴圈呼叫一次 event.get()
+      events = pygame.event.get()
+      self.get_events(events)
+      # 更新 input_manager 的狀態
+      self.input_manager.capture_events(events)
       self.update()
       self.render()
       self.input_manager.tick(self.delta_time)
 
-  def get_events(self):
-    for event in pygame.event.get():
+  def get_events(self, events):
+    for event in events:
       if event.type == pygame.QUIT:
         self.playing = False
         self.running = False

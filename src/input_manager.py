@@ -5,10 +5,10 @@ class InputManager():
   def __init__(self):
     self.actions: dict[int, KeyState | None] = {}
   
-  def capture(self):
-    for event in pygame.event.get():
+  def capture_events(self, events):
+    for event in events:
       if event.type != pygame.KEYDOWN and event.type != pygame.KEYUP:
-        return
+        continue
       
       if self.actions.get(event.key) is None:
         self.actions[event.key] = KeyState()
