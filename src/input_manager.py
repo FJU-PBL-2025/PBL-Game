@@ -8,11 +8,8 @@ class InputManager():
     self.paused: bool = False
     self.pause_delay: float = 0.0
   
-  def capture_events(self, events: list[pygame.Event]):
-    for event in events:
-      if event.type != pygame.KEYDOWN and event.type != pygame.KEYUP:
-        continue
-      
+  def capture(self):
+    for event in pygame.event.get([pygame.KEYDOWN, pygame.KEYUP]):
       if self.actions.get(event.key) is None:
         self.actions[event.key] = KeyState()
       
@@ -28,6 +25,7 @@ class InputManager():
       
       if self.pause_delay <= 0.0:
         self.paused = False
+        self.pause_delay = 0.0
     
     for k in self.actions.keys():
       action = self.actions[k]
