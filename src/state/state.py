@@ -22,5 +22,6 @@ class State():
       self.prev_state = self.game.state_stack[-1]
     self.game.state_stack.append(self)
 
-  def exit_state(self):
-    self.game.state_stack.pop()
+  def exit_state(self, pop_layer: int = 1):
+    for _ in range(pop_layer):
+      self.game.state_stack.pop()

@@ -50,7 +50,7 @@ class Game():
       self.input_manager.tick(self.delta_time)
 
   def get_events(self):
-    for event in pygame.event.get():
+    for event in pygame.event.get([pygame.QUIT]):
       if event.type == pygame.QUIT:
         self.playing = False
         self.running = False

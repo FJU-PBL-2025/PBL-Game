@@ -6,6 +6,7 @@ if TYPE_CHECKING:
   from src.game import Game
 from src.state.state import State
 from src.tile_render import TiledMapRenderer
+from src.state.pause_menu_state import PauseMenuState
 
 
 class GameWorldState(State):
@@ -49,7 +50,8 @@ class GameWorldState(State):
       self.game.input_manager.pause(0.05)
     
     if i_m.is_key_down_once(pygame.K_ESCAPE):
-      self.exit_state()
+      new_state = PauseMenuState(self.game)
+      new_state.enter_state()
 
   def render(self, surface: pygame.Surface):
     surface.fill((255, 255, 255))
