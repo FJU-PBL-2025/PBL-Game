@@ -43,8 +43,8 @@ class Game():
   def game_loop(self):
     while self.playing:
       self.get_delta_time()
-      self.get_events()
       self.input_manager.capture()
+      self.get_events()
       self.update()
       self.render()
       self.input_manager.tick(self.delta_time)

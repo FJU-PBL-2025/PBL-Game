@@ -28,8 +28,7 @@ class TitleScreenState(State):
           new_state = SettingsState(self.game)
           new_state.enter_state()
         case 2:
-          self.game.playing = False
-          self.game.running = False
+          pygame.event.post(pygame.Event(pygame.QUIT))
     
     if i_m.is_key_down_delayed(pygame.K_w, 0.2) or i_m.is_key_down_delayed(pygame.K_UP, 0.2):
       if self.index == 0:
