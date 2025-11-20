@@ -4,8 +4,11 @@ import pygame
 class InputManager():
   def __init__(self):
     self.actions: dict[int, KeyState | None] = {}
+    
+    self.paused: bool = False
+    self.pause_delay: float = 0.0
   
-  def capture_events(self, events):
+  def capture_events(self, events: list[pygame.Event]):
     for event in events:
       if event.type != pygame.KEYDOWN and event.type != pygame.KEYUP:
         continue
@@ -20,6 +23,12 @@ class InputManager():
         self.actions[event.key].clear()
 
   def tick(self, delta_time: float):
+    if self.paused:
+      self.pause_delay -= delta_time
+      
+      if self.pause_delay <= 0.0:
+        self.paused = False
+    
     for k in self.actions.keys():
       action = self.actions[k]
       if action.pressed:
@@ -29,21 +38,31 @@ class InputManager():
     for k in self.actions.keys():
       self.actions[k].clear()
   
-  def check_key_capured(func):
-    def wrapper(*args):
-      if args[0].actions.get(args[1]) is None:
-        args[0].actions[args[1]] = KeyState()
-      return func(*args)
+  def pause(self, delay: float):
+    self.paused = True
+    self.pause_delay = delay
+  
+  def check_capured(func):
+    def wrapper(self: InputManager, key: int, *args):
+      if self.actions.get(key) is None:
+        self.actions[key] = KeyState()
+      return func(self, key, *args)
     return wrapper
   
-  @check_key_capured
+  def handle_pause(func):
+    def wrapper(self: InputManager, key: int, *args):
+      if self.paused:
+        return False
+      return func(self, key, *args)
+    return wrapper
+  
+  @check_capured
+  @handle_pause
   def is_key_down(self, key: int):
-    if self.actions.get(key) is None:
-      self.actions[key] = KeyState()
-    
     return self.actions[key].pressed
   
-  @check_key_capured
+  @check_capured
+  @handle_pause
   def is_key_down_once(self, key: int):
     if not self.actions[key].pressed:
       return False
@@ -53,7 +72,8 @@ class InputManager():
     
     return True
   
-  @check_key_capured
+  @check_capured
+  @handle_pause
   def is_key_down_delayed(self, key: int, delay: float):
     if not self.actions[key].pressed:
       return False

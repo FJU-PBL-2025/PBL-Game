@@ -1,7 +1,7 @@
 import pygame
 
 from src.input_manager import InputManager
-from src.tile_render import Tile
+from src.tile_render import MapMetadata, MapTile
 
 
 class Player(pygame.sprite.Sprite):
@@ -12,6 +12,8 @@ class Player(pygame.sprite.Sprite):
     
     self.x: int = 0
     self.y: int = 0
+    
+    self.in_exit: bool = False
     
     self.image: pygame.Surface = pygame.image.load("./assets/knight.png")
     
@@ -27,9 +29,9 @@ class Player(pygame.sprite.Sprite):
     self,
     delta_time: float,
     input_manager: InputManager,
-    tiles: pygame.sprite.Group[Tile],
-    metadata: dict
-  ) -> list[Tile]:
+    tiles: pygame.sprite.Group[MapTile],
+    metadata: MapMetadata
+  ) -> list[MapTile]:
     dx = 0
     dy = 0
     
@@ -51,7 +53,7 @@ class Player(pygame.sprite.Sprite):
       
       hit_tiles = pygame.sprite.spritecollide(self, tiles, False)
       hit_tiles_set.update(hit_tiles)
-      blocked_tiles = [t for t in hit_tiles if t.gid in metadata["collision_gid"]]
+      blocked_tiles = [t for t in hit_tiles if t.gid in metadata.collisions]
       
       if len(blocked_tiles) > 0:
         self.x = old_x
@@ -64,7 +66,7 @@ class Player(pygame.sprite.Sprite):
       
       hit_tiles = pygame.sprite.spritecollide(self, tiles, False)
       hit_tiles_set.update(hit_tiles)
-      blocked_tiles = [t for t in hit_tiles if t.gid in metadata["collision_gid"]]
+      blocked_tiles = [t for t in hit_tiles if t.gid in metadata.collisions]
       
       if len(blocked_tiles) > 0:
         self.y = old_y
@@ -79,3 +81,7 @@ class Player(pygame.sprite.Sprite):
 
   def update(self, delta_time: float):
     pass
+
+  def set_position(self, x: int, y: int):
+    self.x = x
+    self.y = y
