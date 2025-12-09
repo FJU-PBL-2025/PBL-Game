@@ -2,22 +2,26 @@ import pygame
 import pytmx
 import json
 
+from src.npc import Npc
 
-class TiledMapRenderer():
-  def __init__(self, map_name: str):
+
+class MapLoader():
+  def __init__(self, name: str):
     self.tiles: pygame.sprite.Group[MapTile] = pygame.sprite.Group()
+    self.npcs: pygame.sprite.Group[Npc] = pygame.sprite.Group()
     self.map: pytmx.TiledMap | None = None
     self.metadata: MapMetadata = MapMetadata()
     
-    self.change_map(map_name)
+    self.change_map(name)
 
-  def change_map(self, map_name: str):
+  def change_map(self, name: str):
     self.tiles.empty()
+    self.npcs.empty()
     self.metadata.clear()
     
-    self.map = pytmx.load_pygame(f"./assets/map/{map_name}/map.tmx")
+    self.map = pytmx.load_pygame(f"./assets/map/{name}/map.tmx")
     
-    with open(f"./assets/map/{map_name}/map.meta.json", "r") as f:
+    with open(f"./assets/map/{name}/map.meta.json", "r") as f:
       json_data = json.load(f)
       
       self.metadata.collisions = json_data["collision_gid"]
@@ -28,6 +32,9 @@ class TiledMapRenderer():
           exit["dist_x"],
           exit["dist_y"]
         )
+      
+      entity_data = json_data.get("entity", {})
+      self.metadata.npc_names = entity_data.get("npc", [])
     
     for layer in self.map.visible_layers:
       for x, y, gid in layer:
@@ -40,6 +47,10 @@ class TiledMapRenderer():
         )
         
         self.tiles.add(tile)
+    
+    for npc_name in self.metadata.npc_names:
+      npc = Npc(npc_name, self.map.tilewidth, self.map.tileheight)
+      self.npcs.add(npc)
 
   def render(self, surface: pygame.Surface):
     self.tiles.draw(
@@ -73,10 +84,12 @@ class MapMetadata():
   def __init__(self):
     self.collisions: list[int] = []
     self.exits: dict[tuple[int], MapExit] = {}
+    self.npc_names: list[str] = []
     
   def clear(self):
     self.collisions.clear()
     self.exits.clear()
+    self.npc_names.clear()
 
 class MapExit():
   def __init__(self, dist: str, dist_x: int, dist_y: int):

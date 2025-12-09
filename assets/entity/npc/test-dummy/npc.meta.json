@@ -1,0 +1,49 @@
+{
+  "display_name": "Test Dummy",
+  "spawn": {
+    "x": 6,
+    "y": 6
+  },
+  "source_img": "./assets/knight.png",
+  "dialogue": {
+    "init": {
+      "text": "Hello, I am a test dummy.",
+      "options": [
+        {
+          "text": "Sup.",
+          "next": "0"
+        },
+        {
+          "text": "Bye.",
+          "next": null
+        }
+      ]
+    },
+    "0": {
+      "text": "Sup, how are you?",
+      "options": [
+        {
+          "text": "Good.",
+          "next": "1"
+        },
+        {
+          "text": "Bad.",
+          "next": "2"
+        }
+      ]
+    },
+    "1": {
+      "text": "Good to hear.",
+      "options": [
+        {
+          "text": "Bye.",
+          "next": null
+        }
+      ]
+    },
+    "2": {
+      "text": "Bad to hear.",
+      "options": null
+    }
+  }
+}

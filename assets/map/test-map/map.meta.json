@@ -10,5 +10,8 @@
       "dist_x": 0,
       "dist_y": 8
     }
-  ]
+  ],
+  "entity": {
+    "npc": ["test-dummy"]
+  }
 }

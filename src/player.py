@@ -1,7 +1,7 @@
 import pygame
 
 from src.input_manager import InputManager
-from src.tile_render import MapMetadata, MapTile
+from src.map_loader import MapMetadata, MapTile
 
 
 class Player(pygame.sprite.Sprite):
