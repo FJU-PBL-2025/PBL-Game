@@ -56,8 +56,8 @@ class Npc(pygame.sprite.Sprite):
         ]
       
       self.dialogue_tree[node_id] = Dialogue(
-        text=node_data["text"],
-        options=options
+        text = node_data["text"],
+        options = options
       )
   
   def start_dialogue(self) -> Dialogue | None:

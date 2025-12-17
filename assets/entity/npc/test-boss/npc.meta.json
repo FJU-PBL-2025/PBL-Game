@@ -1,0 +1,76 @@
+{
+  "display_name": "Test Boss",
+  "fightable": true,
+  "spawn": {
+    "x": 8,
+    "y": 6
+  },
+  "source_img": "./assets/knight.png",
+  "hp": 100,
+  "attack": 6,
+  "dialogue": {
+    "init": {
+      "text": "Hello, I am a test boss.",
+      "options": [
+        {
+          "text": "Sup.",
+          "next": "0"
+        },
+        {
+          "text": "Bye.",
+          "next": null
+        }
+      ]
+    },
+    "0": {
+      "text": "Sup, how are you?",
+      "options": [
+        {
+          "text": "Good.",
+          "next": "1"
+        },
+        {
+          "text": "Bad.",
+          "next": "2"
+        }
+      ]
+    },
+    "1": {
+      "text": "Let's fight.",
+      "options": [
+        {
+          "text": "Ok.",
+          "next": "fight"
+        }
+      ]
+    },
+    "2": {
+      "text": "Bad to hear, we'll fight next time.",
+      "options": null
+    }
+  },
+  "skills": [
+    {
+      "name": "Attack",
+      "description": "Deals 5 physical damage",
+      "p_damage": 5,
+      "m_damage": 0,
+      "heal": 0,
+      "shield": 0,
+      "purify": false,
+      "effect": [],
+      "cooldown": 0
+    },
+    {
+      "name": "Shield",
+      "description": "Gives 5 shield",
+      "p_damage": 0,
+      "m_damage": 0,
+      "heal": 0,
+      "shield": 5,
+      "purify": false,
+      "effect": [],
+      "cooldown": 2
+    }
+  ]
+}

@@ -12,6 +12,6 @@
     }
   ],
   "entity": {
-    "npc": ["test-dummy"]
+    "npc": ["test-dummy", "test-boss"]
   }
 }
