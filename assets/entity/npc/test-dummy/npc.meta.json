@@ -1,5 +1,6 @@
 {
   "display_name": "Test Dummy",
+  "fightable": false,
   "spawn": {
     "x": 6,
     "y": 6

@@ -1,0 +1,251 @@
+{
+  "slay": {
+    "name": "Slay",
+    "description": "Deals 5 physical damage.",
+    "p_damage": 5,
+    "m_damage": 0,
+    "heal": 0,
+    "shield": 0,
+    "purify": false,
+    "effect": [],
+    "cooldown": 1
+  },
+  "fireball": {
+    "name": "Fireball",
+    "description": "Deals 4 magic damage, has a 30% chance to apply burning to the enemy.",
+    "p_damage": 0,
+    "m_damage": 4,
+    "heal": 0,
+    "shield": 0,
+    "purify": true,
+    "effect": [
+      {
+        "type": "burning",
+        "target": "enemy",
+        "chance": 0.3
+      }
+    ],
+    "cooldown": 1
+  },
+  "defence": {
+    "name": "Defence",
+    "description": "Gives 6 shield.",
+    "p_damage": 0,
+    "m_damage": 0,
+    "heal": 0,
+    "shield": 6,
+    "purify": false,
+    "effect": [],
+    "cooldown": 1
+  },
+  "heal": {
+    "name": "Heal",
+    "description": "Heals for 6 HP.",
+    "p_damage": 0,
+    "m_damage": 0,
+    "heal": 6,
+    "shield": 0,
+    "purify": false,
+    "effect": [],
+    "cooldown": 1
+  },
+  "king_punch": {
+    "name": "King Punch",
+    "description": "Deals 10 physical damage.",
+    "p_damage": 10,
+    "m_damage": 0,
+    "heal": 0,
+    "shield": 0,
+    "purify": false,
+    "effect": [
+      {
+        "type": "physical_boost",
+        "target": "self",
+        "chance": 1.0,
+        "value": 3,
+        "duration": 3
+      }
+    ],
+    "cooldown": 1
+  },
+  "arcane_shot": {
+    "name": "Arcane Shot",
+    "description": "Deals 5 magic damage, and increases magic damage by 2 for the next 2 turns.",
+    "p_damage": 0,
+    "m_damage": 5,
+    "heal": 0,
+    "shield": 0,
+    "purify": false,
+    "effect": [
+      {
+        "type": "magic_boost",
+        "target": "self",
+        "chance": 1.0,
+        "value": 2,
+        "duration": 2
+      }
+    ],
+    "cooldown": 2
+  },
+  "counter_stance": {
+    "name": "Counter Stance",
+    "description": "Deals 5 physical damage, gives 8 shield, and removes one negative effect.",
+    "p_damage": 5,
+    "m_damage": 0,
+    "heal": 0,
+    "shield": 8,
+    "purify": true,
+    "effect": [],
+    "cooldown": 2
+  },
+  "light_wave": {
+    "name": "Light Wave",
+    "description": "Heals for 8 HP, heals 2 HP per turn for the next 2 turns, and removes one negative effect.",
+    "p_damage": 0,
+    "m_damage": 0,
+    "heal": 8,
+    "shield": 0,
+    "purify": true,
+    "effect": [
+      {
+        "type": "healing",
+        "target": "self",
+        "chance": 1.0,
+        "value": 2,
+        "duration": 2
+      }
+    ],
+    "cooldown": 2
+  },
+  "light_blade": {
+    "name": "Light Blade",
+    "description": "Deals 7 physical damage, has a 30% chance to apply weakness to the enemy.",
+    "p_damage": 7,
+    "m_damage": 0,
+    "heal": 0,
+    "shield": 0,
+    "purify": false,
+    "effect": [
+      {
+        "type": "weakness",
+        "target": "enemy",
+        "chance": 0.3
+      }
+    ],
+    "cooldown": 0
+  },
+  "meteor_ball": {
+    "name": "Meteor Ball",
+    "description": "Deals 8 magic damage.",
+    "p_damage": 0,
+    "m_damage": 8,
+    "heal": 0,
+    "shield": 0,
+    "purify": false,
+    "effect": [],
+    "cooldown": 0
+  },
+  "light_shield": {
+    "name": "Light Shield",
+    "description": "Gives 15 shield and removes one negative effect.",
+    "p_damage": 0,
+    "m_damage": 0,
+    "heal": 0,
+    "shield": 15,
+    "purify": true,
+    "effect": [],
+    "cooldown": 2
+  },
+  "holy_light": {
+    "name": "Holy Light",
+    "description": "Heals for 12 HP, heals 4 HP per turn for the next 2 turns, and removes one negative effect.",
+    "p_damage": 0,
+    "m_damage": 0,
+    "heal": 12,
+    "shield": 0,
+    "purify": true,
+    "effect": [
+      {
+        "type": "healing",
+        "target": "self",
+        "chance": 1.0,
+        "value": 4,
+        "duration": 2
+      }
+    ],
+    "cooldown": 2
+  },
+  "excalibur": {
+    "name": "Excalibur",
+    "description": "Deals 10 physical damage and gives 10 shield.",
+    "p_damage": 10,
+    "m_damage": 0,
+    "heal": 0,
+    "shield": 10,
+    "purify": false,
+    "effect": [],
+    "cooldown": 2
+  },
+  "flame_jet": {
+    "name": "Flame Jet",
+    "description": "Deals 8 magic damage and always applies burning to the enemy.",
+    "p_damage": 0,
+    "m_damage": 8,
+    "heal": 0,
+    "shield": 0,
+    "purify": false,
+    "effect": [
+      {
+        "type": "burning",
+        "target": "enemy",
+        "chance": 1.0
+      }
+    ],
+    "cooldown": 2
+  },
+  "starburst_slash": {
+    "name": "Starburst Slash",
+    "description": "Deals 20 damage and increases physical damage by 4 for the next 2 turns.",
+    "p_damage": 20,
+    "m_damage": 0,
+    "heal": 0,
+    "shield": 0,
+    "purify": false,
+    "effect": [
+      {
+        "type": "physical_boost",
+        "target": "self",
+        "chance": 1.0,
+        "value": 4,
+        "duration": 2
+      }
+    ],
+    "cooldown": 3
+  },
+  "domain_expansion": {
+    "name": "Domain Expansion",
+    "description": "Increases magic damage by 6 and heals 5 HP per turn for the next 3 turns.",
+    "p_damage": 0,
+    "m_damage": 0,
+    "heal": 0,
+    "shield": 0,
+    "purify": false,
+    "effect": [
+      {
+        "type": "magic_boost",
+        "target": "self",
+        "chance": 1.0,
+        "value": 6,
+        "duration": 3
+      },
+      {
+        "type": "healing",
+        "target": "self",
+        "chance": 1.0,
+        "value": 5,
+        "duration": 3
+      }
+    ],
+    "cooldown": 3
+  }
+}

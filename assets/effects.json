@@ -1,0 +1,34 @@
+{
+  "burning": {
+    "name": "Burning",
+    "description": "Deals damage equal to 5% of current HP for 2 rounds.",
+    "duration": 2
+  },
+  "poisoned": {
+    "name": "Poisoned",
+    "description": "Deals damage equal to 10% of max HP for 2 rounds.",
+    "duration": 2
+  },
+  "frozen": {
+    "name": "Frozen",
+    "description": "Cannot move for 1 round.",
+    "duration": 1
+  },
+  "weakness": {
+    "name": "Weakness",
+    "description": "Deals 2 less damage for 1 round.",
+    "duration": 1
+  },
+  "healing": {
+    "name": "Healing",
+    "description": "Heals for {value} HP for {duration} rounds."
+  },
+  "magic_boost": {
+    "name": "Magic Boost",
+    "description": "Increases magic damage by {value} for {duration} rounds."
+  },
+  "physical_boost": {
+    "name": "Physical Boost",
+    "description": "Increases physical damage by {value} for {duration} rounds."
+  }
+}

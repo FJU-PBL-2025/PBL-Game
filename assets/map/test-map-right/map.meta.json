@@ -1,0 +1,14 @@
+{
+  "collision_gid": [
+    5
+  ],
+  "exit": [
+    {
+      "source_x": 0,
+      "source_y": 8,
+      "dist": "test-map",
+      "dist_x": 31,
+      "dist_y": 8
+    }
+  ]
+}

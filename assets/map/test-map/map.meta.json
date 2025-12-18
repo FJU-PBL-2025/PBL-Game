@@ -1,17 +1,17 @@
 {
   "collision_gid": [
-    3
+    5
   ],
   "exit": [
     {
-      "x": 31,
-      "y": 8,
-      "to": "test-map-right"
-    },
-    {
-      "x": 30,
-      "y": 8,
-      "to": "first_stage_screen"
+      "source_x": 31,
+      "source_y": 8,
+      "dist": "test-map-right",
+      "dist_x": 0,
+      "dist_y": 8
     }
-  ]
+  ],
+  "entity": {
+    "npc": ["test-dummy", "test-boss"]
+  }
 }
