@@ -10,5 +10,13 @@
       "dist_x": 31,
       "dist_y": 8
     }
+  ],
+  "object": [
+    {
+      "img": "test-tree #(assets/object/test-tree.png)",
+      "collision": true,
+      "x": 0,
+      "y": 0
+    }
   ]
 }
