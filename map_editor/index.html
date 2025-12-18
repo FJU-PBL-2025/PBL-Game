@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PBL Game - Map Editor</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #1a1a2e;
+      color: #eee;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #16213e;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      border-right: 2px solid #0f3460;
+    }
+
+    .sidebar h2 {
+      color: #e94560;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .tile-palette {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 5px;
+    }
+
+    .tile-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 8px;
+      background-color: #0f3460;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 2px solid transparent;
+    }
+
+    .tile-item:hover {
+      background-color: #1a4a7a;
+    }
+
+    .tile-item.selected {
+      border-color: #e94560;
+      background-color: #1a4a7a;
+    }
+
+    .tile-item canvas {
+      border: 1px solid #333;
+      image-rendering: pixelated;
+    }
+
+    .tile-item span {
+      margin-top: 5px;
+      font-size: 11px;
+      text-align: center;
+      color: #aaa;
+    }
+
+    .tools {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .tools button {
+      padding: 12px;
+      background-color: #e94560;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      transition: background-color 0.2s;
+    }
+
+    .tools button:hover {
+      background-color: #ff6b6b;
+    }
+
+    .tools button.secondary {
+      background-color: #0f3460;
+    }
+
+    .tools button.secondary:hover {
+      background-color: #1a4a7a;
+    }
+
+    .main-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 15px;
+      overflow: hidden;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 15px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .toolbar label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 14px;
+    }
+
+    .toolbar input[type="text"] {
+      padding: 8px;
+      border: 1px solid #0f3460;
+      border-radius: 4px;
+      background-color: #16213e;
+      color: #eee;
+      width: 150px;
+    }
+
+    .toolbar select {
+      padding: 8px;
+      border: 1px solid #0f3460;
+      border-radius: 4px;
+      background-color: #16213e;
+      color: #eee;
+    }
+
+    .info {
+      font-size: 12px;
+      color: #888;
+      margin-left: auto;
+    }
+
+    .canvas-container {
+      flex: 1;
+      overflow: auto;
+      background-color: #0d0d1a;
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    #mapCanvas {
+      image-rendering: pixelated;
+      cursor: crosshair;
+      display: block;
+    }
+
+    .toolbar-btn {
+      padding: 8px 12px;
+      background-color: #0f3460;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .toolbar-btn:hover {
+      background-color: #1a4a7a;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h2>PBL 專題</h2>
+    <div class="tile-palette" id="tilePalette">
+    </div>
+
+    <div class="tools">
+      <button onclick="fillAll()">填滿整個地圖</button>
+      <button class="secondary" onclick="clearMap()">清空地圖</button>
+      <button class="secondary" onclick="exportTMX()">導出地圖</button>
+    </div>
+  </div>
+
+  <div class="main-area">
+    <div class="toolbar">
+      <label>
+        地圖名稱:
+        <input type="text" id="mapName" value="new-map">
+      </label>
+      <button class="toolbar-btn" onclick="document.getElementById('importFile').click()">導入 TMX</button>
+      <input type="file" id="importFile" accept=".tmx" style="display: none" onchange="importTMX(event)">
+      <div class="info">
+        <span id="cursorInfo">座標: -</span> |
+        <span id="rotationInfo">旋轉: 0°</span> |
+        <span>R 旋轉 | Q 逆旋轉 | Cmd+Z 復原</span>
+      </div>
+    </div>
+
+    <div class="canvas-container">
+      <canvas id="mapCanvas" width="1280" height="720"></canvas>
+    </div>
+  </div>
+
+
+  <script>
+    const TILE_SIZE = 40;
+    const MAP_WIDTH = 32;
+    const MAP_HEIGHT = 18;
+
+    const TILES = [
+      { id: 1, name: 'blue_stone', x: 0, y: 0, size: 1 },
+      { id: 2, name: 'dark_stone', x: 1, y: 0, size: 1 },
+      { id: 3, name: 'dirt_cliff', x: 2, y: 0, size: 2 },
+      { id: 4, name: 'dirt_path', x: 3, y: 0, size: 2 },
+      { id: 5, name: 'grass_floor', x: 4, y: 0, size: 1 },
+      { id: 6, name: 'ice_floor', x: 5, y: 0, size: 1 },
+      { id: 7, name: 'lava_brick', x: 6, y: 0, size: 1 },
+      { id: 8, name: 'sand', x: 7, y: 0, size: 1 },
+      { id: 9, name: 'snow_stone', x: 8, y: 0, size: 1 },
+      { id: 10, name: 'snowfall', x: 9, y: 0, size: 1 },
+      { id: 11, name: 'stone', x: 0, y: 1, size: 1 },
+      { id: 12, name: 'wood_plank', x: 1, y: 1, size: 1 },
+    ];
+
+    let mapData = loadMapData();
+    let undoStack = [];
+    const MAX_UNDO = 50;
+
+    function saveUndoState() {
+      undoStack.push(JSON.stringify(mapData));
+      if (undoStack.length > MAX_UNDO) {
+        undoStack.shift();
+      }
+    }
+
+    function undo() {
+      if (undoStack.length > 0) {
+        mapData = JSON.parse(undoStack.pop());
+        renderMap();
+        saveMapData();
+      }
+    }
+
+    function loadMapData() {
+      const saved = localStorage.getItem('pbl-map-data');
+      if (saved) {
+        return JSON.parse(saved);
+      }
+      let data = [];
+      for (let y = 0; y < MAP_HEIGHT; y++) {
+        data[y] = [];
+        for (let x = 0; x < MAP_WIDTH; x++) {
+          data[y][x] = 5;
+        }
+      }
+      return data;
+    }
+
+    function saveMapData() {
+      localStorage.setItem('pbl-map-data', JSON.stringify(mapData));
+      localStorage.setItem('pbl-map-name', document.getElementById('mapName').value);
+    }
+
+    let selectedTile = 5;
+    let currentRotation = 0;
+
+    const FLIP_H = 0x80000000;
+    const FLIP_V = 0x40000000;
+    const FLIP_D = 0x20000000;
+    const CLEAR_FLAGS = 0x1FFFFFFF;
+
+    function encodeRotation(tileId, rotation) {
+      let flags = 0;
+      switch (rotation % 4) {
+        case 1: flags = FLIP_D | FLIP_H; break;
+        case 2: flags = FLIP_H | FLIP_V; break;
+        case 3: flags = FLIP_D | FLIP_V; break;
+      }
+      return (tileId | flags) >>> 0;
+    }
+
+    function decodeRotation(value) {
+      const tileId = value & CLEAR_FLAGS;
+      const h = (value & FLIP_H) !== 0;
+      const v = (value & FLIP_V) !== 0;
+      const d = (value & FLIP_D) !== 0;
+      let rotation = 0;
+      if (d && h && !v) rotation = 1;
+      else if (h && v && !d) rotation = 2;
+      else if (d && v && !h) rotation = 3;
+      return { tileId, rotation };
+    }
+
+    const canvas = document.getElementById('mapCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const tilesetImg = new Image();
+    tilesetImg.src = 'map.png';
+
+    tilesetImg.onload = () => {
+      initPalette();
+      renderMap();
+      const savedName = localStorage.getItem('pbl-map-name');
+      if (savedName) {
+        document.getElementById('mapName').value = savedName;
+      }
+    };
+
+    function initPalette() {
+      const palette = document.getElementById('tilePalette');
+      palette.innerHTML = '';
+
+      TILES.forEach(tile => {
+        const item = document.createElement('div');
+        item.className = 'tile-item' + (tile.id === selectedTile ? ' selected' : '');
+        item.onclick = () => selectTile(tile.id);
+
+        const tileCanvas = document.createElement('canvas');
+        tileCanvas.width = 60;
+        tileCanvas.height = 60;
+        const tileCtx = tileCanvas.getContext('2d');
+        tileCtx.imageSmoothingEnabled = false;
+        tileCtx.drawImage(
+          tilesetImg,
+          tile.x * TILE_SIZE, tile.y * TILE_SIZE, TILE_SIZE, TILE_SIZE,
+          0, 0, 60, 60
+        );
+
+        const label = document.createElement('span');
+        label.textContent = `${tile.id}. ${tile.name}`;
+
+        item.appendChild(tileCanvas);
+        item.appendChild(label);
+        palette.appendChild(item);
+      });
+    }
+
+    function selectTile(id) {
+      selectedTile = id;
+      document.querySelectorAll('.tile-item').forEach((item, index) => {
+        item.classList.toggle('selected', TILES[index].id === id);
+      });
+    }
+
+    function renderMap() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const rendered = new Set();
+
+      for (let y = 0; y < MAP_HEIGHT; y++) {
+        for (let x = 0; x < MAP_WIDTH; x++) {
+          const key = `${x},${y}`;
+          if (rendered.has(key)) continue;
+
+          const value = mapData[y][x];
+          const { tileId, rotation } = decodeRotation(value);
+          const tile = TILES.find(t => t.id === tileId);
+
+          if (tile) {
+            const tileSize = tile.size || 1;
+            const scaledSize = TILE_SIZE * tileSize;
+
+            const isTopLeft = checkIsTopLeft(x, y, tileId, tileSize);
+
+            if (isTopLeft && tileSize > 1) {
+              ctx.save();
+              ctx.translate(x * TILE_SIZE + scaledSize / 2, y * TILE_SIZE + scaledSize / 2);
+              ctx.rotate(rotation * Math.PI / 2);
+              ctx.drawImage(
+                tilesetImg,
+                tile.x * TILE_SIZE, tile.y * TILE_SIZE, TILE_SIZE, TILE_SIZE,
+                -scaledSize / 2, -scaledSize / 2, scaledSize, scaledSize
+              );
+              ctx.restore();
+
+              for (let dy = 0; dy < tileSize; dy++) {
+                for (let dx = 0; dx < tileSize; dx++) {
+                  rendered.add(`${x + dx},${y + dy}`);
+                }
+              }
+            } else if (tileSize === 1) {
+              ctx.save();
+              ctx.translate(x * TILE_SIZE + TILE_SIZE / 2, y * TILE_SIZE + TILE_SIZE / 2);
+              ctx.rotate(rotation * Math.PI / 2);
+              ctx.drawImage(
+                tilesetImg,
+                tile.x * TILE_SIZE, tile.y * TILE_SIZE, TILE_SIZE, TILE_SIZE,
+                -TILE_SIZE / 2, -TILE_SIZE / 2, TILE_SIZE, TILE_SIZE
+              );
+              ctx.restore();
+            }
+          }
+        }
+      }
+
+      function checkIsTopLeft(x, y, tileId, size) {
+        if (size === 1) return true;
+        for (let dy = 0; dy < size; dy++) {
+          for (let dx = 0; dx < size; dx++) {
+            const nx = x + dx;
+            const ny = y + dy;
+            if (nx >= MAP_WIDTH || ny >= MAP_HEIGHT) return false;
+            const { tileId: nTileId } = decodeRotation(mapData[ny][nx]);
+            if (nTileId !== tileId) return false;
+          }
+        }
+        return true;
+      }
+
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+      ctx.lineWidth = 1;
+
+      for (let x = 0; x <= MAP_WIDTH; x++) {
+        ctx.beginPath();
+        ctx.moveTo(x * TILE_SIZE, 0);
+        ctx.lineTo(x * TILE_SIZE, canvas.height);
+        ctx.stroke();
+      }
+
+      for (let y = 0; y <= MAP_HEIGHT; y++) {
+        ctx.beginPath();
+        ctx.moveTo(0, y * TILE_SIZE);
+        ctx.lineTo(canvas.width, y * TILE_SIZE);
+        ctx.stroke();
+      }
+
+      if (hoverX >= 0 && hoverY >= 0) {
+        const tile = TILES.find(t => t.id === selectedTile);
+        if (tile) {
+          const tileSize = tile.size || 1;
+          const scaledSize = TILE_SIZE * tileSize;
+          const centerX = hoverX * TILE_SIZE + scaledSize / 2;
+          const centerY = hoverY * TILE_SIZE + scaledSize / 2;
+
+          ctx.save();
+          ctx.globalAlpha = 0.6;
+          ctx.translate(centerX, centerY);
+          ctx.rotate(currentRotation * Math.PI / 2);
+          ctx.drawImage(
+            tilesetImg,
+            tile.x * TILE_SIZE, tile.y * TILE_SIZE, TILE_SIZE, TILE_SIZE,
+            -scaledSize / 2, -scaledSize / 2, scaledSize, scaledSize
+          );
+          ctx.restore();
+
+          ctx.strokeStyle = '#e94560';
+          ctx.lineWidth = 2;
+          const previewWidth = Math.min(tileSize, MAP_WIDTH - hoverX) * TILE_SIZE;
+          const previewHeight = Math.min(tileSize, MAP_HEIGHT - hoverY) * TILE_SIZE;
+          ctx.strokeRect(hoverX * TILE_SIZE, hoverY * TILE_SIZE, previewWidth, previewHeight);
+        }
+      }
+    }
+
+    function fillAll() {
+      saveUndoState();
+      for (let y = 0; y < MAP_HEIGHT; y++) {
+        for (let x = 0; x < MAP_WIDTH; x++) {
+          mapData[y][x] = encodeRotation(selectedTile, currentRotation);
+        }
+      }
+      renderMap();
+      saveMapData();
+    }
+
+    function clearMap() {
+      saveUndoState();
+      for (let y = 0; y < MAP_HEIGHT; y++) {
+        for (let x = 0; x < MAP_WIDTH; x++) {
+          mapData[y][x] = 5;
+        }
+      }
+      renderMap();
+      saveMapData();
+    }
+
+    let isDrawing = false;
+    let hoverX = -1;
+    let hoverY = -1;
+
+    canvas.addEventListener('mousedown', (e) => {
+      saveUndoState();
+      isDrawing = true;
+      paintTile(e);
+    });
+
+    canvas.addEventListener('mousemove', (e) => {
+      updateCursorInfo(e);
+      updateHoverPosition(e);
+      if (isDrawing) {
+        paintTile(e);
+      }
+    });
+
+    canvas.addEventListener('mouseup', () => {
+      isDrawing = false;
+    });
+
+    canvas.addEventListener('mouseleave', () => {
+      isDrawing = false;
+      hoverX = -1;
+      hoverY = -1;
+      renderMap();
+      document.getElementById('cursorInfo').textContent = '座標: -';
+    });
+
+    function updateHoverPosition(e) {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      const x = Math.floor((e.clientX - rect.left) * scaleX / TILE_SIZE);
+      const y = Math.floor((e.clientY - rect.top) * scaleY / TILE_SIZE);
+
+      if (x >= 0 && x < MAP_WIDTH && y >= 0 && y < MAP_HEIGHT) {
+        if (hoverX !== x || hoverY !== y) {
+          hoverX = x;
+          hoverY = y;
+          renderMap();
+        }
+      }
+    }
+
+    function updateCursorInfo(e) {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      const x = Math.floor((e.clientX - rect.left) * scaleX / TILE_SIZE);
+      const y = Math.floor((e.clientY - rect.top) * scaleY / TILE_SIZE);
+
+      if (x >= 0 && x < MAP_WIDTH && y >= 0 && y < MAP_HEIGHT) {
+        const currentTile = mapData[y][x];
+        const tileName = TILES.find(t => t.id === currentTile)?.name || 'unknown';
+        document.getElementById('cursorInfo').textContent = `Position: (${x}, ${y}) - ${tileName}`;
+      }
+    }
+
+    function paintTile(e) {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      const x = Math.floor((e.clientX - rect.left) * scaleX / TILE_SIZE);
+      const y = Math.floor((e.clientY - rect.top) * scaleY / TILE_SIZE);
+
+      if (x >= 0 && x < MAP_WIDTH && y >= 0 && y < MAP_HEIGHT) {
+        const tile = TILES.find(t => t.id === selectedTile);
+        const tileSize = tile?.size || 1;
+
+        for (let dy = 0; dy < tileSize; dy++) {
+          for (let dx = 0; dx < tileSize; dx++) {
+            const px = x + dx;
+            const py = y + dy;
+            if (px >= 0 && px < MAP_WIDTH && py >= 0 && py < MAP_HEIGHT) {
+              mapData[py][px] = encodeRotation(selectedTile, currentRotation);
+            }
+          }
+        }
+        renderMap();
+        saveMapData();
+      }
+    }
+
+    function exportTMX() {
+      const mapName = document.getElementById('mapName').value || 'new-map';
+
+      let csvData = '';
+      for (let y = 0; y < MAP_HEIGHT; y++) {
+        csvData += mapData[y].join(',');
+        if (y < MAP_HEIGHT - 1) csvData += ',\n';
+      }
+
+      const tmx = `<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="${MAP_WIDTH}" height="${MAP_HEIGHT}" tilewidth="${TILE_SIZE}" tileheight="${TILE_SIZE}" infinite="0" nextlayerid="2" nextobjectid="1">
+ <tileset firstgid="1" name="map" tilewidth="${TILE_SIZE}" tileheight="${TILE_SIZE}" tilecount="100" columns="10">
+  <image source="map.png" width="400" height="400"/>
+ </tileset>
+ <layer id="1" name="Tile Layer 1" width="${MAP_WIDTH}" height="${MAP_HEIGHT}">
+  <data encoding="csv">
+${csvData}
+</data>
+ </layer>
+</map>`;
+
+      downloadFile(mapName + '.tmx', tmx);
+    }
+
+    function downloadFile(filename, content) {
+      const blob = new Blob([content], { type: 'text/xml' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'r' || e.key === 'R' || e.code === 'KeyR') {
+        currentRotation = (currentRotation + 1) % 4;
+        updateRotationDisplay();
+        renderMap();
+      }
+
+      if (e.key === 'q' || e.key === 'Q' || e.code === 'KeyQ') {
+        currentRotation = (currentRotation + 3) % 4;
+        updateRotationDisplay();
+        renderMap();
+      }
+
+      if ((e.metaKey || e.ctrlKey) && (e.key === 'z' || e.code === 'KeyZ')) {
+        e.preventDefault();
+        undo();
+      }
+    });
+
+    function updateRotationDisplay() {
+      const degrees = currentRotation * 90;
+      document.getElementById('rotationInfo').textContent = `旋轉: ${degrees}°`;
+    }
+
+    function importTMX(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const content = e.target.result;
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(content, 'text/xml');
+
+        const dataElement = xml.querySelector('data');
+        if (!dataElement) {
+          alert('無法讀取地圖資料');
+          return;
+        }
+
+        const csvData = dataElement.textContent.trim();
+        const rows = csvData.split('\n');
+
+        saveUndoState();
+
+        for (let y = 0; y < MAP_HEIGHT && y < rows.length; y++) {
+          const cols = rows[y].split(',');
+          for (let x = 0; x < MAP_WIDTH && x < cols.length; x++) {
+            const value = parseInt(cols[x].trim(), 10);
+            if (!isNaN(value)) {
+              mapData[y][x] = value;
+            }
+          }
+        }
+
+        const filename = file.name.replace('.tmx', '');
+        document.getElementById('mapName').value = filename;
+
+        renderMap();
+        saveMapData();
+        alert('導入成功！');
+      };
+
+      reader.readAsText(file);
+      event.target.value = '';
+    }
+  </script>
+</body>
+</html>
