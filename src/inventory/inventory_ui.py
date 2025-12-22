@@ -35,9 +35,8 @@ class InventoryUI:
   UI_WIDTH = 176
   UI_HEIGHT = 94
 
-  def __init__(self, game: "Game", inventory: Inventory):
+  def __init__(self, game: "Game"):
     self.game = game
-    self.inventory = inventory
 
     # 載入背景圖片並裁切有效區域
     full_image: pygame.Surface = pygame.image.load(
@@ -96,7 +95,7 @@ class InventoryUI:
   def render_equipment_slots(self, surface: pygame.Surface):
     """渲染裝備欄物品"""
     for i, (ex, ey, ew, eh) in enumerate(self.EQUIP_SLOTS):
-      slot = self.inventory.equipment_slots[i]
+      slot = self.game.inventory.equipment_slots[i]
 
       x = self.ui_x + ex * self.scale
       y = self.ui_y + ey * self.scale
@@ -120,7 +119,7 @@ class InventoryUI:
     for row in range(Inventory.ITEM_ROWS):
       for col in range(Inventory.ITEM_COLS):
         slot_index = row * Inventory.ITEM_COLS + col
-        slot = self.inventory.item_slots[slot_index]
+        slot = self.game.inventory.item_slots[slot_index]
 
         x = self.ui_x + self.ITEM_COLS_X[col] * self.scale
         y = self.ui_y + self.ITEM_ROWS_Y[row] * self.scale
@@ -140,7 +139,7 @@ class InventoryUI:
 
   def render_cursor_item(self, surface: pygame.Surface):
     """渲染游標上的物品"""
-    if self.inventory.cursor_stack.is_empty():
+    if self.game.inventory.cursor_stack.is_empty():
       return
 
     mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -154,7 +153,7 @@ class InventoryUI:
       surface,
       game_mouse_x - icon_size // 2,
       game_mouse_y - icon_size // 2,
-      self.inventory.cursor_stack,
+      self.game.inventory.cursor_stack,
       icon_size,
       icon_size,
       draw_count=True
@@ -277,8 +276,8 @@ class InventoryUI:
       return None
 
     if self.hovered_slot_type == 'equipment':
-      return self.inventory.equipment_slots[self.hovered_slot]
+      return self.game.inventory.equipment_slots[self.hovered_slot]
     elif self.hovered_slot_type == 'item':
-      return self.inventory.item_slots[self.hovered_slot]
+      return self.game.inventory.item_slots[self.hovered_slot]
 
     return None

@@ -3,6 +3,7 @@ import pygame
 
 from src.input_manager import InputManager
 from src.player import Player
+from src.inventory.inventory import Inventory
 from src.state.state import State
 from src.state.title_screen_state import TitleScreenState
 
@@ -35,6 +36,7 @@ class Game():
     self.state_stack: list[State] = []
     
     self.player: Player = Player()
+    self.inventory: Inventory = Inventory()
     self.input_manager: InputManager = InputManager()
     
     self.load_assets()

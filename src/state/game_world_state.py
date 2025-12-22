@@ -6,6 +6,7 @@ if TYPE_CHECKING:
   from src.game import Game
 from src.state.state import State
 from src.state.dialogue_state import DialogueState
+from src.state.inventory_state import InventoryState
 from src.map_loader import MapLoader
 from src.state.pause_menu_state import PauseMenuState
 from src.npc import Npc
@@ -27,6 +28,10 @@ class GameWorldState(State):
 
     if i_m.is_key_down_once(pygame.K_ESCAPE):
       new_state = PauseMenuState(self.game)
+      new_state.enter_state()
+
+    if i_m.is_key_down_once(pygame.K_TAB):
+      new_state = InventoryState(self.game)
       new_state.enter_state()
 
   def render(self, surface: pygame.Surface):

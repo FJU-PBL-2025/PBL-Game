@@ -5,17 +5,15 @@ import pygame
 if TYPE_CHECKING:
   from src.game import Game
 from src.state.state import State
-from src.inventory.inventory import Inventory
 from src.inventory.inventory_ui import InventoryUI
 
 
 class InventoryState(State):
   """背包狀態 - 處理背包的輸入和顯示"""
 
-  def __init__(self, game: "Game", inventory: Inventory):
+  def __init__(self, game: "Game"):
     State.__init__(self, game)
-    self.inventory = inventory
-    self.ui = InventoryUI(game, inventory)
+    self.ui = InventoryUI(game)
 
     # 滑鼠按鍵狀態追蹤
     self.mouse_pressed: bool = False
@@ -26,7 +24,7 @@ class InventoryState(State):
     i_m = self.game.input_manager
 
     # 按 ESC 或 E 關閉背包
-    if i_m.is_key_down_once(pygame.K_ESCAPE) or i_m.is_key_down_once(pygame.K_e):
+    if i_m.is_key_down_once(pygame.K_ESCAPE) or i_m.is_key_down_once(pygame.K_TAB):
       self.exit_state()
       return
 
@@ -78,12 +76,12 @@ class InventoryState(State):
     if clicked_slot is None:
       return
 
-    cursor = self.inventory.cursor_stack
+    cursor = self.game.inventory.cursor_stack
 
     if cursor.is_empty():
       # 拿起物品
       if not clicked_slot.is_empty():
-        self.inventory.cursor_stack = clicked_slot.copy()
+        self.game.inventory.cursor_stack = clicked_slot.copy()
         clicked_slot.clear()
     else:
       # 游標有物品
@@ -120,13 +118,13 @@ class InventoryState(State):
     if clicked_slot is None:
       return
 
-    cursor = self.inventory.cursor_stack
+    cursor = self.game.inventory.cursor_stack
 
     if cursor.is_empty():
       # 拿起一半
       if not clicked_slot.is_empty() and clicked_slot.count > 0:
         amount = (clicked_slot.count + 1) // 2
-        self.inventory.cursor_stack = clicked_slot.split(amount)
+        self.game.inventory.cursor_stack = clicked_slot.split(amount)
     else:
       # 游標有物品
       if clicked_slot.is_empty():
@@ -156,7 +154,7 @@ class InventoryState(State):
   def get_slot_by_type(self, slot_type: str, slot_index: int):
     """根據類型和索引獲取格子對象"""
     if slot_type == 'equipment':
-      return self.inventory.equipment_slots[slot_index]
+      return self.game.inventory.equipment_slots[slot_index]
     elif slot_type == 'item':
-      return self.inventory.item_slots[slot_index]
+      return self.game.inventory.item_slots[slot_index]
     return None
