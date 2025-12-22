@@ -6,6 +6,7 @@ if TYPE_CHECKING:
   from src.game import Game
 from src.npc import Npc
 from src.state.state import State
+from src.state.battle_state import BattleState
 
 
 class DialogueState(State):
@@ -46,6 +47,12 @@ class DialogueState(State):
       if i_m.is_key_down_once(pygame.K_RETURN) or i_m.is_key_down_once(pygame.K_e):
         self.current_dialogue = self.npc.advance_dialogue(self.index)
         self.index = 0
+        
+        if self.npc.current_dialogue_id == "fight":
+          self.exit_state()
+          battle_state = BattleState(self.game, self.npc)
+          battle_state.enter_state()
+          return
         
         if self.current_dialogue is None:
           self.exit_state()

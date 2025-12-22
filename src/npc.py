@@ -8,12 +8,10 @@ class DialogueOption:
   text: str
   next: str | None
 
-
 @dataclass
 class Dialogue:
   text: str
   options: list[DialogueOption] | None
-
 
 class Npc(pygame.sprite.Sprite):
   def __init__(self, name: str, tile_width: int, tile_height: int):

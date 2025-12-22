@@ -2,12 +2,11 @@
   "display_name": "Test Boss",
   "fightable": true,
   "spawn": {
-    "x": 8,
-    "y": 6
+    "x": 0,
+    "y": 0
   },
   "source_img": "./assets/knight.png",
   "hp": 100,
-  "attack": 6,
   "dialogue": {
     "init": {
       "text": "Hello, I am a test boss.",
@@ -49,28 +48,28 @@
       "options": null
     }
   },
-  "skills": [
-    {
+  "skills": {
+    "attack": {
       "name": "Attack",
       "description": "Deals 5 physical damage",
-      "p_damage": 5,
-      "m_damage": 0,
+      "physical_damage": 5,
+      "magical_damage": 0,
       "heal": 0,
       "shield": 0,
       "purify": false,
       "effect": [],
       "cooldown": 0
     },
-    {
+    "shield": {
       "name": "Shield",
       "description": "Gives 5 shield",
-      "p_damage": 0,
-      "m_damage": 0,
+      "physical_damage": 0,
+      "magical_damage": 0,
       "heal": 0,
       "shield": 5,
       "purify": false,
       "effect": [],
       "cooldown": 2
     }
-  ]
+  }
 }
