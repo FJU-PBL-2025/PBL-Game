@@ -173,9 +173,9 @@ class BattleHelper:
     for effect in entity.effects:
       match effect.type:
         case "burning":
-          entity.current_hp -= entity.current_hp * 0.05
+          self._do_damage(entity, entity.current_hp * 0.05)
         case "poisoned":
-          entity.current_hp -= entity.max_hp * 0.1
+          self._do_damage(entity, entity.max_hp * 0.1)
         case "frozen":
           entity.frozen = True
         case "weakness":
@@ -186,6 +186,22 @@ class BattleHelper:
           entity.magical_buff += effect.value
         case "physical_boost":
           entity.physical_buff += effect.value
+
+  def _do_damage(self, entity: BattleEntity, damage: int):
+    remain_shield = round(entity.shield - damage)
+    
+    if remain_shield <= 0:
+      entity.current_hp += remain_shield
+      entity.shield = 0
+    else:
+      entity.shield = remain_shield
+    
+    entity.current_hp = round(
+      max(
+        entity.current_hp,
+        0
+      )
+    )
 
   def _use_skills(self, entity: BattleEntity, opponent: BattleEntity, skill_ids: List[str]):
     if not entity.frozen:
@@ -204,22 +220,13 @@ class BattleHelper:
           0
         )
         
-        remain_shield = opponent.shield - total_damage
-        
-        if remain_shield <= 0:
-          opponent.current_hp += remain_shield
-          opponent.shield = 0
-        else:
-          opponent.shield = remain_shield
+        self._do_damage(opponent, total_damage)
         
         entity.current_hp = round(
-          max(
-            min(
-              entity.max_hp,
-              entity.current_hp + skill.heal
-            ),
-            0
-          )
+          min(
+            entity.max_hp,
+            entity.current_hp + skill.heal
+          ),
         )
         entity.shield += skill.shield
         
