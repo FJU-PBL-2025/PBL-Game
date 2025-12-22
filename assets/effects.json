@@ -26,16 +26,16 @@
   "healing": {
     "name": "Healing",
     "description": "Heals for {value} HP for {duration} rounds.",
-    "negative": true
+    "negative": false
   },
   "magic_boost": {
     "name": "Magic Boost",
     "description": "Increases magic damage by {value} for {duration} rounds.",
-    "negative": true
+    "negative": false
   },
   "physical_boost": {
     "name": "Physical Boost",
     "description": "Increases physical damage by {value} for {duration} rounds.",
-    "negative": true
+    "negative": false
   }
 }

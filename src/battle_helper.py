@@ -24,7 +24,7 @@ class BattleEffect:
   name: str
   negative: bool
   hanging: bool
-  value: int
+  value: int | None
   duration: int
 
 @dataclass
@@ -62,6 +62,7 @@ class BattleHelper:
     self.enemy: BattleEntity = BattleHelper._load_npc_battle_data(npc)
     self.player: BattleEntity = BattleHelper._load_player_battle_data()
   
+  @staticmethod
   def _load_skills(raw_skills: map) -> dict[str, BattleSkill]:
     with open("./assets/effects.json", "r") as f:
       effect_data = json.load(f)
@@ -108,6 +109,7 @@ class BattleHelper:
     
     return skills
   
+  @staticmethod
   def _load_npc_battle_data(npc: Npc):
     with open(f"./assets/entity/npc/{npc.name}/npc.meta.json", "r") as f:
       data = json.load(f)
@@ -127,6 +129,7 @@ class BattleHelper:
     
     return entity
   
+  @staticmethod
   def _load_player_battle_data():
     with open("./assets/player.meta.json", "r") as f:
       data = json.load(f)
@@ -192,9 +195,13 @@ class BattleHelper:
         if skill.current_cooldown != 0:
           continue
         
-        total_damage = (
-          (skill.physical_damage + entity.physical_buff - entity.weakness) +
-          (skill.magical_damage + entity.magical_buff - entity.weakness)
+        total_damage = max(
+          (
+            (skill.physical_damage + entity.physical_buff)
+            + (skill.magical_damage + entity.magical_buff)
+            - entity.weakness
+          ),
+          0
         )
         
         remain_shield = opponent.shield - total_damage
@@ -206,9 +213,12 @@ class BattleHelper:
           opponent.shield = remain_shield
         
         entity.current_hp = round(
-          min(
-            entity.max_hp,
-            entity.current_hp + skill.heal
+          max(
+            min(
+              entity.max_hp,
+              entity.current_hp + skill.heal
+            ),
+            0
           )
         )
         entity.shield += skill.shield
