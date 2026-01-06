@@ -1,6 +1,7 @@
 import pygame
 
 from src.input_manager import InputManager
+from src.audio_manager import AudioManager
 from src.map_loader import MapMetadata, MapTile
 
 
@@ -29,6 +30,7 @@ class Player(pygame.sprite.Sprite):
     self,
     delta_time: float,
     input_manager: InputManager,
+    audio_manager: AudioManager,
     tiles: pygame.sprite.Group[MapTile],
     metadata: MapMetadata
   ) -> list[MapTile]:
@@ -44,7 +46,7 @@ class Player(pygame.sprite.Sprite):
     if input_manager.is_key_down(pygame.K_s) or input_manager.is_key_down(pygame.K_DOWN):
       dy += self.speed * delta_time
     
-    hit_tiles_set = set()
+    hit_tiles_set: set[MapTile] = set()
     
     if dx != 0:
       old_x = self.x
@@ -76,6 +78,11 @@ class Player(pygame.sprite.Sprite):
     
     if dx == 0 and dy == 0:
       hit_tiles_set.update(pygame.sprite.spritecollide(self, tiles, False))
+    
+    if dx == 0 and dy == 0:
+      audio_manager.stop_sound()
+    else:
+      audio_manager.play_sound("walking_grass")
     
     return list(hit_tiles_set)
 

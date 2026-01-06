@@ -13,5 +13,6 @@
   ],
   "entity": {
     "npc": ["test-dummy", "test-boss"]
-  }
+  },
+  "music": "spawn_town_bgm"
 }

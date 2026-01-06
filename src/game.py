@@ -2,6 +2,7 @@ import time
 import pygame
 
 from src.input_manager import InputManager
+from src.audio_manager import AudioManager
 from src.player import Player
 from src.inventory.inventory import Inventory
 from src.state.state import State
@@ -38,6 +39,7 @@ class Game():
     self.player: Player = Player()
     self.inventory: Inventory = Inventory()
     self.input_manager: InputManager = InputManager()
+    self.audio_manager: AudioManager = AudioManager()
     
     self.load_assets()
     self.load_states()
