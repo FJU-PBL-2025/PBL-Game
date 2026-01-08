@@ -31,6 +31,8 @@ class BattleState(State):
     
     self.player_sprite = pygame.image.load("./assets/knight.png")
     self.enemy_sprite = self.npc.image
+
+    self.reward_given: bool = False
   
   def _get_available_skills(self) -> List[BattleSkill]:
     return [
@@ -42,6 +44,11 @@ class BattleState(State):
     i_m = self.game.input_manager
     
     if self.battle_over:
+      if not self.reward_given:
+        self.reward_given = True
+        for item_id, count in self.battle_helper.enemy.reward.items():
+          self.game.inventory.add_item(item_id, count)
+
       if i_m.is_key_down_once(pygame.K_RETURN):
         self.exit_state()
       return

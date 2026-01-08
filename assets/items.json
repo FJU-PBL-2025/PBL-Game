@@ -1,0 +1,16 @@
+{
+  "coin": {
+    "name": "Coin",
+    "item_type": "material",
+    "max_stack": 99,
+    "description": "Just coin",
+    "icon": "knight"
+  },
+  "test-shield": {
+    "name": "Test Shield",
+    "item_type": "equipment",
+    "max_stack": 1,
+    "description": "Just shield",
+    "icon": "knight"
+  }
+}

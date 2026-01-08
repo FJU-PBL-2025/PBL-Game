@@ -1,0 +1,63 @@
+{
+  "display_name": "Test Shop",
+  "fightable": true,
+  "spawn": {
+    "x": 3,
+    "y": 3
+  },
+  "source_img": "./assets/knight.png",
+  "hp": 100,
+  "dialogue": {
+    "init": {
+      "text": "Hello, I am a test shop.",
+      "options": [
+        {
+          "text": "Sup.",
+          "next": "0"
+        },
+        {
+          "text": "Bye.",
+          "next": null
+        }
+      ]
+    },
+    "0": {
+      "text": "Sup, how are you?",
+      "options": [
+        {
+          "text": "Good.",
+          "next": "1"
+        },
+        {
+          "text": "Bad.",
+          "next": "2"
+        }
+      ]
+    },
+    "1": {
+      "text": "Let's make some deal.",
+      "options": [
+        {
+          "text": "Ok.",
+          "next": "shop"
+        }
+      ]
+    },
+    "2": {
+      "text": "Bad to hear, we'll have deal next time.",
+      "options": null
+    }
+  },
+  "shop": {
+    "test-shield": {
+      "price": [
+        {
+          "coin": {
+            "qty": 1
+          }
+        }
+      ],
+      "reserve": 1
+    }
+  }
+}

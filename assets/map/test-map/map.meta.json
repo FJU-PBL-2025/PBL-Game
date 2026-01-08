@@ -12,7 +12,7 @@
     }
   ],
   "entity": {
-    "npc": ["test-dummy", "test-boss"]
+    "npc": ["test-dummy", "test-boss", "test-shop"]
   },
   "music": "spawn_town_bgm",
   "walk_sound": "walking_grass"

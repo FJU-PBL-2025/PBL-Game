@@ -22,7 +22,7 @@ class Item:
     item_type: ItemType,
     max_stack: int = 99,
     description: str = "",
-    icon_path: Optional[str] = None
+    icon: Optional[str] = None
   ):
     self.item_id: str = item_id
     self.name: str = name
@@ -34,13 +34,13 @@ class Item:
     self.icon_surface: Optional[pygame.Surface] = None
     self.icon_color: tuple = (100, 100, 100)
 
-    if icon_path:
-      self.load_icon(icon_path)
+    if icon:
+      self.load_icon(icon)
 
-  def load_icon(self, path: str):
+  def load_icon(self, name: str):
     """載入物品圖示"""
     try:
-      self.icon_surface = pygame.image.load(path).convert_alpha()
+      self.icon_surface = pygame.image.load(f"./assets/icon/{name}.png").convert_alpha()
     except Exception:
       self.icon_surface = None
 

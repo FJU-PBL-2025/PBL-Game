@@ -7,6 +7,10 @@
   },
   "source_img": "./assets/knight.png",
   "hp": 100,
+  "reward": {
+    "coin": 10,
+    "test-shield": 1
+  },
   "dialogue": {
     "init": {
       "text": "Hello, I am a test boss.",

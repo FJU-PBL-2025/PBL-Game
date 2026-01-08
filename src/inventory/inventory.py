@@ -1,6 +1,7 @@
+import json
 from typing import List, Optional
 
-from src.inventory.item import Item
+from src.inventory.item import Item, ItemType
 from src.inventory.item_stack import ItemStack
 
 
@@ -30,12 +31,25 @@ class Inventory:
     # 游標物品（滑鼠拿著的物品）
     self.cursor_stack: ItemStack = ItemStack()
 
-  def add_item(self, item: Item, count: int = 1) -> int:
+  def add_item(self, item_id: str, count: int = 1) -> int:
     """
     添加物品到道具欄
     返回無法添加的剩餘數量
     """
     remaining = count
+
+    with open("./assets/items.json", "r") as f:
+      items = json.load(f)
+
+    item = items[item_id]
+    item = Item(
+      item_id = item_id,
+      name = item["name"],
+      item_type = ItemType(item["item_type"]),
+      max_stack = item["max_stack"],
+      description = item["description"],
+      icon = item["icon"]
+    )
 
     # 先嘗試堆疊到已有的格子
     for slot in self.item_slots:

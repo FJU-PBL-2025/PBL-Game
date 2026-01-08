@@ -54,6 +54,7 @@ class BattleEntity:
   weakness: int
   skills: dict[str, BattleSkill]
   effects: List[BattleEffect]
+  reward: dict[str, int] | None
 
 class BattleHelper:
   def __init__(self, game: "Game", npc: Npc):
@@ -124,7 +125,8 @@ class BattleHelper:
       frozen = False,
       weakness = 0,
       skills = BattleHelper._load_skills(data["skills"]),
-      effects = []
+      effects = [],
+      reward = data.get("reward", None)
     )
     
     return entity
@@ -149,7 +151,8 @@ class BattleHelper:
       skills = BattleHelper._load_skills(
         {k: v for k, v in player_skill_meta.items() if k in data["skills"]}
       ),
-      effects = []
+      effects = [],
+      reward = None
     )
     
     return entity
