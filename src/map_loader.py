@@ -7,15 +7,15 @@ from src.audio_manager import AudioManager
 
 
 class MapLoader():
-  def __init__(self, name: str, audio_manager: AudioManager):
+  def __init__(self, name: str):
     self.tiles: pygame.sprite.Group[MapTile] = pygame.sprite.Group()
     self.npcs: pygame.sprite.Group[Npc] = pygame.sprite.Group()
     self.map: pytmx.TiledMap | None = None
     self.metadata: MapMetadata = MapMetadata()
 
-    self.change_map(name, audio_manager)
+    self.change_map(name)
 
-  def change_map(self, name: str, audio_manager: AudioManager):
+  def change_map(self, name: str):
     self.tiles.empty()
     self.npcs.empty()
     self.metadata.clear()
@@ -38,9 +38,10 @@ class MapLoader():
       self.metadata.npc_names = entity_data.get("npc", [])
       
       self.metadata.music = json_data.get("music", "")
+      self.metadata.walk_sound = json_data.get("walk_sound", "")
     
     if self.metadata.music:
-      audio_manager.play_background_music(self.metadata.music)
+      AudioManager.play_background_music(self.metadata.music)
     
     for layer in self.map.visible_layers:
       for x, y, gid in layer:
@@ -92,12 +93,14 @@ class MapMetadata():
     self.exits: dict[tuple[int], MapExit] = {}
     self.npc_names: list[str] = []
     self.music: str = ""
+    self.walk_sound: str = ""
     
   def clear(self):
     self.collisions.clear()
     self.exits.clear()
     self.npc_names.clear()
     self.music = ""
+    self.walk_sound = ""
 
 class MapExit():
   def __init__(self, dist: str, dist_x: int, dist_y: int):

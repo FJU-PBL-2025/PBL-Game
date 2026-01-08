@@ -14,5 +14,6 @@
   "entity": {
     "npc": ["test-dummy", "test-boss"]
   },
-  "music": "spawn_town_bgm"
+  "music": "spawn_town_bgm",
+  "walk_sound": "walking_grass"
 }

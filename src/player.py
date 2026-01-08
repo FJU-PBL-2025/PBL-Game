@@ -30,7 +30,6 @@ class Player(pygame.sprite.Sprite):
     self,
     delta_time: float,
     input_manager: InputManager,
-    audio_manager: AudioManager,
     tiles: pygame.sprite.Group[MapTile],
     metadata: MapMetadata
   ) -> list[MapTile]:
@@ -80,9 +79,9 @@ class Player(pygame.sprite.Sprite):
       hit_tiles_set.update(pygame.sprite.spritecollide(self, tiles, False))
     
     if dx == 0 and dy == 0:
-      audio_manager.stop_sound()
+      AudioManager.stop_sound()
     else:
-      audio_manager.play_sound("walking_grass")
+      AudioManager.play_sound(metadata.walk_sound)
     
     return list(hit_tiles_set)
 

@@ -16,7 +16,7 @@ class GameWorldState(State):
   def __init__(self, game: "Game"):
     State.__init__(self, game)
     
-    self.map_loader: MapLoader = MapLoader("test-map", game.audio_manager)
+    self.map_loader: MapLoader = MapLoader("test-map")
 
   def update(self, delta_time: float):
     i_m = self.game.input_manager
@@ -66,7 +66,6 @@ class GameWorldState(State):
     hit_tiles = self.game.player.handle_movement(
       delta_time,
       i_m,
-      self.game.audio_manager,
       self.map_loader.tiles,
       self.map_loader.metadata
     )
@@ -86,7 +85,7 @@ class GameWorldState(State):
         (exit_tile.x, exit_tile.y)
       )
       
-      self.map_loader.change_map(hit_exit.dist, self.game.audio_manager)
+      self.map_loader.change_map(hit_exit.dist)
       self.game.player.set_position(
         hit_exit.dist_x * self.map_loader.map.tilewidth + self.map_loader.map.tilewidth / 2,
         hit_exit.dist_y * self.map_loader.map.tileheight + self.map_loader.map.tileheight / 2

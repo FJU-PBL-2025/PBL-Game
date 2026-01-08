@@ -39,7 +39,7 @@ class Game():
     self.player: Player = Player()
     self.inventory: Inventory = Inventory()
     self.input_manager: InputManager = InputManager()
-    self.audio_manager: AudioManager = AudioManager()
+    AudioManager.init()
     
     self.load_assets()
     self.load_states()

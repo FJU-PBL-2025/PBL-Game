@@ -19,5 +19,6 @@
       "y": 0
     }
   ],
-  "music": "spawn_town_bgm"
+  "music": "spawn_town_bgm",
+  "walk_sound": "walking_grass"
 }
