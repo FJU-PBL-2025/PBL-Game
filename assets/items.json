@@ -1,10 +1,10 @@
 {
   "coin": {
-    "name": "Coin",
+    "name": "金幣",
     "item_type": "material",
-    "max_stack": 99,
-    "description": "Just coin",
-    "icon": "knight"
+    "max_stack": 99999999,
+    "description": "閃亮的金幣，是冒險者最重要的財富。可用於購買各種物品和裝備。",
+    "icon": "coin"
   },
   "test-shield": {
     "name": "Test Shield",

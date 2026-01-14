@@ -86,7 +86,7 @@ class BattleState(State):
           self._teleport_to_village()
           self.exit_state()
         else:
-          # Player won - mark NPC as defeated and remove from map
+          # Player won - mark NPC as defeated and remove from current map
           self.game.defeated_npcs.add(self.npc.name)
           self._remove_defeated_npc()
           # Level up (max level 7)

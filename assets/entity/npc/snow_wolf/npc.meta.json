@@ -9,7 +9,7 @@
   "hp": 50,
   "scale": 3,
   "reward": {
-    "coin": 35,
+    "coin": 800,
     "wolf-fang": 1,
     "health-potion": 2
   },

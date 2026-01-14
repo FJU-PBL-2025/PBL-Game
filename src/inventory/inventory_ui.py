@@ -64,9 +64,14 @@ class InventoryUI:
     self.hovered_slot: Optional[int] = None
     self.hovered_slot_type: Optional[str] = None  # 'equipment' or 'item'
 
-    # 字體
-    self.font = pygame.font.SysFont("arial", 14)
-    self.small_font = pygame.font.SysFont("arial", 12)
+    # 字體 - 使用支援中文的自定義字體
+    try:
+      self.font = pygame.font.Font("./assets/font.ttf", 14)
+      self.small_font = pygame.font.Font("./assets/font.ttf", 12)
+    except:
+      # 備用字體
+      self.font = pygame.font.SysFont("arial", 14)
+      self.small_font = pygame.font.SysFont("arial", 12)
 
   def render(self, surface: pygame.Surface):
     """渲染整個背包介面"""

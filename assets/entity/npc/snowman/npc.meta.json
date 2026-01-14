@@ -9,7 +9,7 @@
   "scale": 5,
   "hp": 60,
   "reward": {
-    "coin": 50,
+    "coin": 1800,
     "ice-crystal": 2,
     "health-potion": 2
   },

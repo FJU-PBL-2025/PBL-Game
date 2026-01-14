@@ -9,7 +9,7 @@
   "scale": 8,
   "hp": 80,
   "reward": {
-    "coin": 100,
+    "coin": 10000,
     "magic-sword": 1,
     "health-potion": 3
   },

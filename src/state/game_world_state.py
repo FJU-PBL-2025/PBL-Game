@@ -16,7 +16,11 @@ class GameWorldState(State):
   def __init__(self, game: "Game"):
     State.__init__(self, game)
     
-    self.map_loader: MapLoader = MapLoader("village", self.game)
+    self.map_loader: MapLoader = MapLoader("awakening-room", self.game)
+    
+    # Load coin icon
+    self.coin_icon = pygame.image.load("./assets/icon/coin.png").convert_alpha()
+    self.coin_icon = pygame.transform.scale(self.coin_icon, (20, 20))  # Scale to appropriate size
     
     # Set player position to entry point
     self.game.player.set_position(
@@ -48,6 +52,53 @@ class GameWorldState(State):
       npc.render(surface)
     
     self.game.player.render(surface)
+    
+    # Draw coin display in top-right corner
+    self._draw_coin_display(surface)
+  
+  def _draw_coin_display(self, surface: pygame.Surface):
+    """Draw coin count in top-right corner"""
+    coin_count = self.game.inventory.count_item("coin")
+    
+    # Background box
+    box_width = 120
+    box_height = 35
+    box_x = self.game.GAME_W - box_width - 10
+    box_y = 10
+    
+    pygame.draw.rect(
+      surface,
+      (40, 40, 60),
+      (box_x, box_y, box_width, box_height),
+      border_radius=5
+    )
+    pygame.draw.rect(
+      surface,
+      (255, 215, 0),
+      (box_x, box_y, box_width, box_height),
+      width=2,
+      border_radius=5
+    )
+    
+    # Coin icon and text
+    icon_x = box_x + 8
+    icon_y = box_y + (box_height - self.coin_icon.get_height()) // 2
+    surface.blit(self.coin_icon, (icon_x, icon_y))
+    
+    # Coin count text (right-aligned within the box)
+    text_y = box_y + box_height // 2
+    # Calculate text width to properly right-align it
+    coin_text = str(coin_count)
+    text_surface = self.game.font.render(coin_text, True, (255, 215, 0))
+    text_width = text_surface.get_width()
+    # Position text so it's right-aligned with some padding from the right edge
+    text_x = box_x + box_width - text_width // 2 - 10
+    self.game.draw_text(
+      surface,
+      str(coin_count),
+      (255, 215, 0),
+      (text_x, text_y)
+    )
   
   def check_npc_interaction(self):
     i_m = self.game.input_manager

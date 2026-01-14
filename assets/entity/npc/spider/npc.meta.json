@@ -9,7 +9,7 @@
   "hp": 40,
   "scale": 8,
   "reward": {
-    "coin": 40,
+    "coin": 500,
     "spider-silk": 2,
     "health-potion": 2
   },

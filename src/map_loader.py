@@ -46,17 +46,29 @@ class MapLoader():
         hide_when_boss_dead = obj_data.get("hide_when_boss_dead", False)
         
         # Check if object should be shown based on boss status
-        bosses_alive = True  # Will be updated after NPCs are checked
+        should_skip = False
         if self.game:
-          # Get map's NPC list to check if any boss is alive
-          map_npc_names = entity_data.get("npc", [])
-          bosses_alive = any(npc not in self.game.defeated_npcs for npc in map_npc_names)
+          if show_when_boss_dead:
+            if isinstance(show_when_boss_dead, list):
+              # Check if all specified bosses are defeated
+              all_bosses_dead = all(boss in self.game.defeated_npcs for boss in show_when_boss_dead)
+              if not all_bosses_dead:
+                should_skip = True
+            else:
+              # Original logic for boolean or single boss
+              map_npc_names = entity_data.get("npc", [])
+              bosses_alive = any(npc not in self.game.defeated_npcs for npc in map_npc_names)
+              if bosses_alive:
+                should_skip = True
+          
+          if hide_when_boss_dead:
+            map_npc_names = entity_data.get("npc", [])
+            bosses_alive = any(npc not in self.game.defeated_npcs for npc in map_npc_names)
+            if not bosses_alive:
+              should_skip = True
         
-        # Skip objects based on boss status
-        if show_when_boss_dead and bosses_alive:
-          continue  # Don't show until boss is dead
-        if hide_when_boss_dead and not bosses_alive:
-          continue  # Hide after boss is dead
+        if should_skip:
+          continue
         
         # Get exit data if present
         obj_exit = None

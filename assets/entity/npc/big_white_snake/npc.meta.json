@@ -9,7 +9,7 @@
   "scale": 13,
   "hp": 70,
   "reward": {
-    "coin": 70,
+    "coin": 3000,
     "snake-scale": 3,
     "health-potion": 3,
     "ice-sword": 1

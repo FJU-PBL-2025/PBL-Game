@@ -1,42 +1,6 @@
 {
   "collision_gid": [],
-  "exit": [
-    {
-      "source_x": 16,
-      "source_y": 17,
-      "dist": "desert_entrance",
-      "dist_x": 16,
-      "dist_y": 0
-    },
-    {
-      "source_x": 17,
-      "source_y": 17,
-      "dist": "desert_entrance",
-      "dist_x": 17,
-      "dist_y": 0
-    },
-    {
-      "source_x": 18,
-      "source_y": 17,
-      "dist": "desert_entrance",
-      "dist_x": 18,
-      "dist_y": 0
-    },
-    {
-      "source_x": 31,
-      "source_y": 8,
-      "dist": "snow_mountain_entrance",
-      "dist_x": 1,
-      "dist_y": 8
-    },
-    {
-      "source_x": 31,
-      "source_y": 9,
-      "dist": "snow_mountain_entrance",
-      "dist_x": 1,
-      "dist_y": 9
-    }
-  ],
+  "exit": [],
   "entry_point": {
     "x": 17.5,
     "y": 4.5
@@ -1469,6 +1433,29 @@
       "collision": true,
       "x": 0,
       "y": 0
+    },
+    {
+      "img": "small_transport",
+      "collision": false,
+      "x": 17,
+      "y": 16,
+      "exit": {
+        "dist": "desert_entrance",
+        "dist_x": 17,
+        "dist_y": 0
+      }
+    },
+    {
+      "img": "small_transport",
+      "collision": false,
+      "x": 30,
+      "y": 8,
+      "show_when_boss_dead": ["spider", "thief"],
+      "exit": {
+        "dist": "snow_mountain_entrance",
+        "dist_x": 1,
+        "dist_y": 8
+      }
     }
   ],
   "entity": {

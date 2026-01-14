@@ -9,7 +9,7 @@
   "hp": 30,
   "scale": 5,
   "reward": {
-    "coin": 30,
+    "coin": 100,
     "thief-dagger": 1,
     "health-potion": 1
   },
