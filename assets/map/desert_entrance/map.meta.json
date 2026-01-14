@@ -1,0 +1,169 @@
+{
+  "collision_gid": [],
+  "exit": [
+    {
+      "source_x": 28,
+      "source_y": 7,
+      "dist": "spider_cave",
+      "dist_x": 0,
+      "dist_y": 8
+    },
+    {
+      "source_x": 29,
+      "source_y": 7,
+      "dist": "spider_cave",
+      "dist_x": 0,
+      "dist_y": 8
+    },
+    {
+      "source_x": 30,
+      "source_y": 7,
+      "dist": "spider_cave",
+      "dist_x": 0,
+      "dist_y": 8
+    },
+    {
+      "source_x": 28,
+      "source_y": 8,
+      "dist": "spider_cave",
+      "dist_x": 0,
+      "dist_y": 8
+    },
+    {
+      "source_x": 29,
+      "source_y": 8,
+      "dist": "spider_cave",
+      "dist_x": 0,
+      "dist_y": 8
+    },
+    {
+      "source_x": 30,
+      "source_y": 8,
+      "dist": "spider_cave",
+      "dist_x": 0,
+      "dist_y": 8
+    },
+    {
+      "source_x": 28,
+      "source_y": 9,
+      "dist": "spider_cave",
+      "dist_x": 0,
+      "dist_y": 8
+    },
+    {
+      "source_x": 29,
+      "source_y": 9,
+      "dist": "spider_cave",
+      "dist_x": 0,
+      "dist_y": 8
+    },
+    {
+      "source_x": 30,
+      "source_y": 9,
+      "dist": "spider_cave",
+      "dist_x": 0,
+      "dist_y": 8
+    }
+  ],
+  "entry_point": {
+    "x": 17,
+    "y": 17
+  },
+  "object": [
+    {
+      "img": "Sprite-0017",
+      "collision": true,
+      "x": 22,
+      "y": 4
+    },
+    {
+      "img": "Sprite-0017",
+      "collision": true,
+      "x": 25,
+      "y": 12
+    },
+    {
+      "img": "Sprite-0006",
+      "collision": true,
+      "x": 14,
+      "y": 6
+    },
+    {
+      "img": "Sprite-0006",
+      "collision": true,
+      "x": 13,
+      "y": 11
+    },
+    {
+      "img": "Sprite-0018",
+      "collision": true,
+      "x": 15,
+      "y": 9
+    },
+    {
+      "img": "Sprite-0005",
+      "collision": true,
+      "x": 18,
+      "y": 10
+    },
+    {
+      "img": "Sprite-0017",
+      "collision": true,
+      "x": 9,
+      "y": 12
+    },
+    {
+      "img": "Sprite-0017",
+      "collision": true,
+      "x": 4,
+      "y": 8
+    },
+    {
+      "img": "Sprite-0017",
+      "collision": true,
+      "x": 7,
+      "y": 3
+    },
+    {
+      "img": "Sprite-0017",
+      "collision": true,
+      "x": 15,
+      "y": 2
+    },
+    {
+      "img": "Sprite-0017",
+      "collision": true,
+      "x": 18,
+      "y": 14
+    },
+    {
+      "img": "Sprite-0017",
+      "collision": true,
+      "x": 11,
+      "y": 8
+    },
+    {
+      "img": "Sprite-0017",
+      "collision": true,
+      "x": 16,
+      "y": 6
+    },
+    {
+      "img": "Sprite-0017",
+      "collision": true,
+      "x": 16,
+      "y": 11
+    },
+    {
+      "img": "Sprite-0017",
+      "collision": true,
+      "x": 24,
+      "y": 9
+    }
+  ],
+  "entity": {
+    "npc": []
+  },
+  "music": "",
+  "walk_sound": "walking_grass"
+}

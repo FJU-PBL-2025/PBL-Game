@@ -1,0 +1,14 @@
+{
+  "collision_gid": [41, 42],
+  "exit": [],
+  "entry_point": {
+    "x": 16,
+    "y": 15
+  },
+  "object": [],
+  "entity": {
+    "npc": []
+  },
+  "music": "",
+  "walk_sound": "walking_grass"
+}

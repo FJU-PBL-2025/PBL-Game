@@ -10,6 +10,7 @@ class MapLoader():
   def __init__(self, name: str):
     self.tiles: pygame.sprite.Group[MapTile] = pygame.sprite.Group()
     self.npcs: pygame.sprite.Group[Npc] = pygame.sprite.Group()
+    self.objects: pygame.sprite.Group[MapObject] = pygame.sprite.Group()
     self.map: pytmx.TiledMap | None = None
     self.metadata: MapMetadata = MapMetadata()
 
@@ -18,6 +19,7 @@ class MapLoader():
   def change_map(self, name: str):
     self.tiles.empty()
     self.npcs.empty()
+    self.objects.empty()
     self.metadata.clear()
     
     self.map = pytmx.load_pygame(f"./assets/map/{name}/map.tmx")
@@ -37,8 +39,25 @@ class MapLoader():
       entity_data = json_data.get("entity", {})
       self.metadata.npc_names = entity_data.get("npc", [])
       
+      # Load objects
+      for obj_data in json_data.get("object", []):
+        map_obj = MapObject(
+          obj_data["img"],
+          obj_data["x"],
+          obj_data["y"],
+          obj_data.get("collision", True),
+          self.map.tilewidth,
+          self.map.tileheight
+        )
+        self.objects.add(map_obj)
+      
       self.metadata.music = json_data.get("music", "")
       self.metadata.walk_sound = json_data.get("walk_sound", "")
+      
+      # Load entry point
+      entry_point = json_data.get("entry_point", {"x": 16, "y": 9})  # Default center-ish position
+      self.metadata.entry_x = entry_point["x"]
+      self.metadata.entry_y = entry_point["y"]
     
     if self.metadata.music:
       AudioManager.play_background_music(self.metadata.music)
@@ -60,9 +79,8 @@ class MapLoader():
       self.npcs.add(npc)
 
   def render(self, surface: pygame.Surface):
-    self.tiles.draw(
-      surface
-    )
+    self.tiles.draw(surface)
+    self.objects.draw(surface)
 
 class MapTile(pygame.sprite.Sprite):
   def __init__(
@@ -94,6 +112,8 @@ class MapMetadata():
     self.npc_names: list[str] = []
     self.music: str = ""
     self.walk_sound: str = ""
+    self.entry_x: int = 16
+    self.entry_y: int = 9
     
   def clear(self):
     self.collisions.clear()
@@ -101,6 +121,38 @@ class MapMetadata():
     self.npc_names.clear()
     self.music = ""
     self.walk_sound = ""
+    self.entry_x = 16
+    self.entry_y = 9
+
+class MapObject(pygame.sprite.Sprite):
+  def __init__(
+    self,
+    image_name: str,
+    x: int,
+    y: int,
+    collision: bool,
+    tile_width: int,
+    tile_height: int
+  ):
+    pygame.sprite.Sprite.__init__(self)
+    
+    self.x: int = x
+    self.y: int = y
+    self.collision: bool = collision
+    
+    # Load the image
+    try:
+      self.image: pygame.Surface = pygame.image.load(f"./assets/map/tileset/{image_name}.png")
+    except FileNotFoundError:
+      # Create a placeholder if image not found
+      self.image = pygame.Surface((tile_width, tile_height))
+      self.image.fill((255, 0, 255))  # Magenta placeholder
+    
+    self.rect: pygame.Rect = pygame.Rect()
+    self.rect.x = x * tile_width
+    self.rect.y = y * tile_height
+    self.rect.width = self.image.get_width()
+    self.rect.height = self.image.get_height()
 
 class MapExit():
   def __init__(self, dist: str, dist_x: int, dist_y: int):

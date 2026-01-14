@@ -66,7 +66,8 @@
       background-color: #1a4a7a;
     }
 
-    .tile-item canvas {
+    .tile-item canvas,
+    .tile-item img {
       border: 1px solid #333;
       image-rendering: pixelated;
     }
@@ -183,18 +184,83 @@
       background-color: #1a4a7a;
     }
 
+    .mode-tabs {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 10px;
+    }
+
+    .mode-tab {
+      flex: 1;
+      padding: 8px;
+      background-color: #0f3460;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .mode-tab.active {
+      background-color: #e94560;
+    }
+
+    .mode-tab:hover {
+      background-color: #1a4a7a;
+    }
+
+    .object-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 8px;
+      background-color: #0f3460;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 2px solid transparent;
+      position: relative;
+    }
+
+    .object-item:hover {
+      background-color: #1a4a7a;
+    }
+
+    .object-item.selected {
+      border-color: #e94560;
+      background-color: #1a4a7a;
+    }
+
+    .object-item canvas {
+      border: 1px solid #333;
+      image-rendering: pixelated;
+      max-width: 100%;
+      max-height: 60px;
+    }
+
   </style>
 </head>
 <body>
   <div class="sidebar">
     <h2>PBL 專題</h2>
+    <div class="mode-tabs">
+      <button class="mode-tab active" id="tileModeBtn" onclick="switchMode('tile')">地板</button>
+      <button class="mode-tab" id="objectModeBtn" onclick="switchMode('object')">物件</button>
+    </div>
     <div class="tile-palette" id="tilePalette">
+    </div>
+    <div class="tile-palette" id="objectPalette" style="display: none;">
     </div>
 
     <div class="tools">
+      <button onclick="document.getElementById('assetUpload').click()">上傳素材</button>
+      <input type="file" id="assetUpload" accept="image/*" multiple style="display: none" onchange="uploadAssets(event)">
+      <button onclick="document.getElementById('objectUpload').click()">上傳物件</button>
+      <input type="file" id="objectUpload" accept="image/*" multiple style="display: none" onchange="uploadObjects(event)">
       <button onclick="fillAll()">填滿整個地圖</button>
       <button class="secondary" onclick="clearMap()">清空地圖</button>
       <button class="secondary" onclick="exportTMX()">導出地圖</button>
+      <button class="secondary" onclick="exportObjects()">導出物件</button>
     </div>
   </div>
 
@@ -206,6 +272,8 @@
       </label>
       <button class="toolbar-btn" onclick="document.getElementById('importFile').click()">導入 TMX</button>
       <input type="file" id="importFile" accept=".tmx" style="display: none" onchange="importTMX(event)">
+      <button class="toolbar-btn" onclick="document.getElementById('importMetaFile').click()">導入 物件</button>
+      <input type="file" id="importMetaFile" accept=".json" style="display: none" onchange="importMeta(event)">
       <div class="info">
         <span id="cursorInfo">座標: -</span> |
         <span id="rotationInfo">旋轉: 0°</span> |
@@ -237,14 +305,52 @@
       { id: 10, name: 'snowfall', x: 9, y: 0, size: 1 },
       { id: 11, name: 'stone', x: 0, y: 1, size: 1 },
       { id: 12, name: 'wood_plank', x: 1, y: 1, size: 1 },
+      { id: 13, name: 'all_black', x: 2, y: 1, size: 1 },
+      { id: 14, name: 'stone_floor', x: 3, y: 1, size: 1 },
+      { id: 15, name: 'grass_floor2', x: 4, y: 1, size: 1 },
+
+      { id: 21, name: 'top_leading_gate', x: 0, y: 2, size: 1 },
+      { id: 22, name: 'top_middle_gate', x: 1, y: 2, size: 1 },
+      { id: 23, name: 'top_trailing_gate', x: 2, y: 2, size: 1 },
+      { id: 24, name: 'middle_leading_gate', x: 3, y: 2, size: 1 },
+      { id: 25, name: 'middle_middle_gate', x: 4, y: 2, size: 1 },
+      { id: 26, name: 'middle_trailing_gate', x: 5, y: 2, size: 1 },
+      { id: 27, name: 'bottom_leading_gate', x: 6, y: 2, size: 1 },
+      { id: 28, name: 'bottom_middle_gate', x: 7, y: 2, size: 1 },
+      { id: 29, name: 'bottom_trailing_gate', x: 8, y: 2, size: 1 },
+
+
+      { id: 31, name: 'bridge_top', x: 0, y: 3, size: 1 },
+      { id: 32, name: 'bridge_top_2', x: 1, y: 3, size: 1 },
+      { id: 33, name: 'bridge_middle', x: 2, y: 3, size: 1 },
+      { id: 34, name: 'bridge_bottom', x: 3, y: 3, size: 1 },
+      { id: 35, name: 'bridge_bottom_2', x: 4, y: 3, size: 1 },
+
+      { id: 41, name: 'stone', x: 0, y: 4, size: 1 },
+      { id: 42, name: 'stone2', x: 1, y: 4, size: 1 },
+      { id: 43, name: 'bridge_top', x: 2, y: 4, size: 1 },
+      { id: 44, name: 'bridge_middle', x: 3, y: 4, size: 1 },
+      { id: 45, name: 'bridge_bottom', x: 4, y: 4, size: 1 },
+
     ];
 
     let mapData = loadMapData();
     let undoStack = [];
     const MAX_UNDO = 50;
+    let uploadedTiles = loadUploadedTiles();
+    let uploadedImages = {};
+    let currentMode = 'tile'; // 'tile' or 'object'
+    let uploadedObjects = loadUploadedObjects();
+    let objectImages = {};
+    let mapObjects = loadMapObjects(); // Array of {img: string, collision: bool, x: int, y: int}
+    let selectedObject = null;
+    let objectCollision = true;
 
     function saveUndoState() {
-      undoStack.push(JSON.stringify(mapData));
+      undoStack.push(JSON.stringify({
+        mapData: mapData,
+        mapObjects: mapObjects
+      }));
       if (undoStack.length > MAX_UNDO) {
         undoStack.shift();
       }
@@ -252,9 +358,12 @@
 
     function undo() {
       if (undoStack.length > 0) {
-        mapData = JSON.parse(undoStack.pop());
+        const state = JSON.parse(undoStack.pop());
+        mapData = state.mapData;
+        mapObjects = state.mapObjects || [];
         renderMap();
         saveMapData();
+        saveMapObjects();
       }
     }
 
@@ -276,6 +385,43 @@
     function saveMapData() {
       localStorage.setItem('pbl-map-data', JSON.stringify(mapData));
       localStorage.setItem('pbl-map-name', document.getElementById('mapName').value);
+    }
+
+    function loadMapObjects() {
+      const saved = localStorage.getItem('pbl-map-objects');
+      return saved ? JSON.parse(saved) : [];
+    }
+
+    function saveMapObjects() {
+      localStorage.setItem('pbl-map-objects', JSON.stringify(mapObjects));
+    }
+
+    function loadUploadedObjects() {
+      const saved = localStorage.getItem('pbl-uploaded-objects');
+      return saved ? JSON.parse(saved) : [];
+    }
+
+    function saveUploadedObjects() {
+      localStorage.setItem('pbl-uploaded-objects', JSON.stringify(uploadedObjects));
+    }
+
+    function switchMode(mode) {
+      currentMode = mode;
+      document.getElementById('tileModeBtn').classList.toggle('active', mode === 'tile');
+      document.getElementById('objectModeBtn').classList.toggle('active', mode === 'object');
+      document.getElementById('tilePalette').style.display = mode === 'tile' ? 'grid' : 'none';
+      document.getElementById('objectPalette').style.display = mode === 'object' ? 'grid' : 'none';
+      selectedObject = null;
+      renderMap();
+    }
+
+    function loadUploadedTiles() {
+      const saved = localStorage.getItem('pbl-uploaded-tiles');
+      return saved ? JSON.parse(saved) : [];
+    }
+
+    function saveUploadedTiles() {
+      localStorage.setItem('pbl-uploaded-tiles', JSON.stringify(uploadedTiles));
     }
 
     let selectedTile = 5;
@@ -315,13 +461,38 @@
     tilesetImg.src = 'map.png';
 
     tilesetImg.onload = () => {
+      preloadUploadedImages();
+      preloadObjectImages();
       initPalette();
+      initObjectPalette();
       renderMap();
       const savedName = localStorage.getItem('pbl-map-name');
       if (savedName) {
         document.getElementById('mapName').value = savedName;
       }
     };
+
+    function preloadUploadedImages() {
+      uploadedTiles.forEach(tile => {
+        const img = new Image();
+        img.onload = () => {
+          uploadedImages[tile.id] = img;
+          renderMap();
+        };
+        img.src = tile.dataUrl;
+      });
+    }
+
+    function preloadObjectImages() {
+      uploadedObjects.forEach(obj => {
+        const img = new Image();
+        img.onload = () => {
+          objectImages[obj.name] = img;
+          renderMap();
+        };
+        img.src = obj.dataUrl;
+      });
+    }
 
     function initPalette() {
       const palette = document.getElementById('tilePalette');
@@ -332,30 +503,171 @@
         item.className = 'tile-item' + (tile.id === selectedTile ? ' selected' : '');
         item.onclick = () => selectTile(tile.id);
 
-        const tileCanvas = document.createElement('canvas');
-        tileCanvas.width = 60;
-        tileCanvas.height = 60;
-        const tileCtx = tileCanvas.getContext('2d');
-        tileCtx.imageSmoothingEnabled = false;
-        tileCtx.drawImage(
+        // Create img element and extract tile from tileset
+        const img = document.createElement('img');
+        img.width = TILE_SIZE;
+        img.height = TILE_SIZE;
+        img.style.display = 'block';
+        
+        // Extract tile from tileset using temporary canvas
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = TILE_SIZE;
+        tempCanvas.height = TILE_SIZE;
+        const tempCtx = tempCanvas.getContext('2d');
+        tempCtx.imageSmoothingEnabled = false;
+        tempCtx.drawImage(
           tilesetImg,
           tile.x * TILE_SIZE, tile.y * TILE_SIZE, TILE_SIZE, TILE_SIZE,
-          0, 0, 60, 60
+          0, 0, TILE_SIZE, TILE_SIZE
         );
+        img.src = tempCanvas.toDataURL();
 
         const label = document.createElement('span');
         label.textContent = `${tile.id}. ${tile.name}`;
 
-        item.appendChild(tileCanvas);
+        item.appendChild(img);
         item.appendChild(label);
         palette.appendChild(item);
+      });
+
+      uploadedTiles.forEach(tile => {
+        const item = document.createElement('div');
+        item.className = 'tile-item uploaded-tile' + (tile.id === selectedTile ? ' selected' : '');
+        item.onclick = () => selectTile(tile.id);
+
+        const img = document.createElement('img');
+        img.width = TILE_SIZE;
+        img.height = TILE_SIZE;
+        img.src = tile.dataUrl;
+        img.style.display = 'block';
+        
+        // Store image object for rendering
+        const imgObj = new Image();
+        imgObj.onload = () => {
+          uploadedImages[tile.id] = imgObj;
+        };
+        imgObj.src = tile.dataUrl;
+
+        const label = document.createElement('span');
+        label.textContent = `${tile.id}. ${tile.name}`;
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = '×';
+        deleteBtn.style.cssText = `
+          position: absolute;
+          top: 2px;
+          right: 2px;
+          width: 16px;
+          height: 16px;
+          background: #e94560;
+          color: white;
+          border: none;
+          border-radius: 50%;
+          font-size: 10px;
+          cursor: pointer;
+          display: none;
+        `;
+        deleteBtn.onclick = (e) => {
+          e.stopPropagation();
+          deleteUploadedTile(tile.id);
+        };
+
+        item.style.position = 'relative';
+        item.onmouseenter = () => deleteBtn.style.display = 'block';
+        item.onmouseleave = () => deleteBtn.style.display = 'none';
+
+        item.appendChild(img);
+        item.appendChild(label);
+        item.appendChild(deleteBtn);
+        palette.appendChild(item);
+      });
+    }
+
+    function initObjectPalette() {
+      const palette = document.getElementById('objectPalette');
+      palette.innerHTML = '';
+
+      uploadedObjects.forEach(obj => {
+        const item = document.createElement('div');
+        item.className = 'object-item' + (selectedObject === obj.name ? ' selected' : '');
+        item.onclick = () => selectObject(obj.name);
+
+        const objCanvas = document.createElement('canvas');
+        const img = objectImages[obj.name];
+        if (img) {
+          const maxSize = 60;
+          const scale = Math.min(maxSize / img.width, maxSize / img.height);
+          objCanvas.width = img.width * scale;
+          objCanvas.height = img.height * scale;
+          const objCtx = objCanvas.getContext('2d');
+          objCtx.imageSmoothingEnabled = false;
+          objCtx.drawImage(img, 0, 0, objCanvas.width, objCanvas.height);
+        } else {
+          objCanvas.width = 60;
+          objCanvas.height = 60;
+        }
+
+        const label = document.createElement('span');
+        label.textContent = obj.name;
+        label.style.marginTop = '5px';
+        label.style.fontSize = '11px';
+        label.style.textAlign = 'center';
+        label.style.color = '#aaa';
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = '×';
+        deleteBtn.style.cssText = `
+          position: absolute;
+          top: 2px;
+          right: 2px;
+          width: 16px;
+          height: 16px;
+          background: #e94560;
+          color: white;
+          border: none;
+          border-radius: 50%;
+          font-size: 10px;
+          cursor: pointer;
+          display: none;
+        `;
+        deleteBtn.onclick = (e) => {
+          e.stopPropagation();
+          deleteUploadedObject(obj.name);
+        };
+
+        item.style.position = 'relative';
+        item.onmouseenter = () => deleteBtn.style.display = 'block';
+        item.onmouseleave = () => deleteBtn.style.display = 'none';
+
+        item.appendChild(objCanvas);
+        item.appendChild(label);
+        item.appendChild(deleteBtn);
+        palette.appendChild(item);
+      });
+    }
+
+    function selectObject(name) {
+      selectedObject = name;
+      document.querySelectorAll('.object-item').forEach(item => {
+        item.classList.remove('selected');
+      });
+      document.querySelectorAll('.object-item').forEach(item => {
+        if (item.onclick && item.onclick.toString().includes(`selectObject('${name}')`)) {
+          item.classList.add('selected');
+        }
       });
     }
 
     function selectTile(id) {
       selectedTile = id;
-      document.querySelectorAll('.tile-item').forEach((item, index) => {
-        item.classList.toggle('selected', TILES[index].id === id);
+      document.querySelectorAll('.tile-item').forEach(item => {
+        item.classList.remove('selected');
+      });
+      
+      document.querySelectorAll('.tile-item').forEach(item => {
+        if (item.onclick.toString().includes(`selectTile(${id})`)) {
+          item.classList.add('selected');
+        }
       });
     }
 
@@ -371,7 +683,7 @@
 
           const value = mapData[y][x];
           const { tileId, rotation } = decodeRotation(value);
-          const tile = TILES.find(t => t.id === tileId);
+          const tile = TILES.find(t => t.id === tileId) || uploadedTiles.find(t => t.id === tileId);
 
           if (tile) {
             const tileSize = tile.size || 1;
@@ -383,11 +695,15 @@
               ctx.save();
               ctx.translate(x * TILE_SIZE + scaledSize / 2, y * TILE_SIZE + scaledSize / 2);
               ctx.rotate(rotation * Math.PI / 2);
-              ctx.drawImage(
-                tilesetImg,
-                tile.x * TILE_SIZE, tile.y * TILE_SIZE, TILE_SIZE, TILE_SIZE,
-                -scaledSize / 2, -scaledSize / 2, scaledSize, scaledSize
-              );
+              if (tile.dataUrl && uploadedImages[tileId]) {
+                ctx.drawImage(uploadedImages[tileId], -scaledSize / 2, -scaledSize / 2, scaledSize, scaledSize);
+              } else if (!tile.dataUrl) {
+                ctx.drawImage(
+                  tilesetImg,
+                  tile.x * TILE_SIZE, tile.y * TILE_SIZE, TILE_SIZE, TILE_SIZE,
+                  -scaledSize / 2, -scaledSize / 2, scaledSize, scaledSize
+                );
+              }
               ctx.restore();
 
               for (let dy = 0; dy < tileSize; dy++) {
@@ -399,16 +715,28 @@
               ctx.save();
               ctx.translate(x * TILE_SIZE + TILE_SIZE / 2, y * TILE_SIZE + TILE_SIZE / 2);
               ctx.rotate(rotation * Math.PI / 2);
-              ctx.drawImage(
-                tilesetImg,
-                tile.x * TILE_SIZE, tile.y * TILE_SIZE, TILE_SIZE, TILE_SIZE,
-                -TILE_SIZE / 2, -TILE_SIZE / 2, TILE_SIZE, TILE_SIZE
-              );
+              if (tile.dataUrl && uploadedImages[tileId]) {
+                ctx.drawImage(uploadedImages[tileId], -TILE_SIZE / 2, -TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
+              } else if (!tile.dataUrl) {
+                ctx.drawImage(
+                  tilesetImg,
+                  tile.x * TILE_SIZE, tile.y * TILE_SIZE, TILE_SIZE, TILE_SIZE,
+                  -TILE_SIZE / 2, -TILE_SIZE / 2, TILE_SIZE, TILE_SIZE
+                );
+              }
               ctx.restore();
             }
           }
         }
       }
+
+      // Render objects
+      mapObjects.forEach(obj => {
+        const img = objectImages[obj.img];
+        if (img) {
+          ctx.drawImage(img, obj.x * TILE_SIZE, obj.y * TILE_SIZE);
+        }
+      });
 
       function checkIsTopLeft(x, y, tileId, size) {
         if (size === 1) return true;
@@ -442,29 +770,50 @@
       }
 
       if (hoverX >= 0 && hoverY >= 0) {
-        const tile = TILES.find(t => t.id === selectedTile);
-        if (tile) {
-          const tileSize = tile.size || 1;
-          const scaledSize = TILE_SIZE * tileSize;
-          const centerX = hoverX * TILE_SIZE + scaledSize / 2;
-          const centerY = hoverY * TILE_SIZE + scaledSize / 2;
+        if (currentMode === 'tile') {
+          const tile = TILES.find(t => t.id === selectedTile) || uploadedTiles.find(t => t.id === selectedTile);
+          if (tile) {
+            const tileSize = tile.size || 1;
+            const scaledSize = TILE_SIZE * tileSize;
+            const centerX = hoverX * TILE_SIZE + scaledSize / 2;
+            const centerY = hoverY * TILE_SIZE + scaledSize / 2;
 
-          ctx.save();
-          ctx.globalAlpha = 0.6;
-          ctx.translate(centerX, centerY);
-          ctx.rotate(currentRotation * Math.PI / 2);
-          ctx.drawImage(
-            tilesetImg,
-            tile.x * TILE_SIZE, tile.y * TILE_SIZE, TILE_SIZE, TILE_SIZE,
-            -scaledSize / 2, -scaledSize / 2, scaledSize, scaledSize
-          );
-          ctx.restore();
+            ctx.save();
+            ctx.globalAlpha = 0.6;
+            ctx.translate(centerX, centerY);
+            ctx.rotate(currentRotation * Math.PI / 2);
+            if (tile.dataUrl && uploadedImages[selectedTile]) {
+              // For uploaded tiles, always use TILE_SIZE (40x40) regardless of tile.size
+              const img = uploadedImages[selectedTile];
+              const displaySize = TILE_SIZE; // Always 40x40 for uploaded tiles
+              ctx.drawImage(img, -displaySize / 2, -displaySize / 2, displaySize, displaySize);
+            } else if (!tile.dataUrl) {
+              ctx.drawImage(
+                tilesetImg,
+                tile.x * TILE_SIZE, tile.y * TILE_SIZE, TILE_SIZE, TILE_SIZE,
+                -scaledSize / 2, -scaledSize / 2, scaledSize, scaledSize
+              );
+            }
+            ctx.restore();
 
-          ctx.strokeStyle = '#e94560';
-          ctx.lineWidth = 2;
-          const previewWidth = Math.min(tileSize, MAP_WIDTH - hoverX) * TILE_SIZE;
-          const previewHeight = Math.min(tileSize, MAP_HEIGHT - hoverY) * TILE_SIZE;
-          ctx.strokeRect(hoverX * TILE_SIZE, hoverY * TILE_SIZE, previewWidth, previewHeight);
+            ctx.strokeStyle = '#e94560';
+            ctx.lineWidth = 2;
+            const previewWidth = Math.min(tileSize, MAP_WIDTH - hoverX) * TILE_SIZE;
+            const previewHeight = Math.min(tileSize, MAP_HEIGHT - hoverY) * TILE_SIZE;
+            ctx.strokeRect(hoverX * TILE_SIZE, hoverY * TILE_SIZE, previewWidth, previewHeight);
+          }
+        } else if (currentMode === 'object' && selectedObject) {
+          const img = objectImages[selectedObject];
+          if (img) {
+            ctx.save();
+            ctx.globalAlpha = 0.6;
+            ctx.drawImage(img, hoverX * TILE_SIZE, hoverY * TILE_SIZE);
+            ctx.restore();
+
+            ctx.strokeStyle = '#e94560';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(hoverX * TILE_SIZE, hoverY * TILE_SIZE, img.width, img.height);
+          }
         }
       }
     }
@@ -487,8 +836,10 @@
           mapData[y][x] = 5;
         }
       }
+      mapObjects = [];
       renderMap();
       saveMapData();
+      saveMapObjects();
     }
 
     let isDrawing = false;
@@ -496,16 +847,35 @@
     let hoverY = -1;
 
     canvas.addEventListener('mousedown', (e) => {
+      if (currentMode === 'object' && e.button === 2) {
+        // Right click to delete object
+        e.preventDefault();
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        const x = Math.floor((e.clientX - rect.left) * scaleX / TILE_SIZE);
+        const y = Math.floor((e.clientY - rect.top) * scaleY / TILE_SIZE);
+        deleteObjectAt(x, y);
+        return;
+      }
       saveUndoState();
       isDrawing = true;
-      paintTile(e);
+      if (currentMode === 'tile') {
+        paintTile(e);
+      } else if (currentMode === 'object') {
+        placeObject(e);
+      }
     });
 
     canvas.addEventListener('mousemove', (e) => {
       updateCursorInfo(e);
       updateHoverPosition(e);
       if (isDrawing) {
-        paintTile(e);
+        if (currentMode === 'tile') {
+          paintTile(e);
+        } else if (currentMode === 'object') {
+          placeObject(e);
+        }
       }
     });
 
@@ -519,6 +889,10 @@
       hoverY = -1;
       renderMap();
       document.getElementById('cursorInfo').textContent = '座標: -';
+    });
+
+    canvas.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
     });
 
     function updateHoverPosition(e) {
@@ -545,9 +919,20 @@
       const y = Math.floor((e.clientY - rect.top) * scaleY / TILE_SIZE);
 
       if (x >= 0 && x < MAP_WIDTH && y >= 0 && y < MAP_HEIGHT) {
-        const currentTile = mapData[y][x];
-        const tileName = TILES.find(t => t.id === currentTile)?.name || 'unknown';
-        document.getElementById('cursorInfo').textContent = `Position: (${x}, ${y}) - ${tileName}`;
+        if (currentMode === 'tile') {
+          const currentTileValue = mapData[y][x];
+          const { tileId } = decodeRotation(currentTileValue);
+          const currentTile = TILES.find(t => t.id === tileId) || uploadedTiles.find(t => t.id === tileId);
+          const tileName = currentTile?.name || 'unknown';
+          document.getElementById('cursorInfo').textContent = `Position: (${x}, ${y}) - ${tileName}`;
+        } else {
+          const objAtPos = mapObjects.find(obj => obj.x === x && obj.y === y);
+          if (objAtPos) {
+            document.getElementById('cursorInfo').textContent = `Position: (${x}, ${y}) - Object: ${objAtPos.img}`;
+          } else {
+            document.getElementById('cursorInfo').textContent = `Position: (${x}, ${y})`;
+          }
+        }
       }
     }
 
@@ -559,7 +944,7 @@
       const y = Math.floor((e.clientY - rect.top) * scaleY / TILE_SIZE);
 
       if (x >= 0 && x < MAP_WIDTH && y >= 0 && y < MAP_HEIGHT) {
-        const tile = TILES.find(t => t.id === selectedTile);
+        const tile = TILES.find(t => t.id === selectedTile) || uploadedTiles.find(t => t.id === selectedTile);
         const tileSize = tile?.size || 1;
 
         for (let dy = 0; dy < tileSize; dy++) {
@@ -574,6 +959,38 @@
         renderMap();
         saveMapData();
       }
+    }
+
+    function placeObject(e) {
+      if (!selectedObject) return;
+      
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      const x = Math.floor((e.clientX - rect.left) * scaleX / TILE_SIZE);
+      const y = Math.floor((e.clientY - rect.top) * scaleY / TILE_SIZE);
+
+      if (x >= 0 && x < MAP_WIDTH && y >= 0 && y < MAP_HEIGHT) {
+        // Remove existing object at this position
+        mapObjects = mapObjects.filter(obj => !(obj.x === x && obj.y === y));
+        
+        // Add new object
+        mapObjects.push({
+          img: selectedObject,
+          collision: objectCollision,
+          x: x,
+          y: y
+        });
+        
+        renderMap();
+        saveMapObjects();
+      }
+    }
+
+    function deleteObjectAt(x, y) {
+      mapObjects = mapObjects.filter(obj => !(obj.x === x && obj.y === y));
+      renderMap();
+      saveMapObjects();
     }
 
     function exportTMX() {
@@ -600,8 +1017,31 @@ ${csvData}
       downloadFile(mapName + '.tmx', tmx);
     }
 
+    function exportObjects() {
+      const mapName = document.getElementById('mapName').value || 'new-map';
+      
+      const metaData = {
+        collision_gid: [],
+        exit: [],
+        object: mapObjects.map(obj => ({
+          img: obj.img,
+          collision: obj.collision,
+          x: obj.x,
+          y: obj.y
+        })),
+        entity: {
+          npc: []
+        },
+        music: "",
+        walk_sound: ""
+      };
+      
+      downloadFile(mapName + '.objects.json', JSON.stringify(metaData, null, 2));
+    }
+
     function downloadFile(filename, content) {
-      const blob = new Blob([content], { type: 'text/xml' });
+      const mimeType = filename.endsWith('.json') ? 'application/json' : 'text/xml';
+      const blob = new Blob([content], { type: mimeType });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
@@ -677,6 +1117,191 @@ ${csvData}
 
       reader.readAsText(file);
       event.target.value = '';
+    }
+
+    function importMeta(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const content = JSON.parse(e.target.result);
+          
+          saveUndoState();
+          
+          if (content.object && Array.isArray(content.object)) {
+            mapObjects = content.object.map(obj => ({
+              img: obj.img,
+              collision: obj.collision !== undefined ? obj.collision : true,
+              x: obj.x,
+              y: obj.y
+            }));
+            saveMapObjects();
+          }
+          
+          renderMap();
+          alert('導入 Meta 成功！');
+        } catch (error) {
+          alert('無法讀取 Meta 檔案：' + error.message);
+        }
+      };
+
+      reader.readAsText(file);
+      event.target.value = '';
+    }
+
+    function uploadAssets(event) {
+      const files = Array.from(event.target.files);
+      if (files.length === 0) return;
+
+      files.forEach(file => {
+        if (!file.type.startsWith('image/')) return;
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const dataUrl = e.target.result;
+          const fileName = file.name.replace(/\.[^/.]+$/, "");
+          
+          const img = new Image();
+          img.onload = () => {
+            if (img.width !== 40 || img.height !== 40) {
+              alert(`圖片尺寸必須是 40x40 像素。上傳的圖片是 ${img.width}x${img.height} 像素。`);
+              return;
+            }
+            
+            const nextId = Math.max(...TILES.map(t => t.id), ...uploadedTiles.map(t => t.id), 0) + 1;
+
+            const newTile = {
+              id: nextId,
+              name: fileName,
+              dataUrl: dataUrl,
+              size: 1,
+              uploadDate: new Date().toISOString()
+            };
+
+            uploadedTiles.push(newTile);
+            uploadedImages[nextId] = img;
+            saveUploadedTiles();
+
+            const blob = dataURLtoBlob(dataUrl);
+            const fileName_ext = file.name;
+            saveAssetToFolder(blob, fileName_ext);
+
+            initPalette();
+          };
+          img.src = dataUrl;
+        };
+        reader.readAsDataURL(file);
+      });
+
+      event.target.value = '';
+    }
+
+    function dataURLtoBlob(dataURL) {
+      const arr = dataURL.split(',');
+      const mime = arr[0].match(/:(.*?);/)[1];
+      const bstr = atob(arr[1]);
+      let n = bstr.length;
+      const u8arr = new Uint8Array(n);
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+      }
+      return new Blob([u8arr], { type: mime });
+    }
+
+    function saveAssetToFolder(blob, fileName) {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = fileName;
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function deleteUploadedTile(tileId) {
+      if (confirm('確定要刪除這個素材嗎？')) {
+        uploadedTiles = uploadedTiles.filter(tile => tile.id !== tileId);
+        delete uploadedImages[tileId];
+        saveUploadedTiles();
+        
+        if (selectedTile === tileId) {
+          selectedTile = 5;
+        }
+        
+        for (let y = 0; y < MAP_HEIGHT; y++) {
+          for (let x = 0; x < MAP_WIDTH; x++) {
+            const { tileId: currentTileId } = decodeRotation(mapData[y][x]);
+            if (currentTileId === tileId) {
+              mapData[y][x] = 5;
+            }
+          }
+        }
+        
+        initPalette();
+        renderMap();
+        saveMapData();
+      }
+    }
+
+    function uploadObjects(event) {
+      const files = Array.from(event.target.files);
+      if (files.length === 0) return;
+
+      files.forEach(file => {
+        if (!file.type.startsWith('image/')) return;
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const dataUrl = e.target.result;
+          const fileName = file.name.replace(/\.[^/.]+$/, "");
+          
+          const img = new Image();
+          img.onload = () => {
+            const newObject = {
+              name: fileName,
+              dataUrl: dataUrl,
+              uploadDate: new Date().toISOString()
+            };
+
+            uploadedObjects.push(newObject);
+            objectImages[fileName] = img;
+            saveUploadedObjects();
+
+            const blob = dataURLtoBlob(dataUrl);
+            const fileName_ext = file.name;
+            saveAssetToFolder(blob, fileName_ext);
+
+            initObjectPalette();
+          };
+          img.src = dataUrl;
+        };
+        reader.readAsDataURL(file);
+      });
+
+      event.target.value = '';
+    }
+
+    function deleteUploadedObject(name) {
+      if (confirm('確定要刪除這個物件嗎？')) {
+        uploadedObjects = uploadedObjects.filter(obj => obj.name !== name);
+        delete objectImages[name];
+        saveUploadedObjects();
+        
+        // Remove objects from map
+        mapObjects = mapObjects.filter(obj => obj.img !== name);
+        saveMapObjects();
+        
+        if (selectedObject === name) {
+          selectedObject = null;
+        }
+        
+        initObjectPalette();
+        renderMap();
+      }
     }
   </script>
 </body>

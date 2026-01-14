@@ -1,0 +1,202 @@
+
+
+{
+  "collision_gid": [2],
+  "exit": [
+    {
+      "source_x": 31,
+      "source_y": 6,
+      "dist": "village"
+    },
+    {
+      "source_x": 31,
+      "source_y": 7,
+      "dist": "village"
+    },
+    {
+      "source_x": 31,
+      "source_y": 8,
+      "dist": "village"
+    },
+    {
+      "source_x": 31,
+      "source_y": 9,
+      "dist": "village"
+    }
+  ],
+  "object": [
+    {
+      "img": "Sprite-0021",
+      "collision": true,
+      "x": 8,
+      "y": 6
+    },
+    {
+      "img": "Sprite-0021",
+      "collision": true,
+      "x": 26,
+      "y": 4
+    },
+    {
+      "img": "Sprite-0021",
+      "collision": true,
+      "x": 27,
+      "y": 12
+    },
+    {
+      "img": "Sprite-0022",
+      "collision": true,
+      "x": 1,
+      "y": 6
+    },
+    {
+      "img": "Sprite-0022",
+      "collision": true,
+      "x": 7,
+      "y": 9
+    },
+    {
+      "img": "Sprite-0022",
+      "collision": true,
+      "x": 20,
+      "y": 7
+    },
+    {
+      "img": "Sprite-0022",
+      "collision": true,
+      "x": 25,
+      "y": 9
+    },
+    {
+      "img": "Sprite-0022",
+      "collision": true,
+      "x": 30,
+      "y": 1
+    },
+    {
+      "img": "stone1",
+      "collision": true,
+      "x": 10,
+      "y": 8
+    },
+    {
+      "img": "stone2",
+      "collision": true,
+      "x": 11,
+      "y": 8
+    },
+    {
+      "img": "stone3",
+      "collision": true,
+      "x": 12,
+      "y": 8
+    },
+    {
+      "img": "stone7",
+      "collision": true,
+      "x": 10,
+      "y": 9
+    },
+    {
+      "img": "stone8",
+      "collision": true,
+      "x": 11,
+      "y": 9
+    },
+    {
+      "img": "stone9",
+      "collision": true,
+      "x": 12,
+      "y": 9
+    },
+    {
+      "img": "100",
+      "collision": true,
+      "x": 0,
+      "y": 5
+    },
+    {
+      "img": "100",
+      "collision": true,
+      "x": 0,
+      "y": 11
+    },
+    {
+      "img": "100",
+      "collision": true,
+      "x": 3,
+      "y": 6
+    },
+    {
+      "img": "100",
+      "collision": true,
+      "x": 3,
+      "y": 10
+    },
+    {
+      "img": "100",
+      "collision": true,
+      "x": 7,
+      "y": 6
+    },
+    {
+      "img": "100",
+      "collision": true,
+      "x": 7,
+      "y": 10
+    },
+    {
+      "img": "100",
+      "collision": true,
+      "x": 11,
+      "y": 6
+    },
+    {
+      "img": "100",
+      "collision": true,
+      "x": 11,
+      "y": 10
+    },
+    {
+      "img": "100",
+      "collision": true,
+      "x": 15,
+      "y": 6
+    },
+    {
+      "img": "100",
+      "collision": true,
+      "x": 15,
+      "y": 10
+    },
+    {
+      "img": "100",
+      "collision": true,
+      "x": 19,
+      "y": 6
+    },
+    {
+      "img": "100",
+      "collision": true,
+      "x": 19,
+      "y": 10
+    },
+    {
+      "img": "100",
+      "collision": true,
+      "x": 23,
+      "y": 6
+    },
+    {
+      "img": "100",
+      "collision": true,
+      "x": 23,
+      "y": 10
+    }
+  ],
+  "entity": {
+    "npc": []
+  },
+  "music": "",
+  "walk_sound": ""
+}

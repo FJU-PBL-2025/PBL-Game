@@ -1,0 +1,37 @@
+{
+  "collision_gid": [31,32,34,35],
+  "exit": [
+    {
+      "source_x": 31,
+      "source_y": 8,
+      "dist": "final-boss",
+      "dist_x": 0,
+      "dist_y": 8
+    },
+    {
+      "source_x": 31,
+      "source_y": 7,
+      "dist": "final-boss",
+      "dist_x": 0,
+      "dist_y": 8
+    },
+    {
+      "source_x": 31,
+      "source_y": 9,
+      "dist": "final-boss",
+      "dist_x": 0,
+      "dist_y": 8
+    }
+
+  ],
+  "entry_point": {
+    "x": 16,
+    "y": 14
+  },
+  "object": [],
+  "entity": {
+    "npc": []
+  },
+  "music": "",
+  "walk_sound": "walking_grass"
+}

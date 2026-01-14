@@ -16,7 +16,13 @@ class GameWorldState(State):
   def __init__(self, game: "Game"):
     State.__init__(self, game)
     
-    self.map_loader: MapLoader = MapLoader("test-map")
+    self.map_loader: MapLoader = MapLoader("village")
+    
+    # Set player position to entry point
+    self.game.player.set_position(
+      self.map_loader.metadata.entry_x * self.map_loader.map.tilewidth + self.map_loader.map.tilewidth // 2,
+      self.map_loader.metadata.entry_y * self.map_loader.map.tileheight + self.map_loader.map.tileheight // 2
+    )
 
   def update(self, delta_time: float):
     i_m = self.game.input_manager
@@ -67,6 +73,7 @@ class GameWorldState(State):
       delta_time,
       i_m,
       self.map_loader.tiles,
+      self.map_loader.objects,
       self.map_loader.metadata
     )
     

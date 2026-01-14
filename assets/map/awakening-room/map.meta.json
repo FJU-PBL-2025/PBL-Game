@@ -1,0 +1,36 @@
+{
+  "collision_gid": [13, 2],
+  "exit": [    
+    {
+      "source_x": 19,
+      "source_y": 8,
+      "dist": "bridge",
+      "dist_x": 0,
+      "dist_y": 8
+    },
+    {
+      "source_x": 19,
+      "source_y": 7,
+      "dist": "bridge",
+      "dist_x": 0,
+      "dist_y": 8
+    },
+    {
+      "source_x": 19,
+      "source_y": 9,
+      "dist": "bridge",
+      "dist_x": 0,
+      "dist_y": 8
+    }
+  ],
+  "entry_point": {
+    "x": 15,
+    "y": 8
+  },
+  "object": [],
+  "entity": {
+    "npc": []
+  },
+  "music": "",
+  "walk_sound": "walking_grass"
+}

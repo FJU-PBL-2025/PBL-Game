@@ -8,11 +8,15 @@ class AudioManager():
 
   @staticmethod
   def play_background_music(name: str):
+    if not name or name.strip() == "":
+      return
     pygame.mixer.music.load(f"./assets/audio/{name}.mp3")
     pygame.mixer.music.play(-1)
   
   @staticmethod
   def play_sound(name: str, channel: int = 0, override: bool = False):
+    if not name or name.strip() == "":
+      return
     sound = pygame.mixer.Sound(f"./assets/audio/{name}.mp3")
     
     if pygame.mixer.Channel(channel).get_busy():

@@ -1,0 +1,1479 @@
+{
+  "collision_gid": [],
+  "exit": [
+    {
+      "source_x": 16,
+      "source_y": 17,
+      "dist": "desert_entrance",
+      "dist_x": 16,
+      "dist_y": 0
+    },
+    {
+      "source_x": 17,
+      "source_y": 17,
+      "dist": "desert_entrance",
+      "dist_x": 17,
+      "dist_y": 0
+    },
+    {
+      "source_x": 18,
+      "source_y": 17,
+      "dist": "desert_entrance",
+      "dist_x": 18,
+      "dist_y": 0
+    },
+    {
+      "source_x": 31,
+      "source_y": 8,
+      "dist": "snow_mountain_entrance",
+      "dist_x": 0,
+      "dist_y": 8
+    },
+    {
+      "source_x": 31,
+      "source_y": 9,
+      "dist": "snow_mountain_entrance",
+      "dist_x": 0,
+      "dist_y": 9
+    }
+  ],
+  "entry_point": {
+    "x": 17.5,
+    "y": 4.5
+  },
+  "object": [
+    {
+      "img": "門",
+      "collision": true,
+      "x": 3,
+      "y": 9
+    },
+    {
+      "img": "房子主體",
+      "collision": true,
+      "x": 2,
+      "y": 9
+    },
+    {
+      "img": "房子主體",
+      "collision": true,
+      "x": 1,
+      "y": 9
+    },
+    {
+      "img": "房子主體",
+      "collision": true,
+      "x": 4,
+      "y": 9
+    },
+    {
+      "img": "房子主體(上左)",
+      "collision": true,
+      "x": 2,
+      "y": 8
+    },
+    {
+      "img": "房子主體(上右)",
+      "collision": true,
+      "x": 3,
+      "y": 8
+    },
+    {
+      "img": "屋頂(前端右斜2)",
+      "collision": true,
+      "x": 4,
+      "y": 8
+    },
+    {
+      "img": "屋頂(右斜2)",
+      "collision": true,
+      "x": 4,
+      "y": 6
+    },
+    {
+      "img": "屋頂(左斜)",
+      "collision": true,
+      "x": 2,
+      "y": 6
+    },
+    {
+      "img": "屋頂(右斜)",
+      "collision": true,
+      "x": 3,
+      "y": 6
+    },
+    {
+      "img": "屋頂木板",
+      "collision": true,
+      "x": 1,
+      "y": 7
+    },
+    {
+      "img": "屋頂木板",
+      "collision": true,
+      "x": 4,
+      "y": 7
+    },
+    {
+      "img": "屋頂(前端左斜2)",
+      "collision": true,
+      "x": 1,
+      "y": 8
+    },
+    {
+      "img": "屋頂(前端右斜)",
+      "collision": true,
+      "x": 3,
+      "y": 7
+    },
+    {
+      "img": "屋頂(前端左斜)",
+      "collision": true,
+      "x": 2,
+      "y": 7
+    },
+    {
+      "img": "煙囪",
+      "collision": true,
+      "x": 1,
+      "y": 6
+    },
+    {
+      "img": "房子主體",
+      "collision": true,
+      "x": 8,
+      "y": 6
+    },
+    {
+      "img": "房子主體",
+      "collision": true,
+      "x": 9,
+      "y": 6
+    },
+    {
+      "img": "房子主體",
+      "collision": true,
+      "x": 11,
+      "y": 6
+    },
+    {
+      "img": "門",
+      "collision": true,
+      "x": 10,
+      "y": 6
+    },
+    {
+      "img": "屋頂(前端左斜2)",
+      "collision": true,
+      "x": 8,
+      "y": 5
+    },
+    {
+      "img": "屋頂(前端右斜2)",
+      "collision": true,
+      "x": 11,
+      "y": 5
+    },
+    {
+      "img": "屋頂(前端左斜)",
+      "collision": true,
+      "x": 9,
+      "y": 4
+    },
+    {
+      "img": "屋頂(前端右斜)",
+      "collision": true,
+      "x": 10,
+      "y": 4
+    },
+    {
+      "img": "房子主體(上右)",
+      "collision": true,
+      "x": 10,
+      "y": 5
+    },
+    {
+      "img": "房子主體(上左)",
+      "collision": true,
+      "x": 9,
+      "y": 5
+    },
+    {
+      "img": "屋頂木板",
+      "collision": true,
+      "x": 8,
+      "y": 4
+    },
+    {
+      "img": "屋頂木板",
+      "collision": true,
+      "x": 11,
+      "y": 4
+    },
+    {
+      "img": "屋頂(左斜2)",
+      "collision": true,
+      "x": 8,
+      "y": 3
+    },
+    {
+      "img": "屋頂(右斜2)",
+      "collision": true,
+      "x": 11,
+      "y": 3
+    },
+    {
+      "img": "屋頂(左斜)",
+      "collision": true,
+      "x": 9,
+      "y": 3
+    },
+    {
+      "img": "屋頂(右斜)",
+      "collision": true,
+      "x": 10,
+      "y": 3
+    },
+    {
+      "img": "ttt1",
+      "collision": true,
+      "x": 5,
+      "y": 1
+    },
+    {
+      "img": "ttt1",
+      "collision": true,
+      "x": 1,
+      "y": 11
+    },
+    {
+      "img": "ttt1",
+      "collision": true,
+      "x": 24,
+      "y": 3
+    },
+    {
+      "img": "ttt2",
+      "collision": true,
+      "x": 0,
+      "y": 2
+    },
+    {
+      "img": "房子主體",
+      "collision": true,
+      "x": 8,
+      "y": 14
+    },
+    {
+      "img": "門",
+      "collision": true,
+      "x": 10,
+      "y": 14
+    },
+    {
+      "img": "房子主體",
+      "collision": true,
+      "x": 11,
+      "y": 14
+    },
+    {
+      "img": "屋頂(右斜)",
+      "collision": true,
+      "x": 10,
+      "y": 11
+    },
+    {
+      "img": "屋頂(左斜)",
+      "collision": true,
+      "x": 9,
+      "y": 11
+    },
+    {
+      "img": "屋頂(前端右斜)",
+      "collision": true,
+      "x": 11,
+      "y": 12
+    },
+    {
+      "img": "屋頂(前端左斜)",
+      "collision": true,
+      "x": 8,
+      "y": 12
+    },
+    {
+      "img": "屋頂(前端左斜2)",
+      "collision": true,
+      "x": 9,
+      "y": 12
+    },
+    {
+      "img": "屋頂(前端右斜2)",
+      "collision": true,
+      "x": 10,
+      "y": 12
+    },
+    {
+      "img": "屋頂(前端右斜2)",
+      "collision": true,
+      "x": 12,
+      "y": 13
+    },
+    {
+      "img": "屋頂(前端左斜2)",
+      "collision": true,
+      "x": 7,
+      "y": 13
+    },
+    {
+      "img": "房子主體(上左)",
+      "collision": true,
+      "x": 8,
+      "y": 13
+    },
+    {
+      "img": "房子主體",
+      "collision": true,
+      "x": 9,
+      "y": 13
+    },
+    {
+      "img": "房子主體",
+      "collision": true,
+      "x": 10,
+      "y": 13
+    },
+    {
+      "img": "房子主體",
+      "collision": true,
+      "x": 7,
+      "y": 14
+    },
+    {
+      "img": "房子主體",
+      "collision": true,
+      "x": 12,
+      "y": 14
+    },
+    {
+      "img": "房子主體(上右)",
+      "collision": true,
+      "x": 11,
+      "y": 13
+    },
+    {
+      "img": "門",
+      "collision": true,
+      "x": 9,
+      "y": 14
+    },
+    {
+      "img": "Sprite-0001",
+      "collision": true,
+      "x": 5,
+      "y": 4
+    },
+    {
+      "img": "Sprite-0001",
+      "collision": true,
+      "x": 6,
+      "y": 11
+    },
+    {
+      "img": "Sprite-0001",
+      "collision": true,
+      "x": 16,
+      "y": 11
+    },
+    {
+      "img": "Sprite-0001",
+      "collision": true,
+      "x": 24,
+      "y": 13
+    },
+    {
+      "img": "Sprite-0001",
+      "collision": true,
+      "x": 24,
+      "y": 2
+    },
+    {
+      "img": "Sprite-0001",
+      "collision": true,
+      "x": 28,
+      "y": 6
+    },
+    {
+      "img": "Sprite-0004",
+      "collision": true,
+      "x": 12,
+      "y": 7
+    },
+    {
+      "img": "Sprite-0004",
+      "collision": true,
+      "x": 13,
+      "y": 7
+    },
+    {
+      "img": "Sprite-0004",
+      "collision": true,
+      "x": 14,
+      "y": 7
+    },
+    {
+      "img": "Sprite-0004",
+      "collision": true,
+      "x": 15,
+      "y": 7
+    },
+    {
+      "img": "Sprite-0004",
+      "collision": true,
+      "x": 16,
+      "y": 7
+    },
+    {
+      "img": "Sprite-0004",
+      "collision": true,
+      "x": 7,
+      "y": 7
+    },
+    {
+      "img": "Sprite-0004",
+      "collision": true,
+      "x": 6,
+      "y": 7
+    },
+    {
+      "img": "Sprite-0004",
+      "collision": true,
+      "x": 5,
+      "y": 7
+    },
+    {
+      "img": "Sprite-0004",
+      "collision": true,
+      "x": 5,
+      "y": 10
+    },
+    {
+      "img": "Sprite-0004",
+      "collision": true,
+      "x": 6,
+      "y": 10
+    },
+    {
+      "img": "Sprite-0004",
+      "collision": true,
+      "x": 7,
+      "y": 10
+    },
+    {
+      "img": "Sprite-0004",
+      "collision": true,
+      "x": 12,
+      "y": 10
+    },
+    {
+      "img": "Sprite-0004",
+      "collision": true,
+      "x": 13,
+      "y": 10
+    },
+    {
+      "img": "Sprite-0004",
+      "collision": true,
+      "x": 14,
+      "y": 10
+    },
+    {
+      "img": "Sprite-0004",
+      "collision": true,
+      "x": 15,
+      "y": 10
+    },
+    {
+      "img": "Sprite-0004",
+      "collision": true,
+      "x": 16,
+      "y": 10
+    },
+    {
+      "img": "Sprite-0003",
+      "collision": true,
+      "x": 5,
+      "y": 5
+    },
+    {
+      "img": "Sprite-0003",
+      "collision": true,
+      "x": 24,
+      "y": 5
+    },
+    {
+      "img": "Sprite-0003",
+      "collision": true,
+      "x": 13,
+      "y": 16
+    },
+    {
+      "img": "Sprite-0012",
+      "collision": false,
+      "x": 22,
+      "y": 10
+    },
+    {
+      "img": "Sprite-0012",
+      "collision": false,
+      "x": 19,
+      "y": 6
+    },
+    {
+      "img": "Sprite-0012",
+      "collision": false,
+      "x": 26,
+      "y": 6
+    },
+    {
+      "img": "Sprite-0012",
+      "collision": false,
+      "x": 21,
+      "y": 2
+    },
+    {
+      "img": "Sprite-0012",
+      "collision": false,
+      "x": 13,
+      "y": 3
+    },
+    {
+      "img": "Sprite-0012",
+      "collision": false,
+      "x": 15,
+      "y": 4
+    },
+    {
+      "img": "Sprite-0012",
+      "collision": false,
+      "x": 13,
+      "y": 6
+    },
+    {
+      "img": "Sprite-0012",
+      "collision": false,
+      "x": 15,
+      "y": 2
+    },
+    {
+      "img": "Sprite-0012",
+      "collision": false,
+      "x": 3,
+      "y": 3
+    },
+    {
+      "img": "Sprite-0012",
+      "collision": false,
+      "x": 3,
+      "y": 13
+    },
+    {
+      "img": "Sprite-0012",
+      "collision": false,
+      "x": 9,
+      "y": 15
+    },
+    {
+      "img": "Sprite-0012",
+      "collision": false,
+      "x": 20,
+      "y": 15
+    },
+    {
+      "img": "Sprite-0012",
+      "collision": false,
+      "x": 26,
+      "y": 16
+    },
+    {
+      "img": "Sprite-0012",
+      "collision": false,
+      "x": 27,
+      "y": 14
+    },
+    {
+      "img": "Sprite-0012",
+      "collision": false,
+      "x": 26,
+      "y": 12
+    },
+    {
+      "img": "tttttt1",
+      "collision": true,
+      "x": 6,
+      "y": 14
+    },
+    {
+      "img": "tttttt1",
+      "collision": true,
+      "x": 22,
+      "y": 15
+    },
+    {
+      "img": "S__1662983",
+      "collision": true,
+      "x": 20,
+      "y": 5
+    },
+    {
+      "img": "屋頂(左斜)",
+      "collision": true,
+      "x": 7,
+      "y": 12
+    },
+    {
+      "img": "屋頂(右斜)",
+      "collision": true,
+      "x": 12,
+      "y": 12
+    },
+    {
+      "img": "煙囪",
+      "collision": true,
+      "x": 8,
+      "y": 11
+    },
+    {
+      "img": "煙囪",
+      "collision": true,
+      "x": 11,
+      "y": 11
+    },
+    {
+      "img": "房子主體",
+      "collision": true,
+      "x": 16,
+      "y": 3
+    },
+    {
+      "img": "房子主體",
+      "collision": true,
+      "x": 17,
+      "y": 3
+    },
+    {
+      "img": "房子主體",
+      "collision": true,
+      "x": 19,
+      "y": 3
+    },
+    {
+      "img": "門",
+      "collision": true,
+      "x": 18,
+      "y": 3
+    },
+    {
+      "img": "Sprite-0011",
+      "collision": true,
+      "x": 8,
+      "y": 7
+    },
+    {
+      "img": "Sprite-0011",
+      "collision": true,
+      "x": 11,
+      "y": 7
+    },
+    {
+      "img": "Sprite-0011",
+      "collision": true,
+      "x": 8,
+      "y": 10
+    },
+    {
+      "img": "Sprite-0011",
+      "collision": true,
+      "x": 11,
+      "y": 10
+    },
+    {
+      "img": "屋頂(前端左斜2)",
+      "collision": true,
+      "x": 16,
+      "y": 2
+    },
+    {
+      "img": "屋頂(前端右斜2)",
+      "collision": true,
+      "x": 19,
+      "y": 2
+    },
+    {
+      "img": "屋頂(前端左斜)",
+      "collision": true,
+      "x": 17,
+      "y": 1
+    },
+    {
+      "img": "屋頂(前端右斜)",
+      "collision": true,
+      "x": 18,
+      "y": 1
+    },
+    {
+      "img": "房子主體(上左)",
+      "collision": true,
+      "x": 17,
+      "y": 2
+    },
+    {
+      "img": "房子主體(上右)",
+      "collision": true,
+      "x": 18,
+      "y": 2
+    },
+    {
+      "img": "屋頂(左斜2)",
+      "collision": true,
+      "x": 16,
+      "y": 0
+    },
+    {
+      "img": "屋頂(左斜)",
+      "collision": true,
+      "x": 17,
+      "y": 0
+    },
+    {
+      "img": "屋頂(右斜)",
+      "collision": true,
+      "x": 18,
+      "y": 0
+    },
+    {
+      "img": "屋頂木板",
+      "collision": true,
+      "x": 16,
+      "y": 1
+    },
+    {
+      "img": "屋頂木板",
+      "collision": true,
+      "x": 19,
+      "y": 1
+    },
+    {
+      "img": "煙囪",
+      "collision": true,
+      "x": 19,
+      "y": 0
+    },
+    {
+      "img": "tree3",
+      "collision": true,
+      "x": 10,
+      "y": 0
+    },
+    {
+      "img": "tree3",
+      "collision": true,
+      "x": 2,
+      "y": 1
+    },
+    {
+      "img": "tree3",
+      "collision": true,
+      "x": 26,
+      "y": 1
+    },
+    {
+      "img": "Sprite-0016",
+      "collision": true,
+      "x": 25,
+      "y": 11
+    },
+    {
+      "img": "Sprite-0016",
+      "collision": true,
+      "x": 15,
+      "y": 16
+    },
+    {
+      "img": "tttttt4",
+      "collision": true,
+      "x": 27,
+      "y": 10
+    },
+    {
+      "img": "village_path_middle",
+      "collision": false,
+      "x": 17,
+      "y": 8
+    },
+    {
+      "img": "village_path_floor",
+      "collision": false,
+      "x": 15,
+      "y": 8
+    },
+    {
+      "img": "village_path_floor",
+      "collision": false,
+      "x": 13,
+      "y": 8
+    },
+    {
+      "img": "village_path_floor",
+      "collision": false,
+      "x": 11,
+      "y": 8
+    },
+    {
+      "img": "village_path_floor",
+      "collision": false,
+      "x": 9,
+      "y": 8
+    },
+    {
+      "img": "village_path_floor",
+      "collision": false,
+      "x": 7,
+      "y": 8
+    },
+    {
+      "img": "village_path_floor",
+      "collision": false,
+      "x": 5,
+      "y": 8
+    },
+    {
+      "img": "village_path_floor",
+      "collision": false,
+      "x": 19,
+      "y": 8
+    },
+    {
+      "img": "village_path_floor",
+      "collision": false,
+      "x": 21,
+      "y": 8
+    },
+    {
+      "img": "village_path_floor",
+      "collision": false,
+      "x": 23,
+      "y": 8
+    },
+    {
+      "img": "village_path_floor",
+      "collision": false,
+      "x": 25,
+      "y": 8
+    },
+    {
+      "img": "village_path_floor",
+      "collision": false,
+      "x": 27,
+      "y": 8
+    },
+    {
+      "img": "village_path_floor",
+      "collision": false,
+      "x": 29,
+      "y": 8
+    },
+    {
+      "img": "village_path_floor_minus_90",
+      "collision": false,
+      "x": 17,
+      "y": 6
+    },
+    {
+      "img": "village_path_floor_minus_90",
+      "collision": false,
+      "x": 17,
+      "y": 4
+    },
+    {
+      "img": "village_path_floor_minus_90",
+      "collision": false,
+      "x": 17,
+      "y": 10
+    },
+    {
+      "img": "village_path_floor_minus_90",
+      "collision": false,
+      "x": 17,
+      "y": 12
+    },
+    {
+      "img": "village_path_floor_minus_90",
+      "collision": false,
+      "x": 17,
+      "y": 14
+    },
+    {
+      "img": "village_path_floor_minus_90",
+      "collision": false,
+      "x": 17,
+      "y": 16
+    },
+    {
+      "img": "121105",
+      "collision": true,
+      "x": 19,
+      "y": 10
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 1,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 2,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 3,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 4,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 5,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 6,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 7,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 8,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 9,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 10,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 11,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 12,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 13,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 14,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 15,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 16,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 17,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 18,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 19,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 20,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 21,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 22,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 23,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 24,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 25,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 26,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 27,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 28,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 29,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 30,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 31,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 31,
+      "y": 1
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 31,
+      "y": 2
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 31,
+      "y": 3
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 31,
+      "y": 4
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 31,
+      "y": 5
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 31,
+      "y": 6
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 31,
+      "y": 7
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 31,
+      "y": 10
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 31,
+      "y": 11
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 31,
+      "y": 12
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 31,
+      "y": 13
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 31,
+      "y": 14
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 31,
+      "y": 15
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 31,
+      "y": 16
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 31,
+      "y": 17
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 30,
+      "y": 17
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 29,
+      "y": 17
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 28,
+      "y": 17
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 27,
+      "y": 17
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 26,
+      "y": 17
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 25,
+      "y": 17
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 24,
+      "y": 17
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 23,
+      "y": 17
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 22,
+      "y": 17
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 21,
+      "y": 17
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 20,
+      "y": 17
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 19,
+      "y": 17
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 15,
+      "y": 17
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 14,
+      "y": 17
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 13,
+      "y": 17
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 12,
+      "y": 17
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 11,
+      "y": 17
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 10,
+      "y": 17
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 9,
+      "y": 17
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 8,
+      "y": 17
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 7,
+      "y": 17
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 6,
+      "y": 17
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 5,
+      "y": 17
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 4,
+      "y": 17
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 3,
+      "y": 17
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 2,
+      "y": 17
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 1,
+      "y": 17
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 0,
+      "y": 17
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 0,
+      "y": 16
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 0,
+      "y": 15
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 0,
+      "y": 14
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 0,
+      "y": 13
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 0,
+      "y": 12
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 0,
+      "y": 11
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 0,
+      "y": 10
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 0,
+      "y": 9
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 0,
+      "y": 8
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 0,
+      "y": 7
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 0,
+      "y": 6
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 0,
+      "y": 5
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 0,
+      "y": 4
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 0,
+      "y": 3
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 0,
+      "y": 2
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 0,
+      "y": 1
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 0,
+      "y": 0
+    }
+  ],
+  "entity": {
+    "npc": []
+  },
+  "music": "",
+  "walk_sound": "walking_grass"
+}

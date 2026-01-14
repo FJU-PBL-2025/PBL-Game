@@ -1,0 +1,415 @@
+{
+  "collision_gid": [6],
+  "exit": [
+    {
+      "source_x": 21,
+      "source_y": 17,
+      "dist": "village",
+      "dist_x": 17.5,
+      "dist_y": 4.5
+    },
+    {
+      "source_x": 22,
+      "source_y": 17,
+      "dist": "village",
+      "dist_x": 17.5,
+      "dist_y": 4.5
+    },
+    {
+      "source_x": 22,
+      "source_y": 17,
+      "dist": "village",
+      "dist_x": 17.5,
+      "dist_y": 4.5
+    }
+  ],
+  "entry_point": {
+    "x": 16,
+    "y": 15
+  },
+  "object": [
+    {
+      "img": "Sprite-0002",
+      "collision": true,
+      "x": 1,
+      "y": 3
+    },
+    {
+      "img": "Sprite-0002",
+      "collision": true,
+      "x": 4,
+      "y": 8
+    },
+    {
+      "img": "Sprite-0002",
+      "collision": true,
+      "x": 30,
+      "y": 2
+    },
+    {
+      "img": "Sprite-0002",
+      "collision": true,
+      "x": 27,
+      "y": 12
+    },
+    {
+      "img": "Sprite-0002",
+      "collision": true,
+      "x": 30,
+      "y": 8
+    },
+    {
+      "img": "Sprite-0003",
+      "collision": true,
+      "x": 2,
+      "y": 11
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 31,
+      "y": 12
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 31,
+      "y": 11
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 31,
+      "y": 10
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 31,
+      "y": 9
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 31,
+      "y": 8
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 31,
+      "y": 7
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 31,
+      "y": 6
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 31,
+      "y": 5
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 31,
+      "y": 4
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 31,
+      "y": 3
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 31,
+      "y": 2
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 31,
+      "y": 1
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 31,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 30,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 29,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 28,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 27,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 26,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 25,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 24,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 23,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 22,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 21,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 20,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 1,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 2,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 3,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 4,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 5,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 6,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 7,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 8,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 9,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 10,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 11,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 12,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 13,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 14,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 16,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 17,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 18,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 19,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 15,
+      "y": 0
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 0,
+      "y": 1
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 0,
+      "y": 2
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 0,
+      "y": 3
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 0,
+      "y": 4
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 0,
+      "y": 5
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 0,
+      "y": 6
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 0,
+      "y": 7
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 0,
+      "y": 8
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 0,
+      "y": 9
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 0,
+      "y": 10
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 0,
+      "y": 11
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 0,
+      "y": 12
+    },
+    {
+      "img": "border",
+      "collision": true,
+      "x": 0,
+      "y": 13
+    }
+  ],
+  "entity": {
+    "npc": []
+  },
+  "music": "",
+  "walk_sound": "walking_grass"
+}

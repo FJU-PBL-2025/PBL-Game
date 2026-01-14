@@ -2,7 +2,7 @@ import pygame
 
 from src.input_manager import InputManager
 from src.audio_manager import AudioManager
-from src.map_loader import MapMetadata, MapTile
+from src.map_loader import MapMetadata, MapTile, MapObject
 
 
 class Player(pygame.sprite.Sprite):
@@ -31,6 +31,7 @@ class Player(pygame.sprite.Sprite):
     delta_time: float,
     input_manager: InputManager,
     tiles: pygame.sprite.Group[MapTile],
+    objects: pygame.sprite.Group[MapObject],
     metadata: MapMetadata
   ) -> list[MapTile]:
     dx = 0
@@ -56,7 +57,11 @@ class Player(pygame.sprite.Sprite):
       hit_tiles_set.update(hit_tiles)
       blocked_tiles = [t for t in hit_tiles if t.gid in metadata.collisions]
       
-      if len(blocked_tiles) > 0:
+      # Check collision with objects
+      hit_objects = pygame.sprite.spritecollide(self, objects, False)
+      blocked_objects = [o for o in hit_objects if o.collision]
+      
+      if len(blocked_tiles) > 0 or len(blocked_objects) > 0:
         self.x = old_x
         self.rect.centerx = self.x
     
@@ -69,7 +74,11 @@ class Player(pygame.sprite.Sprite):
       hit_tiles_set.update(hit_tiles)
       blocked_tiles = [t for t in hit_tiles if t.gid in metadata.collisions]
       
-      if len(blocked_tiles) > 0:
+      # Check collision with objects
+      hit_objects = pygame.sprite.spritecollide(self, objects, False)
+      blocked_objects = [o for o in hit_objects if o.collision]
+      
+      if len(blocked_tiles) > 0 or len(blocked_objects) > 0:
         self.y = old_y
         self.rect.centery = self.y
     
