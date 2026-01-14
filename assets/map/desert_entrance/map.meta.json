@@ -1,5 +1,5 @@
 {
-  "collision_gid": [],
+  "collision_gid": [11],
   "exit": [
     {
       "source_x": 28,

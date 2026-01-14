@@ -4,16 +4,16 @@
     {
       "source_x": 31,
       "source_y": 8,
-      "dist": "snow_mountain_boss",
+      "dist": "snow_mountain_midway",
       "dist_x": 0,
-      "dist_y": 8
+      "dist_y": 9
     },
     {
       "source_x": 31,
       "source_y": 9,
-      "dist": "snow_mountain_boss",
+      "dist": "snow_mountain_midway",
       "dist_x": 0,
-      "dist_y": 9
+      "dist_y": 10
     }
   ],
   "entry_point": {
