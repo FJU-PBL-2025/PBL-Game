@@ -1,41 +1,41 @@
 {
   "burning": {
-    "name": "Burning",
-    "description": "Deals damage equal to 5% of current HP for 2 rounds.",
+    "name": "灼傷",
+    "description": "每回合扣除當前生命值5%，持續2回合",
     "negative": true,
     "duration": 2
   },
   "poisoned": {
-    "name": "Poisoned",
-    "description": "Deals damage equal to 10% of max HP for 2 rounds.",
+    "name": "中毒",
+    "description": "每回合扣除最大生命值10%，持續2回合",
     "negative": true,
     "duration": 2
   },
   "frozen": {
-    "name": "Frozen",
-    "description": "Cannot move for 1 round.",
+    "name": "冰凍",
+    "description": "下一回合無法行動",
     "negative": true,
     "duration": 1
   },
   "weakness": {
-    "name": "Weakness",
-    "description": "Deals 2 less damage for 1 round.",
+    "name": "虛弱",
+    "description": "攻擊力下降2，持續2回合",
     "negative": true,
-    "duration": 1
+    "duration": 2
   },
   "healing": {
-    "name": "Healing",
-    "description": "Heals for {value} HP for {duration} rounds.",
+    "name": "持續回復",
+    "description": "每回合回復{value}點生命，持續{duration}回合",
     "negative": false
   },
   "magic_boost": {
-    "name": "Magic Boost",
-    "description": "Increases magic damage by {value} for {duration} rounds.",
+    "name": "魔法增幅",
+    "description": "魔法傷害增加{value}，持續{duration}回合",
     "negative": false
   },
   "physical_boost": {
-    "name": "Physical Boost",
-    "description": "Increases physical damage by {value} for {duration} rounds.",
+    "name": "物理增幅",
+    "description": "物理傷害增加{value}，持續{duration}回合",
     "negative": false
   }
 }

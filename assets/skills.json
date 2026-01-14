@@ -1,35 +1,36 @@
 {
   "slay": {
-    "name": "Slay",
-    "description": "Deals 5 physical damage.",
+    "name": "斬擊",
+    "description": "造成5點物理傷害",
     "physical_damage": 5,
     "magical_damage": 0,
     "heal": 0,
     "shield": 0,
     "purify": false,
     "effect": [],
-    "cooldown": 1
+    "cooldown": 0
   },
   "fireball": {
-    "name": "Fireball",
-    "description": "Deals 4 magic damage, has a 30% chance to apply burning to the enemy.",
+    "name": "火焰彈",
+    "description": "造成4點魔法傷害，30%附加灼傷",
     "physical_damage": 0,
     "magical_damage": 4,
     "heal": 0,
     "shield": 0,
-    "purify": true,
+    "purify": false,
     "effect": [
       {
         "type": "burning",
         "target": "opponent",
-        "chance": 0.3
+        "chance": 0.3,
+        "duration": 2
       }
     ],
-    "cooldown": 1
+    "cooldown": 0
   },
   "defence": {
-    "name": "Defence",
-    "description": "Gives 6 shield.",
+    "name": "防禦",
+    "description": "提供6點護盾",
     "physical_damage": 0,
     "magical_damage": 0,
     "heal": 0,
@@ -39,8 +40,8 @@
     "cooldown": 1
   },
   "heal": {
-    "name": "Heal",
-    "description": "Heals for 6 HP.",
+    "name": "回復",
+    "description": "回復自身6點生命",
     "physical_damage": 0,
     "magical_damage": 0,
     "heal": 6,
@@ -50,9 +51,9 @@
     "cooldown": 1
   },
   "king_punch": {
-    "name": "King Punch",
-    "description": "Deals 10 physical damage.",
-    "physical_damage": 10,
+    "name": "界王拳",
+    "description": "在接下來3回合內，增加3點物理傷害",
+    "physical_damage": 0,
     "magical_damage": 0,
     "heal": 0,
     "shield": 0,
@@ -66,11 +67,11 @@
         "duration": 3
       }
     ],
-    "cooldown": 1
+    "cooldown": 3
   },
   "arcane_shot": {
-    "name": "Arcane Shot",
-    "description": "Deals 5 magic damage, and increases magic damage by 2 for the next 2 turns.",
+    "name": "奧術彈",
+    "description": "造成5點魔法傷害，在接下來2回合內，增加2點魔法傷害",
     "physical_damage": 0,
     "magical_damage": 5,
     "heal": 0,

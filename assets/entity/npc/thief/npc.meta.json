@@ -1,0 +1,73 @@
+{
+  "display_name": "盜賊",
+  "fightable": true,
+  "spawn": {
+    "x": 24,
+    "y": 8
+  },
+  "source_img": "./assets/entity/boss/thief/rotations/south.png",
+  "hp": 30,
+  "scale": 5,
+  "reward": {
+    "coin": 30,
+    "thief-dagger": 1,
+    "health-potion": 1
+  },
+  "dialogue": {
+    "init": {
+      "text": "把身上的財物交出來，不然就別怪我不客氣了！",
+      "options": [
+        {
+          "text": "我不會交出任何東西的！",
+          "next": "fight_response"
+        },
+        {
+          "text": "等等，我們可以談談...",
+          "next": "negotiate"
+        }
+      ]
+    },
+    "fight_response": {
+      "text": "既然如此，那就別怪我不客氣了！",
+      "options": [
+        {
+          "text": "來吧！",
+          "next": "fight"
+        }
+      ]
+    },
+    "negotiate": {
+      "text": "哼！沒什麼好談的，交出財物或者戰鬥！",
+      "options": [
+        {
+          "text": "那就戰鬥吧！",
+          "next": "fight"
+        }
+      ]
+    }
+  },
+  "skills": {
+    "attack": {
+      "name": "攻擊",
+      "description": "造成2點物理傷害",
+      "physical_damage": 2,
+      "magical_damage": 0,
+      "heal": 0,
+      "shield": 0,
+      "purify": false,
+      "effect": [],
+      "cooldown": 0
+    },
+    "shield_up": {
+      "name": "護盾",
+      "description": "提供3點護盾",
+      "physical_damage": 0,
+      "magical_damage": 0,
+      "heal": 0,
+      "shield": 3,
+      "purify": false,
+      "effect": [],
+      "cooldown": 2
+    }
+  }
+}

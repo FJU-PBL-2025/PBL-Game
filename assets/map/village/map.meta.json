@@ -26,14 +26,14 @@
       "source_x": 31,
       "source_y": 8,
       "dist": "snow_mountain_entrance",
-      "dist_x": 0,
+      "dist_x": 1,
       "dist_y": 8
     },
     {
       "source_x": 31,
       "source_y": 9,
       "dist": "snow_mountain_entrance",
-      "dist_x": 0,
+      "dist_x": 1,
       "dist_y": 9
     }
   ],
@@ -1472,7 +1472,7 @@
     }
   ],
   "entity": {
-    "npc": []
+    "npc": ["villager"]
   },
   "music": "",
   "walk_sound": "walking_grass"

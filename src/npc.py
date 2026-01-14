@@ -34,8 +34,9 @@ class Npc(pygame.sprite.Sprite):
     self.x: float = self.spawn_x * tile_width + tile_width / 2
     self.y: float = self.spawn_y * tile_height + tile_height / 2
 
+    self.scale: float = json_data.get("scale", 3)
     original_image = pygame.image.load(json_data["source_img"])
-    self.image: pygame.Surface = pygame.transform.scale(original_image, (int(tile_width * 3), int(tile_height * 3)))
+    self.image: pygame.Surface = pygame.transform.scale(original_image, (int(tile_width * self.scale), int(tile_height * self.scale)))
     self.rect: pygame.Rect = self.image.get_rect()
     self.rect.center = (self.x, self.y)
 

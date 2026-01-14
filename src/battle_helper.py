@@ -61,7 +61,7 @@ class BattleHelper:
     self.game = game
     
     self.enemy: BattleEntity = BattleHelper._load_npc_battle_data(npc)
-    self.player: BattleEntity = BattleHelper._load_player_battle_data()
+    self.player: BattleEntity = self._load_player_battle_data()
   
   @staticmethod
   def _load_skills(raw_skills: map) -> dict[str, BattleSkill]:
@@ -131,18 +131,20 @@ class BattleHelper:
     
     return entity
   
-  @staticmethod
-  def _load_player_battle_data():
+  def _load_player_battle_data(self):
     with open("./assets/player.meta.json", "r") as f:
       data = json.load(f)
       
     with open("./assets/skills.json", "r") as f:
       player_skill_meta = json.load(f)
+    
+    # Get HP based on player level
+    player_hp = self.game.level_hp.get(self.game.player_level, 35)
       
     entity = BattleEntity(
       name = "Player",
-      max_hp = 100,
-      current_hp = 100,
+      max_hp = player_hp,
+      current_hp = player_hp,
       shield = 0,
       physical_buff = 0,
       magical_buff = 0,

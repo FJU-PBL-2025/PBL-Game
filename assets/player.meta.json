@@ -1,8 +1,9 @@
 {
+  "level": 1,
   "skills": [
     "slay",
-    "flame_jet",
-    "king_punch",
-    "starburst_slash"
+    "fireball", 
+    "defence",
+    "heal"
   ]
 }

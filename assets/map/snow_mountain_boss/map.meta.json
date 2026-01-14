@@ -1,28 +1,7 @@
 {
   "collision_gid": [6],
-  "exit": [
-    {
-      "source_x": 21,
-      "source_y": 17,
-      "dist": "village",
-      "dist_x": 17.5,
-      "dist_y": 4.5
-    },
-    {
-      "source_x": 22,
-      "source_y": 17,
-      "dist": "village",
-      "dist_x": 17.5,
-      "dist_y": 4.5
-    },
-    {
-      "source_x": 22,
-      "source_y": 17,
-      "dist": "village",
-      "dist_x": 17.5,
-      "dist_y": 4.5
-    }
-  ],
+  "boss_died_exit": true,
+  "exit": [],
   "entry_point": {
     "x": 16,
     "y": 15
@@ -405,10 +384,22 @@
       "collision": true,
       "x": 0,
       "y": 13
+    },
+    {
+      "img": "big_transport",
+      "collision": false,
+      "x": 21,
+      "y": 15,
+      "show_when_boss_dead": true,
+      "exit": {
+        "dist": "village",
+        "dist_x": 17.5,
+        "dist_y": 8.5
+      }
     }
   ],
   "entity": {
-    "npc": []
+    "npc": ["big_white_snake"]
   },
   "music": "",
   "walk_sound": "walking_grass"

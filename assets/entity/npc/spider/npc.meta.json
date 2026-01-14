@@ -1,0 +1,71 @@
+{
+  "display_name": "蜘蛛守衛",
+  "fightable": true,
+  "spawn": {
+    "x": 28,
+    "y": 8
+  },
+  "source_img": "./assets/entity/boss/spider/rotations/south.png",
+  "hp": 40,
+  "scale": 8,
+  "reward": {
+    "coin": 40,
+    "spider-silk": 2,
+    "health-potion": 2
+  },
+  "dialogue": {
+    "init": {
+      "text": "嘶～",
+      "options": [
+        {
+          "text": "我必須通過這裡！",
+          "next": "fight"
+        },
+        {
+          "text": "我不想惹麻煩...",
+          "next": "back_off"
+        }
+      ]
+    },
+    "back_off": {
+      "text": "嘶嘶～（蜘蛛依然擋在路中央）",
+      "options": [
+        {
+          "text": "看來只能戰鬥了",
+          "next": "fight"
+        }
+      ]
+    }
+  },
+  "skills": {
+    "attack": {
+      "name": "攻擊",
+      "description": "造成4點物理傷害，30%施加中毒",
+      "physical_damage": 4,
+      "magical_damage": 0,
+      "heal": 0,
+      "shield": 0,
+      "purify": false,
+      "effect": [
+        {
+          "type": "poisoned",
+          "target": "opponent",
+          "chance": 0.3,
+          "duration": 2
+        }
+      ],
+      "cooldown": 0
+    },
+    "heal": {
+      "name": "回復",
+      "description": "回復4點生命",
+      "physical_damage": 0,
+      "magical_damage": 0,
+      "heal": 4,
+      "shield": 0,
+      "purify": false,
+      "effect": [],
+      "cooldown": 3
+    }
+  }
+}

@@ -137,7 +137,7 @@ class DialogueState(State):
     else:
       self.game.draw_text(
         surface,
-        "[Press E or Enter to continue]",
+        "[按下 E 或是 Enter 繼續]",
         (150, 150, 150),
         (box_rect.centerx, options_start_y),
       )

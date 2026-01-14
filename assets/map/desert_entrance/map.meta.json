@@ -1,70 +1,7 @@
 {
   "collision_gid": [11],
-  "exit": [
-    {
-      "source_x": 28,
-      "source_y": 7,
-      "dist": "spider_cave",
-      "dist_x": 0,
-      "dist_y": 8
-    },
-    {
-      "source_x": 29,
-      "source_y": 7,
-      "dist": "spider_cave",
-      "dist_x": 0,
-      "dist_y": 8
-    },
-    {
-      "source_x": 30,
-      "source_y": 7,
-      "dist": "spider_cave",
-      "dist_x": 0,
-      "dist_y": 8
-    },
-    {
-      "source_x": 28,
-      "source_y": 8,
-      "dist": "spider_cave",
-      "dist_x": 0,
-      "dist_y": 8
-    },
-    {
-      "source_x": 29,
-      "source_y": 8,
-      "dist": "spider_cave",
-      "dist_x": 0,
-      "dist_y": 8
-    },
-    {
-      "source_x": 30,
-      "source_y": 8,
-      "dist": "spider_cave",
-      "dist_x": 0,
-      "dist_y": 8
-    },
-    {
-      "source_x": 28,
-      "source_y": 9,
-      "dist": "spider_cave",
-      "dist_x": 0,
-      "dist_y": 8
-    },
-    {
-      "source_x": 29,
-      "source_y": 9,
-      "dist": "spider_cave",
-      "dist_x": 0,
-      "dist_y": 8
-    },
-    {
-      "source_x": 30,
-      "source_y": 9,
-      "dist": "spider_cave",
-      "dist_x": 0,
-      "dist_y": 8
-    }
-  ],
+  "boss_died_exit": true,
+  "exit": [],
   "entry_point": {
     "x": 17,
     "y": 17
@@ -159,10 +96,29 @@
       "collision": true,
       "x": 24,
       "y": 9
+    },
+    {
+      "img": "big_broken_transport",
+      "collision": true,
+      "x": 28,
+      "y": 7,
+      "hide_when_boss_dead": true
+    },
+    {
+      "img": "big_transport",
+      "collision": false,
+      "x": 28,
+      "y": 7,
+      "show_when_boss_dead": true,
+      "exit": {
+        "dist": "spider_cave",
+        "dist_x": 0,
+        "dist_y": 8
+      }
     }
   ],
   "entity": {
-    "npc": []
+    "npc": ["thief"]
   },
   "music": "",
   "walk_sound": "walking_grass"

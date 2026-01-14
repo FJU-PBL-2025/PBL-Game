@@ -1,28 +1,7 @@
 {
-  "collision_gid": [],
-  "exit": [
-    {
-      "source_x": 21,
-      "source_y": 0,
-      "dist": "snow_mountain_boss",
-      "dist_x": 21,
-      "dist_y": 17
-    },
-    {
-      "source_x": 22,
-      "source_y": 0,
-      "dist": "snow_mountain_boss",
-      "dist_x": 22,
-      "dist_y": 17
-    },
-    {
-      "source_x": 23,
-      "source_y": 0,
-      "dist": "snow_mountain_boss",
-      "dist_x": 23,
-      "dist_y": 17
-    }
-  ],
+  "collision_gid": [6],
+  "boss_died_exit": true,
+  "exit": [],
   "entry_point": {
     "x": 16,
     "y": 1
@@ -117,10 +96,29 @@
       "collision": true,
       "x": 29,
       "y": 3
+    },
+    {
+      "img": "big_broken_transport",
+      "collision": true,
+      "x": 21,
+      "y": 0,
+      "hide_when_boss_dead": true
+    },
+    {
+      "img": "big_transport",
+      "collision": false,
+      "x": 21,
+      "y": 0,
+      "show_when_boss_dead": true,
+      "exit": {
+        "dist": "snow_mountain_boss",
+        "dist_x": 22,
+        "dist_y": 17
+      }
     }
   ],
   "entity": {
-    "npc": []
+    "npc": ["snowman"]
   },
   "walk_sound": "walking_grass"
 }

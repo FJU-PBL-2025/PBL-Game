@@ -39,6 +39,20 @@ class Game():
     self.player: Player = Player()
     self.inventory: Inventory = Inventory()
     self.input_manager: InputManager = InputManager()
+    self.defeated_npcs: set[str] = set()  # Track defeated NPCs
+    self.player_level: int = 1  # Player level (1-7)
+    
+    # HP for each level
+    self.level_hp = {
+      1: 35,
+      2: 45,
+      3: 55,
+      4: 65,
+      5: 78,
+      6: 90,
+      7: 100
+    }
+    
     AudioManager.init()
     
     self.load_assets()

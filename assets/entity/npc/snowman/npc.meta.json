@@ -1,0 +1,80 @@
+{
+  "display_name": "雪怪",
+  "fightable": true,
+  "spawn": {
+    "x": 22,
+    "y": 10
+  },
+  "source_img": "./assets/entity/boss/snowman/rotations/south.png",
+  "scale": 5,
+  "hp": 60,
+  "reward": {
+    "coin": 50,
+    "ice-crystal": 2,
+    "health-potion": 2
+  },
+  "dialogue": {
+    "init": {
+      "text": "吼！！！",
+      "options": [
+        {
+          "text": "我不會被你嚇倒的！",
+          "next": "brave_response"
+        },
+        {
+          "text": "這傢伙看起來很危險...",
+          "next": "cautious"
+        }
+      ]
+    },
+    "brave_response": {
+      "text": "吼吼吼！（雪怪揮舞著巨大的手臂）",
+      "options": [
+        {
+          "text": "來吧，讓我們戰鬥！",
+          "next": "fight"
+        }
+      ]
+    },
+    "cautious": {
+      "text": "吼！！（雪怪阻擋你的去路）",
+      "options": [
+        {
+          "text": "看來只能戰鬥了",
+          "next": "fight"
+        }
+      ]
+    }
+  },
+  "skills": {
+    "attack": {
+      "name": "攻擊",
+      "description": "造成8點物理傷害，10%施加冰凍",
+      "physical_damage": 8,
+      "magical_damage": 0,
+      "heal": 0,
+      "shield": 0,
+      "purify": false,
+      "effect": [
+        {
+          "type": "frozen",
+          "target": "opponent",
+          "chance": 0.1,
+          "duration": 2
+        }
+      ],
+      "cooldown": 0
+    },
+    "heal": {
+      "name": "回復",
+      "description": "回復6點生命",
+      "physical_damage": 0,
+      "magical_damage": 0,
+      "heal": 6,
+      "shield": 0,
+      "purify": false,
+      "effect": [],
+      "cooldown": 3
+    }
+  }
+}

@@ -12,5 +12,61 @@
     "max_stack": 1,
     "description": "Just shield",
     "icon": "knight"
+  },
+  "health-potion": {
+    "name": "生命藥水",
+    "item_type": "consumable",
+    "max_stack": 10,
+    "description": "回復25點生命值",
+    "icon": "knight"
+  },
+  "magic-sword": {
+    "name": "魔法之劍",
+    "item_type": "equipment",
+    "max_stack": 1,
+    "description": "魔王掉落的強力武器",
+    "icon": "knight"
+  },
+  "thief-dagger": {
+    "name": "盜賊匕首",
+    "item_type": "equipment",
+    "max_stack": 1,
+    "description": "盜賊使用的鋒利匕首",
+    "icon": "knight"
+  },
+  "spider-silk": {
+    "name": "蜘蛛絲",
+    "item_type": "material",
+    "max_stack": 20,
+    "description": "堅韌的蜘蛛絲，可用於製作",
+    "icon": "knight"
+  },
+  "wolf-fang": {
+    "name": "雪狼尖牙",
+    "item_type": "material",
+    "max_stack": 10,
+    "description": "雪狼的尖牙，散發著寒氣",
+    "icon": "knight"
+  },
+  "ice-crystal": {
+    "name": "寒冰水晶",
+    "item_type": "material",
+    "max_stack": 10,
+    "description": "雪怪心臟的結晶",
+    "icon": "knight"
+  },
+  "snake-scale": {
+    "name": "巨蛇鱗片",
+    "item_type": "material",
+    "max_stack": 15,
+    "description": "雪山巨蛇的堅硬鱗片",
+    "icon": "knight"
+  },
+  "ice-sword": {
+    "name": "寒冰之劍",
+    "item_type": "equipment",
+    "max_stack": 1,
+    "description": "蘊含寒冰力量的劍",
+    "icon": "knight"
   }
 }

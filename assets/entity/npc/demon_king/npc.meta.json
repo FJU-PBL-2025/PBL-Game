@@ -1,0 +1,95 @@
+{
+  "display_name": "魔王",
+  "fightable": true,
+  "spawn": {
+    "x": 30,
+    "y": 7.75
+  },
+  "source_img": "./assets/entity/boss/demon_king/rotations/south.png",
+  "scale": 8,
+  "hp": 80,
+  "reward": {
+    "coin": 100,
+    "magic-sword": 1,
+    "health-potion": 3
+  },
+  "dialogue": {
+    "init": {
+      "text": "準備好受死吧！",
+      "options": [
+        {
+          "text": "我不會輸給你的！",
+          "next": "challenge"
+        },
+        {
+          "text": "等等，我還沒準備好...",
+          "next": "retreat"
+        }
+      ]
+    },
+    "challenge": {
+      "text": "很好！讓我看看你的實力！",
+      "options": [
+        {
+          "text": "開始戰鬥！",
+          "next": "fight"
+        }
+      ]
+    },
+    "retreat": {
+      "text": "誰管你！受死吧！",
+      "options": [
+        {
+          "text": "（被迫迎戰）",
+          "next": "fight"
+        }
+      ]
+    },
+    "second_encounter": {
+      "text": "這次我會確保能殺死你！",
+      "options": [
+        {
+          "text": "這次我會贏的！",
+          "next": "fight"
+        }
+      ]
+    }
+  },
+  "skills": {
+    "attack": {
+      "name": "攻擊",
+      "description": "造成12點物理傷害，30%造成灼傷，10%造成冰凍",
+      "physical_damage": 12,
+      "magical_damage": 0,
+      "heal": 0,
+      "shield": 0,
+      "purify": false,
+      "effect": [
+        {
+          "type": "burning",
+          "target": "opponent",
+          "chance": 0.3,
+          "duration": 2
+        },
+        {
+          "type": "frozen",
+          "target": "opponent",
+          "chance": 0.1,
+          "duration": 2
+        }
+      ],
+      "cooldown": 0
+    },
+    "ultimate_heal": {
+      "name": "終極治療",
+      "description": "提供8點護盾並回復8點生命",
+      "physical_damage": 0,
+      "magical_damage": 0,
+      "heal": 8,
+      "shield": 8,
+      "purify": false,
+      "effect": [],
+      "cooldown": 3
+    }
+  }
+}

@@ -24,13 +24,37 @@ class BattleState(State):
     self.battle_over: bool = False
     self.player_won: bool = False
     self.turn_delay: float = 0.0
+    self.showing_level_up: bool = False
+    self.level_up_info: dict = None
     
     self.bar_width: int = 200
     self.bar_height: int = 20
     self.padding: int = 20
     
-    self.player_sprite = pygame.image.load("./assets/knight.png")
-    self.enemy_sprite = self.npc.image
+    # Load player sprite and scale it 3x (south-east facing enemy)
+    original_player_sprite = pygame.image.load("./assets/icon/south-east.png")
+    original_size = original_player_sprite.get_size()
+    self.player_sprite = pygame.transform.scale(
+      original_player_sprite, 
+      (original_size[0] * 3, original_size[1] * 3)
+    )
+    
+    # Scale enemy sprite - max 8x from original image
+    # Get the original image before NPC scaling was applied
+    original_enemy_image = pygame.image.load(f"./assets/entity/npc/{self.npc.name}/npc.meta.json".replace("npc.meta.json", "").rstrip("/") + "/../../../" + "entity/boss/" + self.npc.name + "/rotations/south.png")
+    import json
+    with open(f"./assets/entity/npc/{self.npc.name}/npc.meta.json", "r", encoding="utf-8") as f:
+      npc_data = json.load(f)
+    # Load south-west facing image for battle
+    enemy_img_path = npc_data["source_img"].replace("south.png", "south-west.png")
+    original_enemy_image = pygame.image.load(enemy_img_path)
+    
+    # Calculate battle scale: use npc scale but cap at 8
+    battle_scale = min(self.npc.scale, 8)
+    self.enemy_sprite = pygame.transform.scale(
+      original_enemy_image,
+      (int(original_enemy_image.get_width() * battle_scale), int(original_enemy_image.get_height() * battle_scale))
+    )
 
     self.reward_given: bool = False
   
@@ -44,13 +68,44 @@ class BattleState(State):
     i_m = self.game.input_manager
     
     if self.battle_over:
-      if not self.reward_given:
+      if not self.reward_given and self.player_won:
         self.reward_given = True
-        for item_id, count in self.battle_helper.enemy.reward.items():
-          self.game.inventory.add_item(item_id, count)
+        if self.battle_helper.enemy.reward:
+          for item_id, count in self.battle_helper.enemy.reward.items():
+            self.game.inventory.add_item(item_id, count)
 
       if i_m.is_key_down_once(pygame.K_RETURN):
-        self.exit_state()
+        # If showing level up message, dismiss it first
+        if self.showing_level_up:
+          self.showing_level_up = False
+          self.exit_state()
+          return
+        
+        if not self.player_won:
+          # Player died, teleport to village (新手村)
+          self._teleport_to_village()
+          self.exit_state()
+        else:
+          # Player won - mark NPC as defeated and remove from map
+          self.game.defeated_npcs.add(self.npc.name)
+          self._remove_defeated_npc()
+          # Level up (max level 7)
+          if self.game.player_level < 7:
+            old_level = self.game.player_level
+            old_hp = self.game.level_hp[old_level]
+            self.game.player_level += 1
+            new_hp = self.game.level_hp[self.game.player_level]
+            
+            # Prepare level up info
+            self.level_up_info = {
+              'new_level': self.game.player_level,
+              'hp_increase': new_hp - old_hp,
+              'new_hp': new_hp,
+              'skills': self._get_unlock_skills(self.game.player_level)
+            }
+            self.showing_level_up = True
+          else:
+            self.exit_state()
       return
     
     if not self.is_player_turn:
@@ -187,7 +242,7 @@ class BattleState(State):
       2
     )
     
-    turn_text = "YOUR TURN - Select Skills (Space to toggle, Enter to confirm)" if self.is_player_turn else "ENEMY TURN..."
+    turn_text = "你的回合 - 選擇技能 (空白鍵切換，Enter 確認)" if self.is_player_turn else "敵人回合..."
     self.game.draw_text(
       surface,
       turn_text,
@@ -251,7 +306,7 @@ class BattleState(State):
     
     self.game.draw_text(
       surface,
-      self.battle_helper.player.name,
+      f"LV{self.game.player_level} {self.battle_helper.player.name}",
       (255, 255, 255),
       (player_x, 30)
     )
@@ -312,10 +367,10 @@ class BattleState(State):
       surface.blit(overlay, (0, 0))
       
       if self.player_won:
-        result_text = "VICTORY!"
+        result_text = "您贏了！"
         result_color = (100, 255, 100)
       else:
-        result_text = "DEFEAT..."
+        result_text = "You Died!"
         result_color = (255, 100, 100)
       
       self.game.draw_text(
@@ -324,9 +379,180 @@ class BattleState(State):
         result_color,
         (self.game.GAME_W // 2, self.game.GAME_H // 2 - 30)
       )
+      
+      if not self.showing_level_up:
+        self.game.draw_text(
+          surface,
+          "[按下 Enter 繼續]",
+          (200, 200, 200),
+          (self.game.GAME_W // 2, self.game.GAME_H // 2 + 20)
+        )
+      else:
+        # Show level up message
+        self._draw_level_up_screen(surface)
+
+  def _get_unlock_skills(self, level: int) -> list[str]:
+    """Get skills unlocked at the given level"""
+    level_skills = {
+      2: ["界王拳", "奧術彈"],
+      3: ["反擊架式", "光之波動"],
+      4: ["光之太刀", "隕石球"],
+      5: ["光能盾牌", "治癒聖光"],
+      6: ["Excalibur", "噴射火焰"],
+      7: ["星爆氣流斬", "領域展開"]
+    }
+    return level_skills.get(level, [])
+
+  def _draw_level_up_screen(self, surface: pygame.Surface):
+    """Draw level up message overlay"""
+    if not self.level_up_info:
+      return
+    
+    # Draw level up box
+    box_width = 400
+    box_height = 250
+    box_x = (self.game.GAME_W - box_width) // 2
+    box_y = (self.game.GAME_H - box_height) // 2 + 50
+    
+    # Draw box background
+    pygame.draw.rect(
+      surface,
+      (40, 40, 60),
+      (box_x, box_y, box_width, box_height),
+      border_radius=10
+    )
+    pygame.draw.rect(
+      surface,
+      (100, 200, 255),
+      (box_x, box_y, box_width, box_height),
+      width=3,
+      border_radius=10
+    )
+    
+    # Level up title
+    self.game.draw_text(
+      surface,
+      f"升級到 LV{self.level_up_info['new_level']}！",
+      (255, 220, 100),
+      (self.game.GAME_W // 2, box_y + 35)
+    )
+    
+    # HP increase
+    self.game.draw_text(
+      surface,
+      f"血量上限提升：{self.level_up_info['new_hp'] - self.level_up_info['hp_increase']} → {self.level_up_info['new_hp']} (+{self.level_up_info['hp_increase']})",
+      (100, 255, 150),
+      (self.game.GAME_W // 2, box_y + 80)
+    )
+    
+    # Unlocked skills
+    skills = self.level_up_info['skills']
+    if skills:
       self.game.draw_text(
         surface,
-        "[Press Enter to continue]",
-        (200, 200, 200),
-        (self.game.GAME_W // 2, self.game.GAME_H // 2 + 20)
+        "解鎖新技能：",
+        (200, 200, 255),
+        (self.game.GAME_W // 2, box_y + 120)
       )
+      skill_text = "、".join(skills)
+      self.game.draw_text(
+        surface,
+        skill_text,
+        (255, 255, 255),
+        (self.game.GAME_W // 2, box_y + 155)
+      )
+    
+    # Continue prompt
+    self.game.draw_text(
+      surface,
+      "[按下 Enter 繼續]",
+      (180, 180, 180),
+      (self.game.GAME_W // 2, box_y + box_height - 30)
+    )
+
+  def _teleport_to_village(self):
+    """Player died, teleport to village (新手村)"""
+    # Find GameWorldState in the state stack
+    from src.state.game_world_state import GameWorldState
+    
+    for state in self.game.state_stack:
+      if isinstance(state, GameWorldState):
+        # Change map to village (新手村)
+        state.map_loader.change_map("village")
+        
+        # Reset player position to village entry point
+        self.game.player.set_position(
+          state.map_loader.metadata.entry_x * state.map_loader.map.tilewidth + state.map_loader.map.tilewidth // 2,
+          state.map_loader.metadata.entry_y * state.map_loader.map.tileheight + state.map_loader.map.tileheight // 2
+        )
+        
+        # Player respawns with full health (handled in next battle)
+        break
+
+  def _remove_defeated_npc(self):
+    """Remove the defeated NPC from the current map"""
+    from src.state.game_world_state import GameWorldState
+    
+    for state in self.game.state_stack:
+      if isinstance(state, GameWorldState):
+        # Remove this NPC from the map's NPC group
+        for npc in state.map_loader.npcs:
+          if npc.name == self.npc.name:
+            state.map_loader.npcs.remove(npc)
+            break
+        
+        # Reload objects to update show_when_boss_dead / hide_when_boss_dead
+        self._reload_objects(state.map_loader)
+        break
+
+  def _reload_objects(self, map_loader):
+    """Reload objects to reflect boss death status"""
+    import json
+    from src.map_loader import MapObject, MapExit
+    
+    # Get current map name from path
+    # Find the map name by checking map file path
+    map_path = None
+    for layer in map_loader.map.visible_layers:
+      break  # Just need to confirm map is loaded
+    
+    # Get map name from the map loader's map filename
+    map_name = map_loader.map.filename.split("/")[-2]
+    
+    with open(f"./assets/map/{map_name}/map.meta.json", "r", encoding="utf-8") as f:
+      json_data = json.load(f)
+    
+    # Get entity data for boss status check
+    entity_data = json_data.get("entity", {})
+    map_npc_names = entity_data.get("npc", [])
+    bosses_alive = any(npc not in self.game.defeated_npcs for npc in map_npc_names)
+    
+    # Clear existing objects and reload
+    map_loader.objects.empty()
+    
+    for obj_data in json_data.get("object", []):
+      show_when_boss_dead = obj_data.get("show_when_boss_dead", False)
+      hide_when_boss_dead = obj_data.get("hide_when_boss_dead", False)
+      
+      # Skip objects based on boss status
+      if show_when_boss_dead and bosses_alive:
+        continue
+      if hide_when_boss_dead and not bosses_alive:
+        continue
+      
+      # Get exit data if present
+      obj_exit = None
+      if "exit" in obj_data:
+        exit_data = obj_data["exit"]
+        obj_exit = MapExit(exit_data["dist"], exit_data["dist_x"], exit_data["dist_y"])
+      
+      map_obj = MapObject(
+        obj_data["img"],
+        obj_data["x"],
+        obj_data["y"],
+        obj_data.get("collision", True),
+        map_loader.map.tilewidth,
+        map_loader.map.tileheight,
+        obj_exit
+      )
+      map_loader.objects.add(map_obj)

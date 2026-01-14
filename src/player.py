@@ -37,7 +37,9 @@ class Player(pygame.sprite.Sprite):
     self.current_direction = 'south'
     self.image: pygame.Surface = self.sprites[self.current_direction]
     
-    self.rect: pygame.Rect = self.image.get_rect()
+    # Use original size for collision detection, not scaled size
+    original_size = original_sprites[self.current_direction].get_rect()
+    self.rect: pygame.Rect = pygame.Rect(0, 0, original_size.width, original_size.height)
   
   def update_direction(self, dx: float, dy: float):
     """Update player direction based on movement"""
@@ -69,9 +71,12 @@ class Player(pygame.sprite.Sprite):
     self.image = self.sprites[self.current_direction]
 
   def render(self, surface: pygame.Surface):
+    # Center the scaled image on the collision rect
+    image_rect = self.image.get_rect()
+    image_rect.center = self.rect.center
     surface.blit(
       self.image,
-      self.rect
+      image_rect
     )
   
   def handle_movement(

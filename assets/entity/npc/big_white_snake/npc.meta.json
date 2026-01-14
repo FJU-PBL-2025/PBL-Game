@@ -1,0 +1,81 @@
+{
+  "display_name": "雪山巨蛇",
+  "fightable": true,
+  "spawn": {
+    "x": 18,
+    "y": 7
+  },
+  "source_img": "./assets/entity/boss/big_white_snake/rotations/south.png",
+  "scale": 13,
+  "hp": 70,
+  "reward": {
+    "coin": 70,
+    "snake-scale": 3,
+    "health-potion": 3,
+    "ice-sword": 1
+  },
+  "dialogue": {
+    "init": {
+      "text": "嘶！！！！",
+      "options": [
+        {
+          "text": "巨蛇！我要挑戰你！",
+          "next": "challenge_accepted"
+        },
+        {
+          "text": "這條蛇太大了...",
+          "next": "intimidated"
+        }
+      ]
+    },
+    "challenge_accepted": {
+      "text": "嘶嘶嘶！（巨蛇盤起身體準備攻擊）",
+      "options": [
+        {
+          "text": "決一死戰！",
+          "next": "fight"
+        }
+      ]
+    },
+    "intimidated": {
+      "text": "嘶！！（巨蛇不會讓你輕易離開）",
+      "options": [
+        {
+          "text": "我必須戰勝你！",
+          "next": "fight"
+        }
+      ]
+    }
+  },
+  "skills": {
+    "attack": {
+      "name": "攻擊",
+      "description": "造成10點物理傷害，10%施加冰凍",
+      "physical_damage": 10,
+      "magical_damage": 0,
+      "heal": 0,
+      "shield": 0,
+      "purify": false,
+      "effect": [
+        {
+          "type": "frozen",
+          "target": "opponent",
+          "chance": 0.1,
+          "duration": 2
+        }
+      ],
+      "cooldown": 0
+    },
+    "shield": {
+      "name": "護盾",
+      "description": "提供7點護盾",
+      "physical_damage": 0,
+      "magical_damage": 0,
+      "heal": 0,
+      "shield": 7,
+      "purify": false,
+      "effect": [],
+      "cooldown": 2
+    }
+  }
+}

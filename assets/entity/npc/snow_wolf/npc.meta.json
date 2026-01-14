@@ -1,0 +1,73 @@
+{
+  "display_name": "雪狼",
+  "fightable": true,
+  "spawn": {
+    "x": 27.5,
+    "y": 8.5
+  },
+  "source_img": "./assets/entity/boss/snow_wolf/rotations/south.png",
+  "hp": 50,
+  "scale": 3,
+  "reward": {
+    "coin": 35,
+    "wolf-fang": 1,
+    "health-potion": 2
+  },
+  "dialogue": {
+    "init": {
+      "text": "敖嗚～",
+      "options": [
+        {
+          "text": "我不怕你！",
+          "next": "challenge"
+        },
+        {
+          "text": "慢慢退後...",
+          "next": "retreat_attempt"
+        }
+      ]
+    },
+    "challenge": {
+      "text": "嗷！！（雪狼露出利牙準備攻擊）",
+      "options": [
+        {
+          "text": "來戰鬥吧！",
+          "next": "fight"
+        }
+      ]
+    },
+    "retreat_attempt": {
+      "text": "嗷嗚～（雪狼不會讓你離開）",
+      "options": [
+        {
+          "text": "看來必須戰鬥了",
+          "next": "fight"
+        }
+      ]
+    }
+  },
+  "skills": {
+    "attack": {
+      "name": "攻擊",
+      "description": "造成6點物理傷害",
+      "physical_damage": 6,
+      "magical_damage": 0,
+      "heal": 0,
+      "shield": 0,
+      "purify": false,
+      "effect": [],
+      "cooldown": 0
+    },
+    "shield": {
+      "name": "護盾",
+      "description": "提供5點護盾",
+      "physical_damage": 0,
+      "magical_damage": 0,
+      "heal": 0,
+      "shield": 5,
+      "purify": false,
+      "effect": [],
+      "cooldown": 2
+    }
+  }
+}

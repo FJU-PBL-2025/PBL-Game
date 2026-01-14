@@ -16,7 +16,7 @@ class GameWorldState(State):
   def __init__(self, game: "Game"):
     State.__init__(self, game)
     
-    self.map_loader: MapLoader = MapLoader("awakening-room")
+    self.map_loader: MapLoader = MapLoader("village", self.game)
     
     # Set player position to entry point
     self.game.player.set_position(
@@ -86,7 +86,28 @@ class GameWorldState(State):
     
     if len(hit_exit_tiles) == 0:
       self.game.player.in_exit = False
+      
+      # Check for object exits
+      if not self.game.player.in_exit:
+        for obj in self.map_loader.objects:
+          if obj.exit and pygame.sprite.collide_rect(self.game.player, obj):
+            self.map_loader.change_map(obj.exit.dist)
+            self.game.player.set_position(
+              obj.exit.dist_x * self.map_loader.map.tilewidth + self.map_loader.map.tilewidth / 2,
+              obj.exit.dist_y * self.map_loader.map.tileheight + self.map_loader.map.tileheight / 2
+            )
+            self.game.player.in_exit = True
+            self.game.input_manager.pause(0.05)
+            return
     elif not self.game.player.in_exit:
+      # Check if exit requires boss to be defeated
+      if self.map_loader.metadata.boss_died_exit:
+        # Check if all NPCs on this map are defeated
+        alive_npcs = [npc.name for npc in self.map_loader.npcs]
+        if len(alive_npcs) > 0:
+          # Boss still alive, can't exit
+          return
+      
       exit_tile = hit_exit_tiles[0]
       hit_exit = self.map_loader.metadata.exits.get(
         (exit_tile.x, exit_tile.y)

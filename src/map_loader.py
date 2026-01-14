@@ -7,7 +7,8 @@ from src.audio_manager import AudioManager
 
 
 class MapLoader():
-  def __init__(self, name: str):
+  def __init__(self, name: str, game = None):
+    self.game = game
     self.tiles: pygame.sprite.Group[MapTile] = pygame.sprite.Group()
     self.npcs: pygame.sprite.Group[Npc] = pygame.sprite.Group()
     self.objects: pygame.sprite.Group[MapObject] = pygame.sprite.Group()
@@ -41,18 +42,42 @@ class MapLoader():
       
       # Load objects
       for obj_data in json_data.get("object", []):
+        show_when_boss_dead = obj_data.get("show_when_boss_dead", False)
+        hide_when_boss_dead = obj_data.get("hide_when_boss_dead", False)
+        
+        # Check if object should be shown based on boss status
+        bosses_alive = True  # Will be updated after NPCs are checked
+        if self.game:
+          # Get map's NPC list to check if any boss is alive
+          map_npc_names = entity_data.get("npc", [])
+          bosses_alive = any(npc not in self.game.defeated_npcs for npc in map_npc_names)
+        
+        # Skip objects based on boss status
+        if show_when_boss_dead and bosses_alive:
+          continue  # Don't show until boss is dead
+        if hide_when_boss_dead and not bosses_alive:
+          continue  # Hide after boss is dead
+        
+        # Get exit data if present
+        obj_exit = None
+        if "exit" in obj_data:
+          exit_data = obj_data["exit"]
+          obj_exit = MapExit(exit_data["dist"], exit_data["dist_x"], exit_data["dist_y"])
+        
         map_obj = MapObject(
           obj_data["img"],
           obj_data["x"],
           obj_data["y"],
           obj_data.get("collision", True),
           self.map.tilewidth,
-          self.map.tileheight
+          self.map.tileheight,
+          obj_exit
         )
         self.objects.add(map_obj)
       
       self.metadata.music = json_data.get("music", "")
       self.metadata.walk_sound = json_data.get("walk_sound", "")
+      self.metadata.boss_died_exit = json_data.get("boss_died_exit", False)
       
       # Load entry point
       entry_point = json_data.get("entry_point", {"x": 16, "y": 9})  # Default center-ish position
@@ -75,6 +100,9 @@ class MapLoader():
         self.tiles.add(tile)
     
     for npc_name in self.metadata.npc_names:
+      # Skip defeated NPCs
+      if self.game and npc_name in self.game.defeated_npcs:
+        continue
       npc = Npc(npc_name, self.map.tilewidth, self.map.tileheight)
       self.npcs.add(npc)
 
@@ -114,6 +142,7 @@ class MapMetadata():
     self.walk_sound: str = ""
     self.entry_x: int = 16
     self.entry_y: int = 9
+    self.boss_died_exit: bool = False
     
   def clear(self):
     self.collisions.clear()
@@ -123,6 +152,7 @@ class MapMetadata():
     self.walk_sound = ""
     self.entry_x = 16
     self.entry_y = 9
+    self.boss_died_exit = False
 
 class MapObject(pygame.sprite.Sprite):
   def __init__(
@@ -132,13 +162,15 @@ class MapObject(pygame.sprite.Sprite):
     y: int,
     collision: bool,
     tile_width: int,
-    tile_height: int
+    tile_height: int,
+    exit: "MapExit" = None
   ):
     pygame.sprite.Sprite.__init__(self)
     
     self.x: int = x
     self.y: int = y
     self.collision: bool = collision
+    self.exit: MapExit = exit
     
     # Load the image
     try:

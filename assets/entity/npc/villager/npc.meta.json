@@ -1,0 +1,42 @@
+{
+  "display_name": "村長",
+  "fightable": false,
+  "spawn": {
+    "x": 16,
+    "y": 4.5
+  },
+  "source_img": "./assets/entity/npc/magician/rotations/south.png",
+  "dialogue": {
+    "init": {
+      "text": "...！！！我怎麼還活著！\n難道是魔法師在最後用傳送魔法拯救我了嗎！",
+      "options": [
+        {
+          "text": "……這裡是哪？",
+          "next": "ask1"
+        }
+      ]
+    },
+    "ask1": {
+      "text": "年輕人啊...你剛剛有看到兩個巨大閃光嗎？",
+      "options": [
+        {
+          "text": "我什麼都不記得了。",
+          "next": "explain"
+        }
+      ]
+    },
+    "explain": {
+      "text": "那兩道閃光分別出現在雪原與沙漠...\n情況似乎不太尋常。",
+      "options": [
+        {
+          "text": "我去沙漠看看吧。",
+          "next": "desert_mission"
+        }
+      ]
+    },
+    "desert_mission": {
+      "text": "好，沙漠離這裡比較近。\n往下直走就可以到了\n不過要小心那邊出沒的盜賊。",
+      "options": null
+    }
+  }
+}
