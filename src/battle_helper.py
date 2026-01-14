@@ -65,7 +65,7 @@ class BattleHelper:
   
   @staticmethod
   def _load_skills(raw_skills: map) -> dict[str, BattleSkill]:
-    with open("./assets/effects.json", "r") as f:
+    with open("./assets/effects.json", "r", encoding = "utf-8") as f:
       effect_data = json.load(f)
     
     skills = {}
@@ -112,7 +112,7 @@ class BattleHelper:
   
   @staticmethod
   def _load_npc_battle_data(npc: Npc):
-    with open(f"./assets/entity/npc/{npc.name}/npc.meta.json", "r") as f:
+    with open(f"./assets/entity/npc/{npc.name}/npc.meta.json", "r", encoding = "utf-8") as f:
       data = json.load(f)
 
     entity = BattleEntity(
@@ -132,10 +132,10 @@ class BattleHelper:
     return entity
   
   def _load_player_battle_data(self):
-    with open("./assets/player.meta.json", "r") as f:
+    with open("./assets/player.meta.json", "r", encoding = "utf-8") as f:
       data = json.load(f)
       
-    with open("./assets/skills.json", "r") as f:
+    with open("./assets/skills.json", "r", encoding = "utf-8") as f:
       player_skill_meta = json.load(f)
     
     # Get HP based on player level

@@ -23,7 +23,7 @@ class Npc(pygame.sprite.Sprite):
     self.tile_width: int = tile_width
     self.tile_height: int = tile_height
 
-    with open(f"./assets/entity/npc/{name}/npc.meta.json", "r", encoding="utf-8") as f:
+    with open(f"./assets/entity/npc/{name}/npc.meta.json", "r", encoding = "utf-8") as f:
       json_data = json.load(f)
 
     self.display_name: str = json_data.get("display_name", name)

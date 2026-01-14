@@ -25,7 +25,7 @@ class MapLoader():
     
     self.map = pytmx.load_pygame(f"./assets/map/{name}/map.tmx")
     
-    with open(f"./assets/map/{name}/map.meta.json", "r", encoding="utf-8") as f:
+    with open(f"./assets/map/{name}/map.meta.json", "r", encoding = "utf-8") as f:
       json_data = json.load(f)
       
       self.metadata.collisions = json_data["collision_gid"]

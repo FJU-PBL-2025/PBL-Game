@@ -38,7 +38,7 @@ class Inventory:
     """
     remaining = count
 
-    with open("./assets/items.json", "r") as f:
+    with open("./assets/items.json", "r", encoding = "utf-8") as f:
       items = json.load(f)
 
     item = items[item_id]

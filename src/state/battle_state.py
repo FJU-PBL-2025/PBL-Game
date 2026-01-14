@@ -43,7 +43,7 @@ class BattleState(State):
     # Get the original image before NPC scaling was applied
     original_enemy_image = pygame.image.load(f"./assets/entity/npc/{self.npc.name}/npc.meta.json".replace("npc.meta.json", "").rstrip("/") + "/../../../" + "entity/boss/" + self.npc.name + "/rotations/south.png")
     import json
-    with open(f"./assets/entity/npc/{self.npc.name}/npc.meta.json", "r", encoding="utf-8") as f:
+    with open(f"./assets/entity/npc/{self.npc.name}/npc.meta.json", "r", encoding = "utf-8") as f:
       npc_data = json.load(f)
     # Load south-west facing image for battle
     enemy_img_path = npc_data["source_img"].replace("south.png", "south-west.png")
@@ -519,7 +519,7 @@ class BattleState(State):
     # Get map name from the map loader's map filename
     map_name = map_loader.map.filename.split("/")[-2]
     
-    with open(f"./assets/map/{map_name}/map.meta.json", "r", encoding="utf-8") as f:
+    with open(f"./assets/map/{map_name}/map.meta.json", "r", encoding = "utf-8") as f:
       json_data = json.load(f)
     
     # Get entity data for boss status check

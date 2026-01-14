@@ -28,7 +28,7 @@ class ShopHelper:
     self._load_shop_data()
 
   def _load_shop_data(self):
-    with open(f"./assets/entity/npc/{self.npc.name}/npc.meta.json", "r") as f:
+    with open(f"./assets/entity/npc/{self.npc.name}/npc.meta.json", "r", encoding = "utf-8") as f:
       npc_data = json.load(f)
 
     shop_data = npc_data.get("shop", {})
