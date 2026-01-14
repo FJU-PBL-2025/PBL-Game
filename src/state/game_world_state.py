@@ -16,7 +16,7 @@ class GameWorldState(State):
   def __init__(self, game: "Game"):
     State.__init__(self, game)
     
-    self.map_loader: MapLoader = MapLoader("village")
+    self.map_loader: MapLoader = MapLoader("awakening-room")
     
     # Set player position to entry point
     self.game.player.set_position(
