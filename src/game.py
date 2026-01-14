@@ -87,15 +87,40 @@ class Game():
     surface: pygame.Surface,
     text: str | bytes | None,
     color: pygame.typing.ColorLike,
-    center: tuple
+    center: tuple,
+    max_width: int = None
   ):
-    text_surface = self.font.render(text, True, color)
-    text_rect = text_surface.get_rect()
-    text_rect.center = center
-    surface.blit(text_surface, text_rect)
+    if not text:
+      return
+    
+    # Handle line breaks in text
+    lines = str(text).split('\n')
+    
+    # Calculate total height for centering
+    line_height = self.font.get_height()
+    total_height = len(lines) * line_height
+    
+    # Start y position to center all lines
+    start_y = center[1] - total_height // 2
+    
+    for i, line in enumerate(lines):
+      if line.strip():  # Only render non-empty lines
+        text_surface = self.font.render(line, True, color)
+        text_rect = text_surface.get_rect()
+        text_rect.centerx = center[0]
+        text_rect.y = start_y + i * line_height
+        surface.blit(text_surface, text_rect)
 
   def load_assets(self):
-    self.font = pygame.font.SysFont("arial", 20)
+    # Load custom font file for Chinese support
+    try:
+      self.font = pygame.font.Font("./assets/font.ttf", 20)
+    except:
+      # Fallback to system fonts if custom font not found
+      try:
+        self.font = pygame.font.SysFont("arial", 20)
+      except:
+        self.font = pygame.font.Font(None, 20)
 
   def load_states(self):
     self.title_screen = TitleScreenState(self)

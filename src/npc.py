@@ -23,7 +23,7 @@ class Npc(pygame.sprite.Sprite):
     self.tile_width: int = tile_width
     self.tile_height: int = tile_height
 
-    with open(f"./assets/entity/npc/{name}/npc.meta.json", "r") as f:
+    with open(f"./assets/entity/npc/{name}/npc.meta.json", "r", encoding="utf-8") as f:
       json_data = json.load(f)
 
     self.display_name: str = json_data.get("display_name", name)
@@ -34,7 +34,8 @@ class Npc(pygame.sprite.Sprite):
     self.x: float = self.spawn_x * tile_width + tile_width / 2
     self.y: float = self.spawn_y * tile_height + tile_height / 2
 
-    self.image: pygame.Surface = pygame.image.load(json_data["source_img"])
+    original_image = pygame.image.load(json_data["source_img"])
+    self.image: pygame.Surface = pygame.transform.scale(original_image, (int(tile_width * 3), int(tile_height * 3)))
     self.rect: pygame.Rect = self.image.get_rect()
     self.rect.center = (self.x, self.y)
 

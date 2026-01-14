@@ -16,10 +16,58 @@ class Player(pygame.sprite.Sprite):
     
     self.in_exit: bool = False
     
-    self.image: pygame.Surface = pygame.image.load("./assets/knight.png")
+    # Load player character sprites for 8 directions and scale them
+    original_sprites = {
+      'south': pygame.image.load("./assets/icon/south.png"),
+      'south-east': pygame.image.load("./assets/icon/south-east.png"),
+      'east': pygame.image.load("./assets/icon/east.png"),
+      'north-east': pygame.image.load("./assets/icon/north-east.png"),
+      'north': pygame.image.load("./assets/icon/north.png"),
+      'north-west': pygame.image.load("./assets/icon/north-west.png"),
+      'west': pygame.image.load("./assets/icon/west.png"),
+      'south-west': pygame.image.load("./assets/icon/south-west.png")
+    }
+    
+    # Scale all sprites by 1.75x
+    self.sprites = {}
+    for direction, sprite in original_sprites.items():
+      scaled_size = (int(sprite.get_width() * 1.75), int(sprite.get_height() * 1.75))
+      self.sprites[direction] = pygame.transform.scale(sprite, scaled_size)
+    
+    self.current_direction = 'south'
+    self.image: pygame.Surface = self.sprites[self.current_direction]
     
     self.rect: pygame.Rect = self.image.get_rect()
   
+  def update_direction(self, dx: float, dy: float):
+    """Update player direction based on movement"""
+    if dx == 0 and dy == 0:
+      return  # No movement, keep current direction
+    
+    # Determine direction based on movement
+    if dy > 0:  # Moving down
+      if dx > 0:
+        self.current_direction = 'south-east'
+      elif dx < 0:
+        self.current_direction = 'south-west'
+      else:
+        self.current_direction = 'south'
+    elif dy < 0:  # Moving up
+      if dx > 0:
+        self.current_direction = 'north-east'
+      elif dx < 0:
+        self.current_direction = 'north-west'
+      else:
+        self.current_direction = 'north'
+    else:  # Moving horizontally
+      if dx > 0:
+        self.current_direction = 'east'
+      else:
+        self.current_direction = 'west'
+    
+    # Update sprite
+    self.image = self.sprites[self.current_direction]
+
   def render(self, surface: pygame.Surface):
     surface.blit(
       self.image,
@@ -45,6 +93,9 @@ class Player(pygame.sprite.Sprite):
       dy -= self.speed * delta_time
     if input_manager.is_key_down(pygame.K_s) or input_manager.is_key_down(pygame.K_DOWN):
       dy += self.speed * delta_time
+    
+    # Update direction based on movement
+    self.update_direction(dx, dy)
     
     hit_tiles_set: set[MapTile] = set()
     

@@ -29,7 +29,7 @@
   },
   "object": [],
   "entity": {
-    "npc": []
+    "npc": ["magician", "warrior"]
   },
   "music": "",
   "walk_sound": "walking_grass"

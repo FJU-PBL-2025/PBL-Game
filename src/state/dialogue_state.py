@@ -108,6 +108,11 @@ class DialogueState(State):
       (box_rect.left + 80, box_rect.top + 25),
     )
 
+    # Calculate text height for dynamic option positioning
+    text_lines = str(self.current_dialogue.text).split('\n')
+    line_height = self.game.font.get_height()
+    text_height = len([line for line in text_lines if line.strip()]) * line_height
+    
     self.game.draw_text(
       surface,
       self.current_dialogue.text,
@@ -115,6 +120,9 @@ class DialogueState(State):
       (box_rect.centerx, box_rect.top + 60),
     )
 
+    # Position options with extra padding based on text height
+    options_start_y = box_rect.top + 60 + text_height // 2 + 30  # Extra 30px padding
+    
     options = self.current_dialogue.options
     if options:
       for i, opt in enumerate(options):
@@ -124,12 +132,12 @@ class DialogueState(State):
           surface,
           prefix + opt.text,
           color,
-          (box_rect.centerx, box_rect.top + 100 + i * 30),
+          (box_rect.centerx, options_start_y + i * 30),
         )
     else:
       self.game.draw_text(
         surface,
         "[Press E or Enter to continue]",
         (150, 150, 150),
-        (box_rect.centerx, box_rect.top + 120),
+        (box_rect.centerx, options_start_y),
       )
